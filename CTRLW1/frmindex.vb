@@ -13071,7 +13071,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
             Try
 
-
+                'zxczxc
                 Dim rutaimagen As String
 
                 'IP = InputBox("Ingresa la ip del servidor de la BD")
