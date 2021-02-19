@@ -12989,7 +12989,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
     End Function
     Private Sub Button83_Click(sender As Object, e As EventArgs) Handles Button83.Click
         cerrarconexion()
-
+        '--------------------------------
         'Try
         Dim res As Integer
 
