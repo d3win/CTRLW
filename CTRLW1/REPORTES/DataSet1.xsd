@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tipo_corte" msprop:Generator_TableClassName="tipo_corteDataTable" msprop:Generator_TableVarName="tabletipo_corte" msprop:Generator_TablePropName="tipo_corte" msprop:Generator_RowDeletingName="tipo_corteRowDeleting" msprop:Generator_RowChangingName="tipo_corteRowChanging" msprop:Generator_RowEvHandlerName="tipo_corteRowChangeEventHandler" msprop:Generator_RowDeletedName="tipo_corteRowDeleted" msprop:Generator_UserTableName="tipo_corte" msprop:Generator_RowChangedName="tipo_corteRowChanged" msprop:Generator_RowEvArgName="tipo_corteRowChangeEvent" msprop:Generator_RowClassName="tipo_corteRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idtipo_corte" msprop:Generator_ColumnVarNameInTable="columnidtipo_corte" msprop:Generator_ColumnPropNameInRow="idtipo_corte" msprop:Generator_ColumnPropNameInTable="idtipo_corteColumn" msprop:Generator_UserColumnName="idtipo_corte" type="xs:string" minOccurs="0" />
+              <xs:element name="tipo" msprop:Generator_ColumnVarNameInTable="columntipo" msprop:Generator_ColumnPropNameInRow="tipo" msprop:Generator_ColumnPropNameInTable="tipoColumn" msprop:Generator_UserColumnName="tipo" type="xs:string" minOccurs="0" />
+              <xs:element name="estado" msprop:Generator_ColumnVarNameInTable="columnestado" msprop:Generator_ColumnPropNameInRow="estado" msprop:Generator_ColumnPropNameInTable="estadoColumn" msprop:Generator_UserColumnName="estado" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
