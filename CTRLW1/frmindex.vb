@@ -5,6 +5,8 @@ Imports System.IO.StreamWriter
 Imports System.IO
 
 Public Class frmindex
+    Dim p1, p2, p3, p4, p5, p6, p7, p8 As Integer
+
     Public respaldar As New SaveFileDialog
     Public carpeta As New FolderBrowserDialog
     Public abrir As New OpenFileDialog
@@ -858,10 +860,10 @@ Public Class frmindex
         obtenerfolio()
         ' Button14.ForeColor = Color.White
         TabControl1.SelectedIndex = 1
-            txtcliente.Text = "USUARIO"
-            listaclientes.Visible = False
-            grilla.DefaultCellStyle.Font = New Font("Arial", 20)
-            grilla.RowHeadersVisible = False
+        txtcliente.Text = "USUARIO"
+        listaclientes.Visible = False
+        grilla.DefaultCellStyle.Font = New Font("Arial", 20)
+        grilla.RowHeadersVisible = False
 
 
 
@@ -1003,10 +1005,28 @@ Public Class frmindex
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim tipo As Integer
         obtener_chticket_Chcambio_venta()
+        'tipo = tipoingreso()
+
+
+
         tipo = tipoingreso()
 
+        comprobarpermisoventana()
+        tipo = p2
+        'lbclientes.Visible = False
 
-        If tipo = 2 Then
+        'MsgBox("primer permiso")
+        'MsgBox(p1)
+        'comprobamos si tiene los permisos para entrar a esta ventana
+
+
+
+
+
+
+
+
+        If tipo = 0 Then
 
             TabControl1.SelectedIndex = 1
             Button1.BackColor = Color.DimGray
@@ -1083,7 +1103,12 @@ Public Class frmindex
         tipo = tipoingreso()
 
 
-        If tipo = 2 Then
+        comprobarpermisoventana()
+        tipo = p3
+
+
+
+        If tipo = 0 Then
 
             TabControl1.SelectedIndex = 1
             Button1.BackColor = Color.DimGray
@@ -1173,10 +1198,19 @@ Public Class frmindex
 
         Dim tipo As Integer
 
+
+
+
+
         tipo = tipoingreso()
 
+        comprobarpermisoventana()
+        tipo = p4
 
-        If tipo = 2 Then
+
+
+
+        If tipo = 0 Then
 
             TabControl1.SelectedIndex = 1
             Button1.BackColor = Color.DimGray
@@ -1353,7 +1387,7 @@ Public Class frmindex
         Catch ex As Exception
             'MsgBox("error 2")
             sumatotalventa = 0
-        cerrarconexion()
+            cerrarconexion()
 
         End Try
         'MsgBox(sumatotalventa)
@@ -1617,7 +1651,11 @@ Public Class frmindex
         tipo = tipoingreso()
 
 
-        If tipo = 2 Then
+        comprobarpermisoventana()
+        tipo = p5
+
+
+        If tipo = 0 Then
 
             TabControl1.SelectedIndex = 1
             Button1.BackColor = Color.DimGray
@@ -1655,7 +1693,33 @@ Public Class frmindex
         End If
 
     End Sub
+    Function comprobarpermisoventana()
+        Try
 
+            cerrarconexion()
+
+            conexionMysql.Open()
+            Dim Sqlx1 As String
+            Sqlx1 = "select pclientes,pcompras,pproductos,pcorte,pusuarios,pproveedores,preportes,pconfiguracion from usuario where usuario='" & nombreusuario & "';"
+            Dim cmdx1 As New MySqlCommand(Sqlx1, conexionMysql)
+
+            reader = cmdx1.ExecuteReader()
+            reader.Read()
+            p1 = reader.GetString(0).ToString
+            p2 = reader.GetString(1).ToString
+            p3 = reader.GetString(2).ToString
+            p4 = reader.GetString(3).ToString
+            p5 = reader.GetString(4).ToString
+            p6 = reader.GetString(5).ToString
+            p7 = reader.GetString(6).ToString
+            p8 = reader.GetString(7).ToString
+
+            conexionMysql.Close()
+        Catch ex As Exception
+
+        End Try
+
+    End Function
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         obtener_chticket_Chcambio_venta()
         'llenamos la grilla de los clientes existentes
@@ -1665,7 +1729,7 @@ Public Class frmindex
         grillacliente.Visible = True
         grupocontrolesclientes.Visible = False
 
-
+        comprobarpermisoventana()
 
         Dim tipo As Integer
 
@@ -1673,7 +1737,19 @@ Public Class frmindex
 
         lbclientes.Visible = False
 
-        If tipo = 2 Then
+        '  MsgBox("primer permiso")
+        'MsgBox(p1)
+        'comprobamos si tiene los permisos para entrar a esta ventana
+
+        tipo = p1
+
+        'si el tipo de ingreso es 2, significa que es un trabajador, verificamos solamente si tiene permitido entrar a 
+        If tipo = 0 Then
+
+
+            'comprobamos si tiene
+
+
 
             TabControl1.SelectedIndex = 1
             Button1.BackColor = Color.DimGray
@@ -1719,8 +1795,11 @@ Public Class frmindex
 
         tipo = tipoingreso()
 
+        comprobarpermisoventana()
+        tipo = p7
 
-        If tipo = 2 Then
+
+        If tipo = 0 Then
 
 
             TabControl1.SelectedIndex = 1
@@ -1819,10 +1898,14 @@ Public Class frmindex
 
         Dim tipo As Integer
 
+
+
         tipo = tipoingreso()
+        comprobarpermisoventana()
+        tipo = p8
 
 
-        If tipo = 2 Then
+        If tipo = 0 Then
 
             TabControl1.SelectedIndex = 1
             Button1.BackColor = Color.DimGray
@@ -1870,7 +1953,7 @@ Public Class frmindex
             tipo_corte_configuracion()
 
             cargardatos_ticket_cambio()
-           
+
 
 
             'cargarlogook()
@@ -2144,16 +2227,16 @@ Public Class frmindex
                 'Try
                 'MsgBox(txtclavep.Text)
                 conexionMysql.Open()
-                    Dim Sql As String
-                    Sql = "select * from producto where idproducto='" & txtclavep.Text & "';"
-                    Dim cmd As New MySqlCommand(Sql, conexionMysql)
-                    reader = cmd.ExecuteReader()
-                    reader.Read()
-                    txtactividadp.Text = reader.GetString(1).ToString()
-                    txtcantidadp.Text = reader.GetString(2).ToString()
-                    txtcostop.Text = reader.GetString(3).ToString()
-                    txtprecioindividualp.Text = reader.GetString(4).ToString()
-                    txtpreciomayoreop.Text = reader.GetString(5).ToString()
+                Dim Sql As String
+                Sql = "select * from producto where idproducto='" & txtclavep.Text & "';"
+                Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                reader = cmd.ExecuteReader()
+                reader.Read()
+                txtactividadp.Text = reader.GetString(1).ToString()
+                txtcantidadp.Text = reader.GetString(2).ToString()
+                txtcostop.Text = reader.GetString(3).ToString()
+                txtprecioindividualp.Text = reader.GetString(4).ToString()
+                txtpreciomayoreop.Text = reader.GetString(5).ToString()
                 Try
                     claveproveedor = reader.GetString(6).ToString()
                     clavetipoproducto = reader.GetString(7).ToString()
@@ -2301,13 +2384,13 @@ Public Class frmindex
                 'MsgBox("El producto no existe o no se a podido procesar", MsgBoxStyle.Exclamation, "Sistema")
 
                 tipoingreso()
-            cerrarconexion()
+                cerrarconexion()
 
 
-            Call limpiarp()
+                Call limpiarp()
 
 
-            'MsgBox("Hay detalles con el proceso", MsgBoxStyle.Information, "CTRL+y")
+                'MsgBox("Hay detalles con el proceso", MsgBoxStyle.Information, "CTRL+y")
 
             End Try
         End If
@@ -3150,63 +3233,63 @@ Public Class frmindex
         'Try
 
         If txttotalpagar.Text = "0" Or txttotalpagar.Text = "" Then
-                MsgBox("No hay ventas que realizar", MsgBoxStyle.Information, "Sistema")
-                txttotalpagar.Text = ""
-            Else
-                'obtener fecha y hora
-                Dim dia, mes, año, fecha As String
-                hora2 = Now.Hour()
-                minuto = Now.Minute()
-                segundo = Now.Second()
+            MsgBox("No hay ventas que realizar", MsgBoxStyle.Information, "Sistema")
+            txttotalpagar.Text = ""
+        Else
+            'obtener fecha y hora
+            Dim dia, mes, año, fecha As String
+            hora2 = Now.Hour()
+            minuto = Now.Minute()
+            segundo = Now.Second()
 
-                hora = hora2 & ":" & minuto & ":" & segundo
+            hora = hora2 & ":" & minuto & ":" & segundo
 
-                dia = Date.Now.Day
-                mes = Date.Now.Month
-                año = Date.Now.Year
-                fecha = año & "-" & mes & "-" & dia
+            dia = Date.Now.Day
+            mes = Date.Now.Month
+            año = Date.Now.Year
+            fecha = año & "-" & mes & "-" & dia
 
 
 
-                '------------------ insertar reginstro en tabla venta ---------------------------------------
+            '------------------ insertar reginstro en tabla venta ---------------------------------------
 
+            cerrarconexion()
+            Dim idcliente As Integer
+
+            idcliente = 1
+
+            Try
                 cerrarconexion()
-                Dim idcliente As Integer
-
-                idcliente = 1
-
-                Try
-                    cerrarconexion()
-                    conexionMysql.Open()
-                    Dim Sql31 As String
-                    'consultamos el id del cliente para obtener un registro de quien es al que se le esta vendiendo
-                    Sql31 = "select idcliente from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & txtcliente.Text & "%';"
-                    Dim cmd31 As New MySqlCommand(Sql31, conexionMysql)
-                    reader = cmd31.ExecuteReader()
-                    reader.Read()
-                    idcliente = reader.GetString(0).ToString()
-                    conexionMysql.Close()
-                    'MsgBox(idcliente)
-                Catch ex As Exception
-                    idcliente = 1
-                    '-MsgBox(idcliente)
-                End Try
-
-
-
-                '----------------consultamos al usuario que esta realizando la venta ------------------
-                Dim idusuario As Integer
-
-                cerrarconexion()
-
                 conexionMysql.Open()
-                Dim Sql32 As String
+                Dim Sql31 As String
                 'consultamos el id del cliente para obtener un registro de quien es al que se le esta vendiendo
-                Sql32 = "select idusuario from usuario where usuario= '" & usuarioactual & "';"
-                Dim cmd32 As New MySqlCommand(Sql32, conexionMysql)
-                reader = cmd32.ExecuteReader()
+                Sql31 = "select idcliente from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & txtcliente.Text & "%';"
+                Dim cmd31 As New MySqlCommand(Sql31, conexionMysql)
+                reader = cmd31.ExecuteReader()
                 reader.Read()
-                idusuario = reader.GetString(0).ToString()
+                idcliente = reader.GetString(0).ToString()
+                conexionMysql.Close()
+                'MsgBox(idcliente)
+            Catch ex As Exception
+                idcliente = 1
+                '-MsgBox(idcliente)
+            End Try
+
+
+
+            '----------------consultamos al usuario que esta realizando la venta ------------------
+            Dim idusuario As Integer
+
+            cerrarconexion()
+
+            conexionMysql.Open()
+            Dim Sql32 As String
+            'consultamos el id del cliente para obtener un registro de quien es al que se le esta vendiendo
+            Sql32 = "select idusuario from usuario where usuario= '" & usuarioactual & "';"
+            Dim cmd32 As New MySqlCommand(Sql32, conexionMysql)
+            reader = cmd32.ExecuteReader()
+            reader.Read()
+            idusuario = reader.GetString(0).ToString()
             '-------------------------------------------------
             '----------datos que se van al reporte
             indexidusuario = idcliente
@@ -3280,142 +3363,142 @@ Public Class frmindex
             cerrarconexion()
 
             conexionMysql.Open()
-                Dim Sql As String
+            Dim Sql As String
             Sql = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario,tipoventa,pagacon,cambio,idtipo_pago) VALUES (" & lbfolio.Text & "," & txtunidades.Text & ", " & CDbl(txttotalpagar.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'1','" & lbpagacon.Text & "', '" & lbcambio.Text & "'," & tipopago & ");"
             Dim cmd As New MySqlCommand(Sql, conexionMysql)
-                cmd.ExecuteNonQuery()
-                conexionMysql.Close()
-                txtactividad.Text = ""
-                txtcosto.Text = ""
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+            txtactividad.Text = ""
+            txtcosto.Text = ""
             txtpagar = CDbl(txttotalpagar.Text)
             rtobservaciones.Text = ""
             'txttotalpagar.Text = ""
             conexionMysql.Close()
 
 
-                '------------------ FIN insertar reginstro en tabla venta ---------------------------------------
+            '------------------ FIN insertar reginstro en tabla venta ---------------------------------------
 
 
-                '------------------ insertar reginstro en tabla ventaIND ---------------------------------------
-                Dim i As Integer = grilla.RowCount
-                Dim j As Integer
-                Dim actividad As String
-                Dim cantidad, costo, idventa As Double
+            '------------------ insertar reginstro en tabla ventaIND ---------------------------------------
+            Dim i As Integer = grilla.RowCount
+            Dim j As Integer
+            Dim actividad As String
+            Dim cantidad, costo, idventa As Double
             Dim idproducto, observaciones As String
 
             conexionMysql.Open()
 
-                'suma de valores
-                For j = 0 To i - 2
-                    'MsgBox("valosr de j:" & j)
-                    'a = venta.grillaventa.Item(j, 3).Value.ToString()
-                    actividad = grilla.Rows(j).Cells(1).Value 'descripcion
-                    cantidad = grilla.Rows(j).Cells(2).Value 'cantidad
-                    costo = grilla.Rows(j).Cells(3).Value 'costo
+            'suma de valores
+            For j = 0 To i - 2
+                'MsgBox("valosr de j:" & j)
+                'a = venta.grillaventa.Item(j, 3).Value.ToString()
+                actividad = grilla.Rows(j).Cells(1).Value 'descripcion
+                cantidad = grilla.Rows(j).Cells(2).Value 'cantidad
+                costo = grilla.Rows(j).Cells(3).Value 'costo
                 idproducto = grilla.Rows(j).Cells(5).Value
                 observaciones = grilla.Rows(j).Cells(6).Value
                 cerrarconexion()
-                    conexionMysql.Open()
+                conexionMysql.Open()
 
-                    'MsgBox("el producto es:" & actividad)
+                'MsgBox("el producto es:" & actividad)
 
-                    Dim Sql2 As String
+                Dim Sql2 As String
                 Sql2 = "INSERT INTO ventaind (actividad, cantidad, costo, idventa,idproducto,descripcion) VALUES ('" & actividad & "'," & cantidad & "," & costo & "," & lbfolio.Text & ",'" & idproducto & "','" & observaciones & "');"
                 Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
-                    cmd2.ExecuteNonQuery()
-                    conexionMysql.Close()
-                Next
+                cmd2.ExecuteNonQuery()
+                conexionMysql.Close()
+            Next
 
-                '----------------------------- se hace actualización a la tabla de productos--------------
-                Dim totalactualizar, m, n As Integer
-                cerrarconexion()
+            '----------------------------- se hace actualización a la tabla de productos--------------
+            Dim totalactualizar, m, n As Integer
+            cerrarconexion()
 
-                conexionMysql.Open()
-                Dim Sql3 As String
-                'consultamos cuantos registros se insertaros para posteriormente actualizarlos en su registro original
-                Sql3 = "select count(distinct idproducto) from ventaind where idventa=" & lbfolio.Text & " and idproducto <> '';"
-                Dim cmd3 As New MySqlCommand(Sql3, conexionMysql)
-                reader = cmd3.ExecuteReader()
+            conexionMysql.Open()
+            Dim Sql3 As String
+            'consultamos cuantos registros se insertaros para posteriormente actualizarlos en su registro original
+            Sql3 = "select count(distinct idproducto) from ventaind where idventa=" & lbfolio.Text & " and idproducto <> '';"
+            Dim cmd3 As New MySqlCommand(Sql3, conexionMysql)
+            reader = cmd3.ExecuteReader()
+            reader.Read()
+            totalactualizar = reader.GetString(0).ToString()
+
+
+            'MsgBox(totalactualizar)
+
+            conexionMysql.Close()
+
+            'for para dar las vueltas necesarias para poder actualizar
+            '---------------DECLARACION DE VARIABLES------------------
+            Dim claveproducto, cantidadpro As Integer
+            Dim matriz(totalactualizar, 3) As String
+            '-------------------------------------------
+            cantidadpro = 0
+            '----------------------------- se hace actualización a la tabla de productos--------------
+            cerrarconexion()
+            conexionMysql.Open()
+            Dim Sql4 As String
+            'consultamos cuantos registros se insertaros para posteriormente actualizarlos en su registro original
+            Sql4 = "select idproducto, sum(cantidad) from ventaind where idventa=" & lbfolio.Text & "  group by idproducto;"
+            Dim cmd4 As New MySqlCommand(Sql4, conexionMysql)
+            reader = cmd4.ExecuteReader()
+
+
+
+
+            For m = 1 To totalactualizar
                 reader.Read()
-                totalactualizar = reader.GetString(0).ToString()
 
 
-                'MsgBox(totalactualizar)
+                'guardamos los valores en una matriz
+                matriz(m, 0) = reader.GetString(0).ToString()
+                matriz(m, 1) = reader.GetString(1).ToString()
+                'MsgBox("el registro de la matriz(idproducto):" & matriz(m, 0))
+                'MsgBox("el registro de la matriz(cantidad):" & matriz(m, 1))
+                'MsgBox(matriz(m, 0))
+                'MsgBox(matriz(m, 1))
 
-                conexionMysql.Close()
+            Next
+            conexionMysql.Close()
 
-                'for para dar las vueltas necesarias para poder actualizar
-                '---------------DECLARACION DE VARIABLES------------------
-                Dim claveproducto, cantidadpro As Integer
-                Dim matriz(totalactualizar, 3) As String
-                '-------------------------------------------
-                cantidadpro = 0
-                '----------------------------- se hace actualización a la tabla de productos--------------
+            '-----------------------consultamos cuantos valores existes de tal idproducto
+
+            Dim x, xcantidad As Integer
+
+            For x = 1 To totalactualizar
                 cerrarconexion()
+
                 conexionMysql.Open()
-                Dim Sql4 As String
+                xcantidad = 0
+
+                'MsgBox("el producto es:" & matriz(x, 0))
+                Dim Sql6 As String
                 'consultamos cuantos registros se insertaros para posteriormente actualizarlos en su registro original
-                Sql4 = "select idproducto, sum(cantidad) from ventaind where idventa=" & lbfolio.Text & "  group by idproducto;"
-                Dim cmd4 As New MySqlCommand(Sql4, conexionMysql)
-                reader = cmd4.ExecuteReader()
+                Sql6 = "select cantidad,idproducto from producto where idproducto='" & matriz(x, 0) & "';"
+                Dim cmd6 As New MySqlCommand(Sql6, conexionMysql)
+                reader = cmd6.ExecuteReader()
 
-
-
-
-                For m = 1 To totalactualizar
-                    reader.Read()
-
-
-                    'guardamos los valores en una matriz
-                    matriz(m, 0) = reader.GetString(0).ToString()
-                    matriz(m, 1) = reader.GetString(1).ToString()
-                    'MsgBox("el registro de la matriz(idproducto):" & matriz(m, 0))
-                    'MsgBox("el registro de la matriz(cantidad):" & matriz(m, 1))
-                    'MsgBox(matriz(m, 0))
-                    'MsgBox(matriz(m, 1))
-
-                Next
+                reader.Read()
+                'guardamos los valores en una matriz
+                xcantidad = reader.GetString(0).ToString()
+                matriz(x, 1) = xcantidad - matriz(x, 1)
                 conexionMysql.Close()
+            Next
+            '---------------------------------------------------------------------------------------
+            For n = 1 To totalactualizar
+                '-----------------------ahora sacamos los valores de la matriz para poder actualizarlos
+                '--------------------------------------------------------------------------------------------
+                cerrarconexion()
 
-                '-----------------------consultamos cuantos valores existes de tal idproducto
-
-                Dim x, xcantidad As Integer
-
-                For x = 1 To totalactualizar
-                    cerrarconexion()
-
-                    conexionMysql.Open()
-                    xcantidad = 0
-
-                    'MsgBox("el producto es:" & matriz(x, 0))
-                    Dim Sql6 As String
-                    'consultamos cuantos registros se insertaros para posteriormente actualizarlos en su registro original
-                    Sql6 = "select cantidad,idproducto from producto where idproducto='" & matriz(x, 0) & "';"
-                    Dim cmd6 As New MySqlCommand(Sql6, conexionMysql)
-                    reader = cmd6.ExecuteReader()
-
-                    reader.Read()
-                    'guardamos los valores en una matriz
-                    xcantidad = reader.GetString(0).ToString()
-                    matriz(x, 1) = xcantidad - matriz(x, 1)
-                    conexionMysql.Close()
-                Next
-                '---------------------------------------------------------------------------------------
-                For n = 1 To totalactualizar
-                    '-----------------------ahora sacamos los valores de la matriz para poder actualizarlos
-                    '--------------------------------------------------------------------------------------------
-                    cerrarconexion()
-
-                    conexionMysql.Open()
-                    'actualizo el dato
-                    Dim Sql5 As String
-                    Sql5 = "UPDATE producto SET cantidad=" & matriz(n, 1) & " WHERE idproducto='" & matriz(n, 0) & "';"
-                    Dim cmd5 As New MySqlCommand(Sql5, conexionMysql)
-                    cmd5.ExecuteNonQuery()
-                    conexionMysql.Close()
-                    ' MsgBox("registro actualizado")
-                    '-------------------------------------------------------------------------------------------------
-                Next
+                conexionMysql.Open()
+                'actualizo el dato
+                Dim Sql5 As String
+                Sql5 = "UPDATE producto SET cantidad=" & matriz(n, 1) & " WHERE idproducto='" & matriz(n, 0) & "';"
+                Dim cmd5 As New MySqlCommand(Sql5, conexionMysql)
+                cmd5.ExecuteNonQuery()
+                conexionMysql.Close()
+                ' MsgBox("registro actualizado")
+                '-------------------------------------------------------------------------------------------------
+            Next
             '-------------------------------------------------------------------------------------------
             '--------------------------------------- se manda a imprimir el reporte
 
@@ -3442,21 +3525,21 @@ Public Class frmindex
 
 
             txtcliente.Text = "USUARIO"
-                listaclientes.Visible = False
-                If chimpresionticket.Checked = True Then
-                    'impresionticket()
+            listaclientes.Visible = False
+            If chimpresionticket.Checked = True Then
+                'impresionticket()
 
-                    'vamos a trabajar con el ticket
+                'vamos a trabajar con el ticket
 
-                    imprimir()
-
-
+                imprimir()
 
 
 
 
-                End If
-                If chimpresion.Checked = True Then
+
+
+            End If
+            If chimpresion.Checked = True Then
                 '//////////////////////////////////////////////////////
                 ' frx.Show()
                 'cargamos el formulario 2, temporalmente para ver si funcionan los reportes.
@@ -3482,19 +3565,19 @@ Public Class frmindex
 
             End If
 
-                'una vez guardada la venta, se obtiene un nuevo folio para la proxima venta
-                obtenerfolio()
+            'una vez guardada la venta, se obtiene un nuevo folio para la proxima venta
+            obtenerfolio()
 
 
 
 
 
-                '------------------------------------------------------------------------
-                'al finalizar se limpia la grilla y las cajas de texto
-                txttotalpagar.Text = ""
-                txtunidades.Text = ""
-                grilla.Rows.Clear()
-                txttotalpagar.Text = ""
+            '------------------------------------------------------------------------
+            'al finalizar se limpia la grilla y las cajas de texto
+            txttotalpagar.Text = ""
+            txtunidades.Text = ""
+            grilla.Rows.Clear()
+            txttotalpagar.Text = ""
 
             'llamamos para obtener un nuevo folio
             txtclave.Focus()
@@ -4023,7 +4106,7 @@ Public Class frmindex
 
                     conexionMysql.Open()
                     Dim Sql As String
-                    Sql = "INSERT INTO usuario (usuario, nombre, ap, am, telefono, correo, direccion, tipo_usuario) VALUES ('root', 'root', 'root', 'root', 'root', 'root', 'root', 1);"
+                    Sql = "INSERT INTO usuario (usuario, nombre, ap, am, telefono, correo, direccion, tipo_usuario,pclientes,pcompras,pproductos,pcorte,pusuarios,pproveedores,preportes,pconfiguracion) VALUES ('root', 'root', 'root', 'root', 'root', 'root', 'root', 1,1,1,1,1,1,1,1,1);"
                     Dim cmd As New MySqlCommand(Sql, conexionMysql)
                     cmd.ExecuteNonQuery()
                     conexionMysql.Close()
@@ -5054,7 +5137,8 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                 ElseIf tipousuario = 2 Then
 
                     cerrarconexion()
-
+                    'por la actualizacion se cambio el tipo de usuari oque se crea, ahora se le dan todos los permisos de la BD
+                    'solo lo limitamos a que opcion puede entrar y a cual no.
                     conexionMysql.Open()
                     Dim Sqlu1 As String
                     Sqlu1 = "GRANT ALL PRIVILEGES ON * . * TO '" & utxtusuario.Text & "'@'%' WITH GRANT OPTION;"
@@ -5079,7 +5163,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                         p2 = 0
                     End If
 
-                    If uchconfiguracion.Checked = True Then
+                    If uchproductos.Checked = True Then
 
                         p3 = 1
                     Else
@@ -5092,7 +5176,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                         p4 = 0
                     End If
 
-                    If uchproductos.Checked = True Then
+                    If uchusuarios.Checked = True Then
 
                         p5 = 1
                     Else
@@ -5110,7 +5194,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     Else
                         p7 = 0
                     End If
-                    If uchusuarios.Checked = True Then
+                    If uchconfiguracion.Checked = True Then
 
                         p8 = 1
                     Else
@@ -5122,13 +5206,13 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     ' Try
 
                     conexionMysql.Open()
-                                Dim Sqlp1 As String
+                    Dim Sqlp1 As String
                     Sqlp1 = "update usuario set pclientes='" & p1 & "',  pcompras ='" & p2 & "', pproductos='" & p3 & "', pcorte='" & p4 & "', pusuarios='" & p5 & "',pproveedores='" & p6 & "', preportes='" & p7 & "', pconfiguracion='" & p8 & "'       where usuario='" & utxtusuario.Text & "';"
                     Dim cmdp1 As New MySqlCommand(Sqlp1, conexionMysql)
-                                cmdp1.ExecuteNonQuery()
-                                conexionMysql.Close()
+                    cmdp1.ExecuteNonQuery()
+                    conexionMysql.Close()
 
-                                MsgBox("Registro actualizado", MsgBoxStyle.Information, "Sistema")
+                    MsgBox("Registro actualizado", MsgBoxStyle.Information, "Sistema")
                     '   ullenadogrilla()
                     'ulimpiarusuario()
                     ' Catch ex As Exception
@@ -5673,7 +5757,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
     Private Sub ugrilla_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles ugrilla.CellContentClick
         Dim Variable As Integer = ugrilla.Item(0, ugrilla.CurrentRow.Index).Value
         'MsgBox(Variable)
-        Dim utipo_usuario As Integer
+        Dim utipo_usuario, c1, c2, c3, c4, c5, c6, c7, c8 As Integer
 
         'cerrar conexion en caso de que este abierta
         cerrarconexion()
@@ -5694,6 +5778,82 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
         utxtdireccion.Text = reader.GetString(7).ToString
         'variable para obtener el tipo de usuario
         utipo_usuario = reader.GetString(8).ToString
+        c1 = reader.GetString(9).ToString
+        c2 = reader.GetString(10).ToString
+        c3 = reader.GetString(11).ToString
+        c4 = reader.GetString(12).ToString
+        c5 = reader.GetString(13).ToString
+        c6 = reader.GetString(14).ToString
+        c7 = reader.GetString(15).ToString
+        c8 = reader.GetString(16).ToString
+
+        If c1 = 1 Then
+            uchclientes.Checked = True
+        Else
+            uchclientes.Checked = False
+
+        End If
+
+        If c2 = 1 Then
+            uchcompras.Checked = True
+        Else
+            uchcompras.Checked = False
+
+        End If
+
+        If c3 = 1 Then
+            uchproductos.Checked = True
+        Else
+            uchproductos.Checked = False
+
+        End If
+
+
+        If c4 = 1 Then
+            uchcorte.Checked = True
+        Else
+            uchcorte.Checked = False
+
+        End If
+
+
+        If c5 = 1 Then
+            uchusuarios.Checked = True
+        Else
+            uchusuarios.Checked = False
+
+        End If
+
+
+
+        If c6 = 1 Then
+            uchproveedores.Checked = True
+        Else
+            uchproveedores.Checked = False
+
+        End If
+
+
+
+        If c7 = 1 Then
+            uchreportes.Checked = True
+        Else
+            uchreportes.Checked = False
+
+        End If
+
+
+
+        If c8 = 1 Then
+            uchconfiguracion.Checked = True
+        Else
+            uchconfiguracion.Checked = False
+
+        End If
+
+
+
+
         conexionMysql.Close()
         cerrarconexion()
 
@@ -5714,6 +5874,26 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             tipoingreso()
             comprobartipoingreso()
         End Try
+
+        Try
+            conexionMysql.Open()
+            Dim sql23 As String
+            sql23 = "select * from tipo_usuario where tipo_usuario=" & Variable & ";"
+            Dim cmd23 As New MySqlCommand(sql23, conexionMysql)
+            reader = cmd23.ExecuteReader()
+            reader.Read()
+            utxttipousuario.Text = reader.GetString(0).ToString
+            'variable para obtener el tipo de usuario
+            conexionMysql.Close()
+        Catch ex As Exception
+
+            tipoingreso()
+            comprobartipoingreso()
+        End Try
+
+
+        'cargamos los checkbox que estan activados.
+
 
 
 
@@ -6139,8 +6319,10 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
         tipo = tipoingreso()
 
+        comprobarpermisoventana()
+        tipo = p6
 
-        If tipo = 2 Then
+        If tipo = 0 Then
 
             TabControl1.SelectedIndex = 1
             Button1.BackColor = Color.DimGray
@@ -8625,7 +8807,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
         uchconfiguracion.Checked = True
         uchcorte.Checked = True
         uchproductos.Checked = True
-        uchproveedores.Checked= True
+        uchproveedores.Checked = True
         uchreportes.Checked = True
         uchusuarios.Checked = True
 
@@ -10573,31 +10755,26 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
         cargarformadepago()
         obtenerfolio()
         Dim tipo As Integer
-
-        tipo = tipoingreso()
-
-
-        If tipo = 2 Then
-
-            TabControl1.SelectedIndex = 1
-
-            Button1.BackColor = Color.DimGray
-            Button2.BackColor = Color.FromArgb(47, 56, 72)
-            Button3.BackColor = Color.FromArgb(47, 56, 72)
-            Button4.BackColor = Color.FromArgb(47, 56, 72)
-            Button5.BackColor = Color.FromArgb(47, 56, 72)
-            Button6.BackColor = Color.FromArgb(47, 56, 72)
-            Button8.BackColor = Color.FromArgb(47, 56, 72)
-            Button10.BackColor = Color.FromArgb(47, 56, 72)
-            Button12.BackColor = Color.FromArgb(47, 56, 72)
-            Button13.BackColor = Color.FromArgb(47, 56, 72)
-            Button67.BackColor = Color.FromArgb(47, 56, 72)
+        'tipo = tipoingreso()
+        'If tipo = 2 Then
+        'TabControl1.SelectedIndex = 1
+        '    Button1.BackColor = Color.DimGray
+        '    Button2.BackColor = Color.FromArgb(47, 56, 72)
+        '    Button3.BackColor = Color.FromArgb(47, 56, 72)
+        '    Button4.BackColor = Color.FromArgb(47, 56, 72)
+        '    Button5.BackColor = Color.FromArgb(47, 56, 72)
+        '    Button6.BackColor = Color.FromArgb(47, 56, 72)
+        '    Button8.BackColor = Color.FromArgb(47, 56, 72)
+        '    Button10.BackColor = Color.FromArgb(47, 56, 72)
+        '    Button12.BackColor = Color.FromArgb(47, 56, 72)
+        '    Button13.BackColor = Color.FromArgb(47, 56, 72)
+        '    Button67.BackColor = Color.FromArgb(47, 56, 72)
 
 
-            comprobartipoingreso()
-        Else
+        '    comprobartipoingreso()
+        'Else
 
-            picturepagado.Visible = False
+        picturepagado.Visible = False
 
             TabControl1.SelectedIndex = 10
             Button1.BackColor = Color.FromArgb(47, 56, 72)
@@ -10628,7 +10805,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
             cargarformadepago()
 
-        End If
+        'End If
 
     End Sub
 
@@ -12485,22 +12662,22 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
     Private Sub Chcambio_CheckedChanged(sender As Object, e As EventArgs) Handles chcambio.CheckedChanged
         'Try
         Dim valor As Integer
+        valor = 0
+        If chticket.Checked = True Then
+            valor = 1
+        ElseIf chticket.Checked = False Then
             valor = 0
-            If chticket.Checked = True Then
-                valor = 1
-            ElseIf chticket.Checked = False Then
-                valor = 0
-            End If
+        End If
 
-            'MsgBox("LA IMPRESORA A GUARDAR ES:" & impresosaPredt)
+        'MsgBox("LA IMPRESORA A GUARDAR ES:" & impresosaPredt)
 
 
-            conexionMysql.Open()
-            Dim Sql22 As String
-            Sql22 = "UPDATE `dwin`.`datos_empresa` SET `obligarcambio` = '" & valor & "';"
-            Dim cmd22 As New MySqlCommand(Sql22, conexionMysql)
-            cmd22.ExecuteNonQuery()
-            conexionMysql.Close()
+        conexionMysql.Open()
+        Dim Sql22 As String
+        Sql22 = "UPDATE `dwin`.`datos_empresa` SET `obligarcambio` = '" & valor & "';"
+        Dim cmd22 As New MySqlCommand(Sql22, conexionMysql)
+        cmd22.ExecuteNonQuery()
+        conexionMysql.Close()
         'MsgBox("Valor Actualizado", MsgBoxStyle.Information, "CTRL+y")
 
         'Catch ex As Exception
@@ -14557,11 +14734,11 @@ ADD COLUMN `saludo_ticket` VARCHAR(45) NULL AFTER `ruta_logo`;
         Dim cantidadminima, idproveedor As Integer
         'primero consultamos cual es el minimo de productos por mostrar
         conexionMysql.Open()
-            Dim sql26 As String
+        Dim sql26 As String
         sql26 = "Select idproveedor from proveedor where nombre_empresa ='" & corcbproveedores.Text & "';"
         Dim cmd26 As New MySqlCommand(sql26, conexionMysql)
-            reader = cmd26.ExecuteReader
-            reader.Read()
+        reader = cmd26.ExecuteReader
+        reader.Read()
         idproveedor = reader.GetString(0).ToString()
         conexionMysql.Close()
 
@@ -15295,7 +15472,7 @@ ADD COLUMN `saludo_ticket` VARCHAR(45) NULL AFTER `ruta_logo`;
         'Try
         Dim fechaentrega As String
 
-            txtclientefolioservicio.Text = grillaclienteservicios.Item(0, grillaclienteservicios.CurrentRow.Index).Value
+        txtclientefolioservicio.Text = grillaclienteservicios.Item(0, grillaclienteservicios.CurrentRow.Index).Value
         Try
 
             txtclienteadeudo.Text = grillaclienteservicios.Item(6, grillaclienteservicios.CurrentRow.Index).Value

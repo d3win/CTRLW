@@ -4079,7 +4079,6 @@ Partial Class frmindex
         Me.GroupBox19.Size = New System.Drawing.Size(214, 173)
         Me.GroupBox19.TabIndex = 104
         Me.GroupBox19.TabStop = False
-        Me.GroupBox19.Visible = False
         '
         'uchconfiguracion
         '
@@ -5933,6 +5932,7 @@ Partial Class frmindex
         Me.GroupBox38.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.GroupBox38.Controls.Add(Me.Button76)
+        Me.GroupBox38.Controls.Add(Me.Button57)
         Me.GroupBox38.Controls.Add(Me.Button52)
         Me.GroupBox38.Controls.Add(Me.Button65)
         Me.GroupBox38.Controls.Add(Me.Button88)
@@ -6732,7 +6732,6 @@ Partial Class frmindex
         'GroupBox18
         '
         Me.GroupBox18.Controls.Add(Me.txtrutaimagen)
-        Me.GroupBox18.Controls.Add(Me.Button57)
         Me.GroupBox18.Controls.Add(Me.Button55)
         Me.GroupBox18.Controls.Add(Me.Label73)
         Me.GroupBox18.Controls.Add(Me.Label61)
@@ -6767,10 +6766,11 @@ Partial Class frmindex
         '
         Me.Button57.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(104, Byte), Integer))
         Me.Button57.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.Button57.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button57.ForeColor = System.Drawing.Color.White
-        Me.Button57.Location = New System.Drawing.Point(358, 17)
+        Me.Button57.Location = New System.Drawing.Point(178, 121)
         Me.Button57.Name = "Button57"
-        Me.Button57.Size = New System.Drawing.Size(73, 63)
+        Me.Button57.Size = New System.Drawing.Size(151, 42)
         Me.Button57.TabIndex = 56
         Me.Button57.Text = "Parche 082020"
         Me.Button57.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
