@@ -18,6 +18,13 @@ Public Class frmindex
     Public txtpagar, ventamaxima As Double
     Public fpagacon, fcambio As String
     Public indexidusuario, indexidventa As String
+    'llamamos a la funcion que actualiza la BD siempre cuando halla alguna actualizacion
+
+
+
+
+
+
 
 
     'datos para el reporte
@@ -32,6 +39,31 @@ Public Class frmindex
         End
 
     End Sub
+    Function actualizarbd2021()
+        '.----------------------------------------------------------
+        '------------------------------------------------------------
+        'APLICAR PARCUE QUE MODIFICA LA TABLA PRODUCTOS PARA VENDER POR MAYOREO
+        '-------------------------------------------------------------
+        '--------------------------------------------------------------
+
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `dwin`.`producto` 
+ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+
+        End Try
+
+    End Function
+
     Function llenadogrilla2()
         Try
 
@@ -102,6 +134,7 @@ Public Class frmindex
 
     End Function
     Private Sub frmindex_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        actualizarbd2021()
 
 
         chagenda.CheckState = False
@@ -4556,7 +4589,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
     Private Sub Button21_Click_1(sender As Object, e As EventArgs) Handles Button21.Click
         Dim res As Integer
         res = 1
-        If txttipoproducto.Text = "" Or txtproveedor.Text = "" Or txtclavep.Text = "" Or txtactividadp.Text = "" Or txtcantidadp.Text = "" Or txtprecioindividualp.Text = "" Or txtpreciomayoreop.Text = "" Then
+        If txttipoproducto.Text = "" Or txtproveedor.Text = "" Or txtclavep.Text = "" Or txtactividadp.Text = "" Or txtcantidadp.Text = "" Or txtprecioindividualp.Text = "" Or txtpreciomayoreop.Text = "" Or txtpzasmayoreop.Text = "" Then
             MsgBox("Hace falta información", MsgBoxStyle.Exclamation, "Sistema")
         Else
             'Try
@@ -4620,7 +4653,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
             If res <> 0 Then
 
-
+                'me quede en donde tengo que guardar la cantidad de piezas por mayoreo
                 Try
 
                     cerrarconexion()
@@ -4628,7 +4661,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     conexionMysql.Open()
 
                     Dim sql2 As String
-                    sql2 = "INSERT INTO producto (idproducto,descripcion, cantidad, costo, precio, preciom, idproveedor,idtipoproducto) VALUES ('" & txtclavep.Text & "', '" & txtactividadp.Text & "', " & txtcantidadp.Text & ", " & txtcostop.Text & ", " & txtprecioindividualp.Text & ", " & txtpreciomayoreop.Text & "," & idproveedor & ", " & idtipoproducto & ");"
+                    sql2 = "INSERT INTO producto (idproducto,descripcion, cantidad, costo, precio, preciom, idproveedor,idtipoproducto,cantidad_mayoreo) VALUES ('" & txtclavep.Text & "', '" & txtactividadp.Text & "', " & txtcantidadp.Text & ", " & txtcostop.Text & ", " & txtprecioindividualp.Text & ", " & txtpreciomayoreop.Text & "," & idproveedor & ", " & idtipoproducto & "," & txtpzasmayoreop.Text & ");"
                     Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
                     cmd2.ExecuteNonQuery()
 
@@ -14253,23 +14286,20 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
     Private Sub Button57_Click_3(sender As Object, e As EventArgs) Handles Button57.Click
 
+
         '.----------------------------------------------------------
         '------------------------------------------------------------
-        'APLICACIÓN DE PARCHE CREACION DE CAMPOS EN TABLA usuario PARA AGREGAR permitir acceder a las diferentes secciones
+        'APLICAR PARCUE QUE MODIFICA LA TABLA PRODUCTOS PARA VENDER POR MAYOREO
         '-------------------------------------------------------------
         '--------------------------------------------------------------
+
+        cerrarconexion()
+
         Try
             conexionMysql.Open()
             Dim Sql As String
-            Sql = "ALTER TABLE `dwin`.`usuario` 
-ADD COLUMN `pclientes` INT NULL AFTER `tipo_usuario`,
-ADD COLUMN `pcompras` INT NULL AFTER `pclientes`,
-ADD COLUMN `pproductos` INT NULL AFTER `pcompras`,
-ADD COLUMN `pcorte` INT NULL AFTER `pproductos`,
-ADD COLUMN `pusuarios` INT NULL AFTER `pcorte`,
-ADD COLUMN `pproveedores` INT NULL AFTER `pusuarios`,
-ADD COLUMN `preportes` INT NULL AFTER `pproveedores`,
-ADD COLUMN `pconfiguracion` INT NULL AFTER `preportes`;"
+            Sql = "ALTER TABLE `dwin`.`producto` 
+ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             Dim cmd As New MySqlCommand(Sql, conexionMysql)
             cmd.ExecuteNonQuery()
             conexionMysql.Close()
@@ -14278,7 +14308,6 @@ ADD COLUMN `pconfiguracion` INT NULL AFTER `preportes`;"
             cerrarconexion()
 
         End Try
-        cerrarconexion()
 
 
 
@@ -14286,317 +14315,350 @@ ADD COLUMN `pconfiguracion` INT NULL AFTER `preportes`;"
 
 
 
+        '        '.----------------------------------------------------------
+        '        '------------------------------------------------------------
+        '        'APLICACIÓN DE PARCHE CREACION DE CAMPOS EN TABLA usuario PARA AGREGAR permitir acceder a las diferentes secciones
+        '        '-------------------------------------------------------------
+        '        '--------------------------------------------------------------
+        '        Try
+        '            conexionMysql.Open()
+        '            Dim Sql As String
+        '            Sql = "ALTER TABLE `dwin`.`usuario` 
+        'ADD COLUMN `pclientes` INT NULL AFTER `tipo_usuario`,
+        'ADD COLUMN `pcompras` INT NULL AFTER `pclientes`,
+        'ADD COLUMN `pproductos` INT NULL AFTER `pcompras`,
+        'ADD COLUMN `pcorte` INT NULL AFTER `pproductos`,
+        'ADD COLUMN `pusuarios` INT NULL AFTER `pcorte`,
+        'ADD COLUMN `pproveedores` INT NULL AFTER `pusuarios`,
+        'ADD COLUMN `preportes` INT NULL AFTER `pproveedores`,
+        'ADD COLUMN `pconfiguracion` INT NULL AFTER `preportes`;"
+        '            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+        '            cmd.ExecuteNonQuery()
+        '            conexionMysql.Close()
+        '        Catch
+        '            'MsgBox
+        '            cerrarconexion()
 
+        '        End Try
+        '        cerrarconexion()
 
-        '.----------------------------------------------------------
-        '------------------------------------------------------------
-        'APLICACIÓN DE PARCHE CREACION DE CAMPOS EN TABLA CAJA PARA AGREGAR VALORES
-        '-------------------------------------------------------------
-        '--------------------------------------------------------------
-        Try
-            conexionMysql.Open()
-            Dim Sql As String
-            Sql = "ALTER TABLE `dwin`.`caja` 
-ADD COLUMN `venta_rapida` DOUBLE NULL AFTER `observaciones`,
-ADD COLUMN `anticipos` DOUBLE NULL AFTER `venta_rapida`,
-ADD COLUMN `compras` DOUBLE NULL AFTER `anticipos`,
-ADD COLUMN `total_ventas_compras` DOUBLE NULL AFTER `compras`,
-ADD COLUMN `total_deberia_existir` DOUBLE NULL AFTER `total_ventas_compras`,
-ADD COLUMN `diferencia` DOUBLE NULL AFTER `total_deberia_existir`;"
-            Dim cmd As New MySqlCommand(Sql, conexionMysql)
-            cmd.ExecuteNonQuery()
-            conexionMysql.Close()
-        Catch
-            'MsgBox
-            cerrarconexion()
 
-        End Try
-        cerrarconexion()
 
 
 
-        Try
-            conexionMysql.Open()
-            Dim SqlP2 As String
-            SqlP2 = "ALTER TABLE `dwin`.`datos_empresa` 
-CHANGE COLUMN `nombre` `nombre` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `calle_numero` `calle_numero` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `colonia_ciudad` `colonia_ciudad` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `cp` `cp` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `estado` `estado` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `telefono` `telefono` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `whatsapp` `whatsapp` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `correo` `correo` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `fanpage` `fanpage` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `sitio_web` `sitio_web` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `director` `director` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `horario` `horario` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `giro` `giro` VARCHAR(300) NULL DEFAULT NULL ;
-"
-            Dim cmdP2 As New MySqlCommand(SqlP2, conexionMysql)
-            cmdP2.ExecuteNonQuery()
-            conexionMysql.Close()
 
 
 
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
 
+        '        '.----------------------------------------------------------
+        '        '------------------------------------------------------------
+        '        'APLICACIÓN DE PARCHE CREACION DE CAMPOS EN TABLA CAJA PARA AGREGAR VALORES
+        '        '-------------------------------------------------------------
+        '        '--------------------------------------------------------------
+        '        Try
+        '            conexionMysql.Open()
+        '            Dim Sql As String
+        '            Sql = "ALTER TABLE `dwin`.`caja` 
+        'ADD COLUMN `venta_rapida` DOUBLE NULL AFTER `observaciones`,
+        'ADD COLUMN `anticipos` DOUBLE NULL AFTER `venta_rapida`,
+        'ADD COLUMN `compras` DOUBLE NULL AFTER `anticipos`,
+        'ADD COLUMN `total_ventas_compras` DOUBLE NULL AFTER `compras`,
+        'ADD COLUMN `total_deberia_existir` DOUBLE NULL AFTER `total_ventas_compras`,
+        'ADD COLUMN `diferencia` DOUBLE NULL AFTER `total_deberia_existir`;"
+        '            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+        '            cmd.ExecuteNonQuery()
+        '            conexionMysql.Close()
+        '        Catch
+        '            'MsgBox
+        '            cerrarconexion()
 
-        Try
+        '        End Try
+        '        cerrarconexion()
 
-            'modificación 08-08-2020
-            'se agrega el tipo de servicio de vinil, motivo: activar busqueda por cliente para poder hacer un
-            'filtro de que se realice pura busqueda de vinil
-            conexionMysql.Open()
 
-            Dim Sql36 As String
-            Sql36 = "INSERT INTO `dwin`.`tipoventa` (`idtipoventa`,`tipoventa`) VALUES ('3','Vinil');"
-            Dim cmd36 As New MySqlCommand(Sql36, conexionMysql)
-            cmd36.ExecuteNonQuery()
-            conexionMysql.Close()
 
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
+        '        Try
+        '            conexionMysql.Open()
+        '            Dim SqlP2 As String
+        '            SqlP2 = "ALTER TABLE `dwin`.`datos_empresa` 
+        'CHANGE COLUMN `nombre` `nombre` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `calle_numero` `calle_numero` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `colonia_ciudad` `colonia_ciudad` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `cp` `cp` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `estado` `estado` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `telefono` `telefono` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `whatsapp` `whatsapp` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `correo` `correo` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `fanpage` `fanpage` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `sitio_web` `sitio_web` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `director` `director` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `horario` `horario` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `giro` `giro` VARCHAR(300) NULL DEFAULT NULL ;
+        '"
+        '            Dim cmdP2 As New MySqlCommand(SqlP2, conexionMysql)
+        '            cmdP2.ExecuteNonQuery()
+        '            conexionMysql.Close()
 
 
 
-        Try
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
 
-            'modificación 08-08-2020
-            'se agrega el tipo de servicio de vinil, motivo: activar busqueda por cliente para poder hacer un
-            'filtro de que se realice pura busqueda de vinil
 
-            conexionMysql.Open()
+        '        Try
 
-            Dim Sql37 As String
-            Sql37 = " ALTER TABLE `dwin`.`datos_empresa` 
-ADD COLUMN `minimoproductos` INT(10) NULL AFTER `saludo_nota`;"
-            Dim cmd37 As New MySqlCommand(Sql37, conexionMysql)
-            cmd37.ExecuteNonQuery()
-            conexionMysql.Close()
+        '            'modificación 08-08-2020
+        '            'se agrega el tipo de servicio de vinil, motivo: activar busqueda por cliente para poder hacer un
+        '            'filtro de que se realice pura busqueda de vinil
+        '            conexionMysql.Open()
 
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-
-        Try
-
-            'modificación 08-08-2020
-            'se agrega el tipo de servicio de vinil, motivo: activar busqueda por cliente para poder hacer un
-            'filtro de que se realice pura busqueda de vinil
-
-            conexionMysql.Open()
-
-            Dim Sql38 As String
-            Sql38 = " ALTER TABLE `dwin`.`compramercancia` 
-DROP COLUMN `cantidad_paquete`,
-DROP COLUMN `costo_paquete`,
-ADD COLUMN `totalcompra` DOUBLE NULL AFTER `hora`;
-"
-            Dim cmd38 As New MySqlCommand(Sql38, conexionMysql)
-            cmd38.ExecuteNonQuery()
-            conexionMysql.Close()
-
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-
-
-        Try
-
-            'modificación 08-08-2020
-            'se agrega el tipo de servicio de vinil, motivo: activar busqueda por cliente para poder hacer un
-            'filtro de que se realice pura busqueda de vinil
-
-            conexionMysql.Open()
-
-            Dim Sql39 As String
-            Sql39 = "
-        ALTER TABLE `dwin`.`cliente` 
-CHANGE COLUMN `edad` `rfc` VARCHAR(20) NULL DEFAULT NULL ;"
-            Dim cmd39 As New MySqlCommand(Sql39, conexionMysql)
-            cmd39.ExecuteNonQuery()
-            conexionMysql.Close()
-
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-
-
-        '---------------------------------
-        '---------------------------------
-        '--creacion de una nueva tabla de pago
-        '---------------------------------
-        '---------------------------------
-
-        Try
-            conexionMysql.Open()
-
-            Dim Sql40 As String
-            Sql40 = "CREATE TABLE `dwin`.`tipo_pago` (
-  `idtipo_pago` INT NOT NULL,
-  `tipo` VARCHAR(45) NULL,
-  PRIMARY KEY (`idtipo_pago`));
-"
-            Dim cmd40 As New MySqlCommand(Sql40, conexionMysql)
-            cmd40.ExecuteNonQuery()
-            conexionMysql.Close()
-
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-
-        '---------------------------------
-        '---------------------------------
-        '---------------------------------
-        '---------------------------------
-        '-insercion de registros para parche
-
-        Try
-            conexionMysql.Open()
-
-            Dim Sql40 As String
-            Sql40 = "INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('1', 'EFECTIVO');
-INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('2', 'TRANSFERENCIAS');
-INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TARJETA DEBITO/CREDITO');
-INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('4', 'VALES');
-
-"
-            Dim cmd40 As New MySqlCommand(Sql40, conexionMysql)
-            cmd40.ExecuteNonQuery()
-            conexionMysql.Close()
-
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-        '---------------------------------
-        '---------------------------------
-
-
-        '---------------------------------
-        '---------------------------------
-        '-insercion de registros para parche
-
-        Try
-            conexionMysql.Open()
-
-            Dim Sql41 As String
-            Sql41 = "ALTER TABLE `dwin`.`venta` 
-ADD COLUMN `idtipo_pago` INT(11) NULL AFTER `idsecotizacion`,
-ADD INDEX `idtipo_pago_idx` (`idtipo_pago` ASC);
-;
-ALTER TABLE `dwin`.`venta` 
-ADD CONSTRAINT `idtipo_pago`
-  FOREIGN KEY (`idtipo_pago`)
-  REFERENCES `dwin`.`tipo_pago` (`idtipo_pago`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
-"
-            Dim cmd41 As New MySqlCommand(Sql41, conexionMysql)
-            cmd41.ExecuteNonQuery()
-            conexionMysql.Close()
-
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-        '---------------------------------
-        '---------------------------------
-
-
-
-
-
-        '---------------------------------
-        '---------------------------------
-        '-insercion de registros para parche
-
-        Try
-            conexionMysql.Open()
-
-            Dim Sql41 As String
-            Sql41 = "ALTER TABLE `dwin`.`cliente` 
-CHANGE COLUMN `direccion` `direccion` VARCHAR(100) NULL DEFAULT NULL ,
-CHANGE COLUMN `correo` `correo` VARCHAR(100) NULL DEFAULT NULL ;"
-            Dim cmd41 As New MySqlCommand(Sql41, conexionMysql)
-            cmd41.ExecuteNonQuery()
-            conexionMysql.Close()
-
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-        '---------------------------------
-        '---------------------------------
-
-        '---------------------------------
-        '---------------------------------
-        '-insercion de registros para parche
-
-        Try
-            conexionMysql.Open()
-            Dim Sql41 As String
-            Sql41 = "ALTER TABLE `dwin`.`datos_empresa` 
-ADD COLUMN `rfc` VARCHAR(45) NULL AFTER `minimoproductos`;"
-            Dim cmd41 As New MySqlCommand(Sql41, conexionMysql)
-            cmd41.ExecuteNonQuery()
-            conexionMysql.Close()
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-        '---------------------------------
-        '---------------------------------
-        '---------------------------------
-        '---------------------------------
-        '-insercion de registros para parche
-
-        Try
-            conexionMysql.Open()
-            Dim Sql42 As String
-            Sql42 = "ALTER TABLE `dwin`.`datos_empresa` 
-ADD COLUMN `ruta_logo` VARCHAR(200) NULL AFTER `rfc`;"
-            Dim cmd42 As New MySqlCommand(Sql42, conexionMysql)
-            cmd42.ExecuteNonQuery()
-            conexionMysql.Close()
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-        '---------------------------------
-        '---------------------------------
-
-        '---------------------------------
-        '---------------------------------
-        '-insercion de registros para parche
-
-        Try
-            conexionMysql.Open()
-            Dim Sql43 As String
-            Sql43 = "ALTER TABLE `dwin`.`datos_empresa` 
-ADD COLUMN `saludo_ticket` VARCHAR(45) NULL AFTER `ruta_logo`;
-"
-            Dim cmd43 As New MySqlCommand(Sql43, conexionMysql)
-            cmd43.ExecuteNonQuery()
-            conexionMysql.Close()
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
-        '---------------------------------
-        '---------------------------------
-
-        'Try
-        '    conexionMysql.Open()
-        '    Dim Sql43 As String
-        '    Sql43 = "update producto set idproveedor=16;"
-
-        '    Dim cmd43 As New MySqlCommand(Sql43, conexionMysql)
-        '    cmd43.ExecuteNonQuery()
-        '    conexionMysql.Close()
-        'Catch ex As Exception
-        '    cerrarconexion()
-        'End Try
-        ''---------------------------------
-        ''---------------------------------
+        '            Dim Sql36 As String
+        '            Sql36 = "INSERT INTO `dwin`.`tipoventa` (`idtipoventa`,`tipoventa`) VALUES ('3','Vinil');"
+        '            Dim cmd36 As New MySqlCommand(Sql36, conexionMysql)
+        '            cmd36.ExecuteNonQuery()
+        '            conexionMysql.Close()
+
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+
+
+
+        '        Try
+
+        '            'modificación 08-08-2020
+        '            'se agrega el tipo de servicio de vinil, motivo: activar busqueda por cliente para poder hacer un
+        '            'filtro de que se realice pura busqueda de vinil
+
+        '            conexionMysql.Open()
+
+        '            Dim Sql37 As String
+        '            Sql37 = " ALTER TABLE `dwin`.`datos_empresa` 
+        'ADD COLUMN `minimoproductos` INT(10) NULL AFTER `saludo_nota`;"
+        '            Dim cmd37 As New MySqlCommand(Sql37, conexionMysql)
+        '            cmd37.ExecuteNonQuery()
+        '            conexionMysql.Close()
+
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+
+        '        Try
+
+        '            'modificación 08-08-2020
+        '            'se agrega el tipo de servicio de vinil, motivo: activar busqueda por cliente para poder hacer un
+        '            'filtro de que se realice pura busqueda de vinil
+
+        '            conexionMysql.Open()
+
+        '            Dim Sql38 As String
+        '            Sql38 = " ALTER TABLE `dwin`.`compramercancia` 
+        'DROP COLUMN `cantidad_paquete`,
+        'DROP COLUMN `costo_paquete`,
+        'ADD COLUMN `totalcompra` DOUBLE NULL AFTER `hora`;
+        '"
+        '            Dim cmd38 As New MySqlCommand(Sql38, conexionMysql)
+        '            cmd38.ExecuteNonQuery()
+        '            conexionMysql.Close()
+
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+
+
+        '        Try
+
+        '            'modificación 08-08-2020
+        '            'se agrega el tipo de servicio de vinil, motivo: activar busqueda por cliente para poder hacer un
+        '            'filtro de que se realice pura busqueda de vinil
+
+        '            conexionMysql.Open()
+
+        '            Dim Sql39 As String
+        '            Sql39 = "
+        '        ALTER TABLE `dwin`.`cliente` 
+        'CHANGE COLUMN `edad` `rfc` VARCHAR(20) NULL DEFAULT NULL ;"
+        '            Dim cmd39 As New MySqlCommand(Sql39, conexionMysql)
+        '            cmd39.ExecuteNonQuery()
+        '            conexionMysql.Close()
+
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+
+
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '--creacion de una nueva tabla de pago
+        '        '---------------------------------
+        '        '---------------------------------
+
+        '        Try
+        '            conexionMysql.Open()
+
+        '            Dim Sql40 As String
+        '            Sql40 = "CREATE TABLE `dwin`.`tipo_pago` (
+        '  `idtipo_pago` INT NOT NULL,
+        '  `tipo` VARCHAR(45) NULL,
+        '  PRIMARY KEY (`idtipo_pago`));
+        '"
+        '            Dim cmd40 As New MySqlCommand(Sql40, conexionMysql)
+        '            cmd40.ExecuteNonQuery()
+        '            conexionMysql.Close()
+
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '-insercion de registros para parche
+
+        '        Try
+        '            conexionMysql.Open()
+
+        '            Dim Sql40 As String
+        '            Sql40 = "INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('1', 'EFECTIVO');
+        'INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('2', 'TRANSFERENCIAS');
+        'INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TARJETA DEBITO/CREDITO');
+        'INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('4', 'VALES');
+
+        '"
+        '            Dim cmd40 As New MySqlCommand(Sql40, conexionMysql)
+        '            cmd40.ExecuteNonQuery()
+        '            conexionMysql.Close()
+
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+        '        '---------------------------------
+        '        '---------------------------------
+
+
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '-insercion de registros para parche
+
+        '        Try
+        '            conexionMysql.Open()
+
+        '            Dim Sql41 As String
+        '            Sql41 = "ALTER TABLE `dwin`.`venta` 
+        'ADD COLUMN `idtipo_pago` INT(11) NULL AFTER `idsecotizacion`,
+        'ADD INDEX `idtipo_pago_idx` (`idtipo_pago` ASC);
+        ';
+        'ALTER TABLE `dwin`.`venta` 
+        'ADD CONSTRAINT `idtipo_pago`
+        '  FOREIGN KEY (`idtipo_pago`)
+        '  REFERENCES `dwin`.`tipo_pago` (`idtipo_pago`)
+        '  ON DELETE NO ACTION
+        '  ON UPDATE NO ACTION;
+        '"
+        '            Dim cmd41 As New MySqlCommand(Sql41, conexionMysql)
+        '            cmd41.ExecuteNonQuery()
+        '            conexionMysql.Close()
+
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+        '        '---------------------------------
+        '        '---------------------------------
+
+
+
+
+
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '-insercion de registros para parche
+
+        '        Try
+        '            conexionMysql.Open()
+
+        '            Dim Sql41 As String
+        '            Sql41 = "ALTER TABLE `dwin`.`cliente` 
+        'CHANGE COLUMN `direccion` `direccion` VARCHAR(100) NULL DEFAULT NULL ,
+        'CHANGE COLUMN `correo` `correo` VARCHAR(100) NULL DEFAULT NULL ;"
+        '            Dim cmd41 As New MySqlCommand(Sql41, conexionMysql)
+        '            cmd41.ExecuteNonQuery()
+        '            conexionMysql.Close()
+
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+        '        '---------------------------------
+        '        '---------------------------------
+
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '-insercion de registros para parche
+
+        '        Try
+        '            conexionMysql.Open()
+        '            Dim Sql41 As String
+        '            Sql41 = "ALTER TABLE `dwin`.`datos_empresa` 
+        'ADD COLUMN `rfc` VARCHAR(45) NULL AFTER `minimoproductos`;"
+        '            Dim cmd41 As New MySqlCommand(Sql41, conexionMysql)
+        '            cmd41.ExecuteNonQuery()
+        '            conexionMysql.Close()
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '-insercion de registros para parche
+
+        '        Try
+        '            conexionMysql.Open()
+        '            Dim Sql42 As String
+        '            Sql42 = "ALTER TABLE `dwin`.`datos_empresa` 
+        'ADD COLUMN `ruta_logo` VARCHAR(200) NULL AFTER `rfc`;"
+        '            Dim cmd42 As New MySqlCommand(Sql42, conexionMysql)
+        '            cmd42.ExecuteNonQuery()
+        '            conexionMysql.Close()
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+        '        '---------------------------------
+        '        '---------------------------------
+
+        '        '---------------------------------
+        '        '---------------------------------
+        '        '-insercion de registros para parche
+
+        '        Try
+        '            conexionMysql.Open()
+        '            Dim Sql43 As String
+        '            Sql43 = "ALTER TABLE `dwin`.`datos_empresa` 
+        'ADD COLUMN `saludo_ticket` VARCHAR(45) NULL AFTER `ruta_logo`;
+        '"
+        '            Dim cmd43 As New MySqlCommand(Sql43, conexionMysql)
+        '            cmd43.ExecuteNonQuery()
+        '            conexionMysql.Close()
+        '        Catch ex As Exception
+        '            cerrarconexion()
+        '        End Try
+        '        '---------------------------------
+        '        '---------------------------------
+
+        '        'Try
+        '        '    conexionMysql.Open()
+        '        '    Dim Sql43 As String
+        '        '    Sql43 = "update producto set idproveedor=16;"
+
+        '        '    Dim cmd43 As New MySqlCommand(Sql43, conexionMysql)
+        '        '    cmd43.ExecuteNonQuery()
+        '        '    conexionMysql.Close()
+        '        'Catch ex As Exception
+        '        '    cerrarconexion()
+        '        'End Try
+        '        ''---------------------------------
+        '        ''---------------------------------
 
 
 
