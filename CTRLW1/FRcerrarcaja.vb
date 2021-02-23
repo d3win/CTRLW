@@ -73,7 +73,8 @@ Public Class FRcerrarcaja
 
             cerrarconexion()
 
-
+        lbfechaapertura.Text = fechacaja
+        lbhorapertura.Text = horacaja
         '---------------------------------------------------------
         '----------------------------------------------------'
         'comprobar si el cierre de caja se hizo en el mismo dia, o se hace ne otro dia diferente. 

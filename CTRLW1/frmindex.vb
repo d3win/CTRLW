@@ -897,7 +897,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         listaclientes.Visible = False
         grilla.DefaultCellStyle.Font = New Font("Arial", 20)
         grilla.RowHeadersVisible = False
-
+        Label25.Text = "Precio Menudeo"
 
 
         'Button2.BackColor = Color.FromArgb(239, 239, 239)
@@ -2270,6 +2270,17 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
                 txtcostop.Text = reader.GetString(3).ToString()
                 txtprecioindividualp.Text = reader.GetString(4).ToString()
                 txtpreciomayoreop.Text = reader.GetString(5).ToString()
+
+                Try
+
+
+                    txtpzasmayoreop.Text = reader.GetString(8).ToString()
+
+                Catch ex As Exception
+                    txtpzasmayoreop.Text = 0
+                End Try
+
+
                 Try
                     claveproveedor = reader.GetString(6).ToString()
                     clavetipoproducto = reader.GetString(7).ToString()
@@ -2678,6 +2689,47 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     Private Sub txtcantidad_TextChanged(sender As Object, e As EventArgs) Handles txtcantidad.TextChanged
         Try
+
+
+            'consultamos si la cantidad que se indica es mayor o igual a mayoreo, entonces cambiamos el costo del producto y tomamos el precio por mayoreo
+            Dim cantidad, pmayoreo, pmenudeo As Double
+            pmenudeo = txtcosto.Text
+            cerrarconexion()
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select cantidad_mayoreo, preciom from producto where idproducto='" & txtclave.Text & "';"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            reader = cmd.ExecuteReader()
+            reader.Read()
+            cantidad = reader.GetString(0).ToString()
+            pmayoreo = reader.GetString(1).ToString()
+
+            conexionMysql.Close()
+            ' MsgBox(pmayoreo)
+
+            If txtcantidad.Text >= cantidad Then
+
+                txtcosto.Text = pmayoreo
+                Label25.Text = "Precio Mayoreo"
+            Else
+                cerrarconexion()
+                conexionMysql.Open()
+                Dim Sql2 As String
+                Sql2 = "select precio from producto where idproducto='" & txtclave.Text & "';"
+                Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+                reader = cmd2.ExecuteReader()
+                reader.Read()
+                txtcosto.Text = reader.GetString(0).ToString()
+                'pmayoreo = reader.GetString(1).ToString()
+
+                conexionMysql.Close()
+                Label25.Text = "Precio Menudeo"
+
+                'txtcosto.Text = pmenudeo
+            End If
+
+
+
             txttotal.Text = CDbl(txtcantidad.Text) * CDbl(txtcosto.Text)
 
         Catch ex As Exception
@@ -4784,7 +4836,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
     Private Sub Button15_Click_1(sender As Object, e As EventArgs) Handles Button15.Click
 
-        If txttipoproducto.Text = "" Or txtproveedor.Text = "" Or txtclavep.Text = "" Or txtactividadp.Text = "" Or txtcostop.Text = "" Or txtcantidadp.Text = "" Or txtprecioindividualp.Text = "" Or txtpreciomayoreop.Text = "" Then
+        If txttipoproducto.Text = "" Or txtproveedor.Text = "" Or txtclavep.Text = "" Or txtactividadp.Text = "" Or txtcostop.Text = "" Or txtcantidadp.Text = "" Or txtprecioindividualp.Text = "" Or txtpreciomayoreop.Text = "" Or txtpzasmayoreop.Text = "" Then
             MsgBox("Hay cajas vacias, verifica nuevamente", MsgBoxStyle.Information, "Sistema")
         Else
 
@@ -4859,7 +4911,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     conexionMysql.Open()
 
                     Dim sql2 As String
-                    sql2 = "UPDATE producto SET descripcion='" & txtactividadp.Text & "', cantidad=" & txtcantidadp.Text & ", costo=" & txtcostop.Text & ", precio=" & txtprecioindividualp.Text & ", preciom=" & txtpreciomayoreop.Text & ", idproveedor =" & idproveedor & ", idtipoproducto =" & idtipoproducto & "  WHERE idproducto='" & txtclavep.Text & "';"
+                    sql2 = "UPDATE producto SET descripcion='" & txtactividadp.Text & "', cantidad=" & txtcantidadp.Text & ", costo=" & txtcostop.Text & ", precio=" & txtprecioindividualp.Text & ", preciom=" & txtpreciomayoreop.Text & ", idproveedor =" & idproveedor & ", idtipoproducto =" & idtipoproducto & ", cantidad_mayoreo =" & txtpzasmayoreop.Text & "  WHERE idproducto='" & txtclavep.Text & "';"
                     Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
                     cmd2.ExecuteNonQuery()
 
@@ -14791,75 +14843,84 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
     End Function
     Function consultaproductosfaltantescombobox()
 
+        Try
 
 
-        Dim cantidadminima, idproveedor As Integer
-        'primero consultamos cual es el minimo de productos por mostrar
-        conexionMysql.Open()
-        Dim sql26 As String
-        sql26 = "Select idproveedor from proveedor where nombre_empresa ='" & corcbproveedores.Text & "';"
-        Dim cmd26 As New MySqlCommand(sql26, conexionMysql)
-        reader = cmd26.ExecuteReader
-        reader.Read()
-        idproveedor = reader.GetString(0).ToString()
-        conexionMysql.Close()
+            Dim cantidadminima, idproveedor As Integer
+            'primero consultamos cual es el minimo de productos por mostrar
+            conexionMysql.Open()
+            Dim sql26 As String
+            sql26 = "Select idproveedor from proveedor where nombre_empresa ='" & corcbproveedores.Text & "';"
+            Dim cmd26 As New MySqlCommand(sql26, conexionMysql)
+            reader = cmd26.ExecuteReader
+            reader.Read()
+            idproveedor = reader.GetString(0).ToString()
+            conexionMysql.Close()
 
-        'Dim cantidadminima As Integer
-        'primero consultamos cual es el minimo de productos por mostrar
-        conexionMysql.Open()
-        Dim sql25 As String
-        sql25 = "select minimoproductos from datos_empresa;"
-        Dim cmd25 As New MySqlCommand(sql25, conexionMysql)
-        reader = cmd25.ExecuteReader
-        reader.Read()
-        cantidadminima = reader.GetString(0).ToString()
-        conexionMysql.Close()
-        conexionMysql.Open()
-        Dim Sql As String
-        Sql = "select idproducto, descripcion, cantidad from producto where cantidad <=" & cantidadminima & " and idproveedor=" & idproveedor & ";"
-        Dim cmd As New MySqlCommand(Sql, conexionMysql)
-        Dim dt As New DataTable
-        Dim da As New MySqlDataAdapter(cmd)
-        'cargamos el formulario  resumen
-        da.Fill(dt)
-        pgrillaproductosfaltantes.DataSource = dt
-        pgrillaproductosfaltantes.Columns(1).Width = 700
-        conexionMysql.Close()
+            'Dim cantidadminima As Integer
+            'primero consultamos cual es el minimo de productos por mostrar
+            conexionMysql.Open()
+            Dim sql25 As String
+            sql25 = "select minimoproductos from datos_empresa;"
+            Dim cmd25 As New MySqlCommand(sql25, conexionMysql)
+            reader = cmd25.ExecuteReader
+            reader.Read()
+            cantidadminima = reader.GetString(0).ToString()
+            conexionMysql.Close()
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select idproducto, descripcion, cantidad from producto where cantidad <=" & cantidadminima & " and idproveedor=" & idproveedor & ";"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            'cargamos el formulario  resumen
+            da.Fill(dt)
+            pgrillaproductosfaltantes.DataSource = dt
+            pgrillaproductosfaltantes.Columns(1).Width = 700
+            conexionMysql.Close()
 
-        'mostramos el boton para imprimir sobre el filtro realizado
+            'mostramos el boton para imprimir sobre el filtro realizado
 
-        btnimprimirfiltro.Visible = True
+            btnimprimirfiltro.Visible = True
 
 
-        idproveedorfiltro = idproveedor
+            idproveedorfiltro = idproveedor
+        Catch ex As Exception
+            MsgBox("al parecer no haz definido una cantidad minima", MsgBoxStyle.Information, "CTRL+y")
+        End Try
 
 
     End Function
     Function consultaproductosfaltantes()
+        Try
 
-        Dim cantidadminima As Integer
-        'primero consultamos cual es el minimo de productos por mostrar
-        conexionMysql.Open()
-        Dim sql25 As String
-        sql25 = "select minimoproductos from datos_empresa;"
-        Dim cmd25 As New MySqlCommand(sql25, conexionMysql)
-        reader = cmd25.ExecuteReader
-        reader.Read()
-        cantidadminima = reader.GetString(0).ToString()
-        conexionMysql.Close()
+            Dim cantidadminima As Integer
+            'primero consultamos cual es el minimo de productos por mostrar
+            conexionMysql.Open()
+            Dim sql25 As String
+            sql25 = "select minimoproductos from datos_empresa;"
+            Dim cmd25 As New MySqlCommand(sql25, conexionMysql)
+            reader = cmd25.ExecuteReader
+            reader.Read()
+            cantidadminima = reader.GetString(0).ToString()
+            conexionMysql.Close()
 
 
-        conexionMysql.Open()
-        Dim Sql As String
-        Sql = "select idproducto, descripcion, cantidad from producto where cantidad <=" & cantidadminima & ";"
-        Dim cmd As New MySqlCommand(Sql, conexionMysql)
-        Dim dt As New DataTable
-        Dim da As New MySqlDataAdapter(cmd)
-        'cargamos el formulario  resumen
-        da.Fill(dt)
-        pgrillaproductosfaltantes.DataSource = dt
-        pgrillaproductosfaltantes.Columns(1).Width = 700
-        conexionMysql.Close()
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select idproducto, descripcion, cantidad from producto where cantidad <=" & cantidadminima & ";"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            'cargamos el formulario  resumen
+            da.Fill(dt)
+            pgrillaproductosfaltantes.DataSource = dt
+            pgrillaproductosfaltantes.Columns(1).Width = 700
+            conexionMysql.Close()
+        Catch ex As Exception
+            MsgBox("Al parecer no haz definido una cantidad minima de productos", MsgBoxStyle.Information, "CTRL+y")
+        End Try
+
     End Function
 
     Private Sub Btnproductosfaltantes_Click(sender As Object, e As EventArgs) Handles btnproductosfaltantes.Click
