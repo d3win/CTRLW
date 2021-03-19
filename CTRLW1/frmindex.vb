@@ -40,6 +40,95 @@ Public Class frmindex
 
     End Sub
     Function actualizarbd2021()
+
+
+
+
+
+        '-------------------------------------------------------------------------
+        '-------------------------------------------------------------------------
+        '------ 12032021 - agrego una columna mas para saber cuantas lineas almaceno en la bd para uso de ticket
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = " ALTER TABLE `ventaind` 
+ADD COLUMN `cant_filas_descripcion` INT NULL AFTER `valor`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+        '-------------------------------------------------------------------------
+        '-------------------------------------------------------------------------
+        '------ 12032021 - actualiza el tipo de datos de tinytext a text
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "        ALTER TABLE `dwin`.`ventaind` 
+CHANGE COLUMN `descripcion` `descripcion` TEXT NULL DEFAULT NULL ;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+
+
+
+
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = " ALTER TABLE `dwin`.`compramercancia` 
+CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `dwin`.`compra` 
+        CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+
+
+
+
+
+
+
+
+
         '.----------------------------------------------------------
         '------------------------------------------------------------
         'APLICAR PARCUE QUE MODIFICA LA TABLA PRODUCTOS PARA VENDER POR MAYOREO
@@ -52,7 +141,7 @@ Public Class frmindex
             conexionMysql.Open()
             Dim Sql As String
             Sql = "ALTER TABLE `dwin`.`producto` 
-ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
+        ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             Dim cmd As New MySqlCommand(Sql, conexionMysql)
             cmd.ExecuteNonQuery()
             conexionMysql.Close()
@@ -61,6 +150,64 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             cerrarconexion()
 
         End Try
+
+
+
+
+
+
+
+        '.----------------------------------------------------------
+        '------------------------------------------------------------
+        'APLICACIÓN DE PARCHE CREACION DE CAMPOS EN TABLA usuario PARA AGREGAR permitir acceder a las diferentes secciones
+        '-------------------------------------------------------------
+        '--------------------------------------------------------------
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `dwin`.`usuario` 
+        ADD COLUMN `pclientes` INT NULL AFTER `tipo_usuario`,
+        ADD COLUMN `pcompras` INT NULL AFTER `pclientes`,
+        ADD COLUMN `pproductos` INT NULL AFTER `pcompras`,
+        ADD COLUMN `pcorte` INT NULL AFTER `pproductos`,
+        ADD COLUMN `pusuarios` INT NULL AFTER `pcorte`,
+        ADD COLUMN `pproveedores` INT NULL AFTER `pusuarios`,
+        ADD COLUMN `preportes` INT NULL AFTER `pproveedores`,
+        ADD COLUMN `pconfiguracion` INT NULL AFTER `preportes`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+
+
+        Catch
+            'MsgBox
+            cerrarconexion()
+
+        End Try
+        cerrarconexion()
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "UPDATE `dwin`.`usuario` SET `pclientes` = '1', `pcompras` = '1', `pproductos` = '1', `pcorte` = '1', `pusuarios` = '1', `pproveedores` = '1', `preportes` = '1', `pconfiguracion` = '1' WHERE (`idusuario` = '1');
+"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+
+
+        Catch
+            'MsgBox
+            cerrarconexion()
+
+        End Try
+        cerrarconexion()
+
+
+
+
+
+
+
 
     End Function
 
@@ -1108,7 +1255,10 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             ccgrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.SkyBlue
             cccgrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.SkyBlue
 
-            comprasdeldia()
+            '            comprasdeldia()
+            cllenadogrilla()
+
+
             ctxtcomprado.Text = consultacompras()
 
 
@@ -2739,6 +2889,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
         agregarproductogrilla()
+        'MsgBox(rtobservaciones.Text)
     End Sub
     Function agregarproductogrilla()
         grilla.DefaultCellStyle.Font = New Font("Arial", 20)
@@ -2765,8 +2916,8 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
             'cantidad total es la cantidad que se va a vender
             'se le suma 1, porque es el producto que apenas se va anexar a la lista de venta
-            Try
-                cantidad_total = comprobacion() + txtcantidad.Text
+            'Try
+            cantidad_total = comprobacion() + txtcantidad.Text
 
 
                 'cantidadbd, es la cantidad que existe en la BD del producto
@@ -2782,10 +2933,10 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
                 End If
 
-            Catch ex As Exception
+            ' Catch ex As Exception
 
-                MsgBox("No podemos procesar esta solicitud, Desbordamiento", MsgBoxStyle.Exclamation, "Sistema")
-            End Try
+            MsgBox("No podemos procesar esta solicitud, Desbordamiento", MsgBoxStyle.Exclamation, "Sistema")
+            ' End Try
 
         End If
 
@@ -2821,8 +2972,10 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         Else
 
             Dim i As Integer = grilla.RowCount
+            Dim cant_filas_ob As Integer
+            cant_filas_ob = CStr(rtobservaciones.Lines.Length)
 
-            grilla.Rows.Add(i, txtactividad.Text, txtcantidad.Text, txtcosto.Text, txttotal.Text, txtclave.Text, rtobservaciones.Text)
+            grilla.Rows.Add(i, txtactividad.Text, txtcantidad.Text, txtcosto.Text, txttotal.Text, txtclave.Text, rtobservaciones.Text, cant_filas_ob)
 
             grilla.Columns(1).Width = 700
             grilla.Columns(0).Width = 50
@@ -2831,6 +2984,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             grilla.Columns(4).Width = 70
             grilla.Columns(5).Width = 140
             grilla.Columns(6).Width = 140
+            grilla.Columns(7).Width = 100
 
 
             sumatorio()
@@ -3322,7 +3476,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             txttotalpagar.Text = ""
         Else
             'obtener fecha y hora
-            Dim dia, mes, año, fecha As String
+            Dim dia, mes, año, fecha, hora, hora2, minuto, segundo As String
             hora2 = Now.Hour()
             minuto = Now.Minute()
             segundo = Now.Second()
@@ -3334,6 +3488,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             año = Date.Now.Year
             fecha = año & "-" & mes & "-" & dia
 
+            fecha = fecha + " " + hora
 
 
             '------------------ insertar reginstro en tabla venta ---------------------------------------
@@ -3466,7 +3621,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
             '------------------ insertar reginstro en tabla ventaIND ---------------------------------------
             Dim i As Integer = grilla.RowCount
-            Dim j As Integer
+            Dim j, cant_filas_obs As Integer
             Dim actividad As String
             Dim cantidad, costo, idventa As Double
             Dim idproducto, observaciones As String
@@ -3482,13 +3637,15 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
                 costo = grilla.Rows(j).Cells(3).Value 'costo
                 idproducto = grilla.Rows(j).Cells(5).Value
                 observaciones = grilla.Rows(j).Cells(6).Value
+                cant_filas_obs = grilla.Rows(j).Cells(7).Value
+
                 cerrarconexion()
                 conexionMysql.Open()
 
                 'MsgBox("el producto es:" & actividad)
 
                 Dim Sql2 As String
-                Sql2 = "INSERT INTO ventaind (actividad, cantidad, costo, idventa,idproducto,descripcion) VALUES ('" & actividad & "'," & cantidad & "," & costo & "," & lbfolio.Text & ",'" & idproducto & "','" & observaciones & "');"
+                Sql2 = "INSERT INTO ventaind (actividad, cantidad, costo, idventa,idproducto,descripcion,cant_filas_descripcion ) VALUES ('" & actividad & "'," & cantidad & "," & costo & "," & lbfolio.Text & ",'" & idproducto & "','" & observaciones & "'," & cant_filas_obs & ");"
                 Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
                 cmd2.ExecuteNonQuery()
                 conexionMysql.Close()
@@ -3728,13 +3885,14 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         'traemos la información del ticket, como encabezado, datos de la empresa etc.
         Dim saludo, ticketnombre, ticketcoloniaciudad, tickettelefono, ticketgiro, p1, p2, p3, p4, comentario As String
         Dim callenumero, cp, estado, whatsapp, correo, rfc As String
-        Dim x, y, tfuente, tfuente2, tfuente3 As Integer
+        Dim x, y, tfuente, tfuente2, tfuente3, cant_filas As Integer
         Try
 
 
             conexionMysql.Open()
             Dim Sql1 As String
-            Sql1 = "select * from datos_empresa;"
+
+            Sql1 = "Select * From datos_empresa;"
             Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
             reader = cmd1.ExecuteReader()
             reader.Read()
@@ -3763,6 +3921,23 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         Catch ex As Exception
 
         End Try
+
+        'consultamos la cantidad de filas del richtextbos
+        Try
+            conexionMysql.Open()
+            Dim Sql1 As String
+            Sql1 = "SELECT cant_filas_descripcion FROM ventaind where idventa='" & lbfolio.Text & "';"
+            Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
+            reader = cmd1.ExecuteReader()
+            reader.Read()
+            cant_filas = reader.GetString(1).ToString()
+
+            conexionMysql.Close()
+
+        Catch ex As Exception
+
+        End Try
+        MsgBox(cant_filas)
 
         tfuente = 10 '7
         tfuente2 = 12
@@ -3844,7 +4019,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             'aqui es donde tenemos que leer todos los datos de la grilla llamada "grilla"
 
             Dim i As Integer = grilla.RowCount
-            Dim t1, t2, t3, t4, t5 As Integer
+            Dim t1, t2, t3, t4, t5, cant_f_ob As Integer
             Dim actividad As String
             Dim cantidad, costo, idventa As Double
             Dim idproducto As String
@@ -3863,6 +4038,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
                 costo = grilla.Rows(j).Cells(3).Value 'costo
                 idproducto = grilla.Rows(j).Cells(5).Value
                 comentario = grilla.Rows(j).Cells(6).Value
+                cant_f_ob = grilla.Rows(j).Cells(7).Value
                 'cerrarconexion()
                 'conexionMysql.Open()
 
@@ -3886,15 +4062,15 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
                 'prFont = New Font("Arial", 10, FontStyle.Bold)
                 'e.Graphics.DrawString(cantidad & "-- $" & (CDbl(costo) * CDbl(cantidad)), prFont, Brushes.Black, 0, t3)
 
-                t1 = t1 + (incremento * 3.2)
-                t2 = t2 + (incremento * 3.2)
-                t3 = t3 + (incremento * 3.2)
+                t1 = t1 + (incremento * 3.2) + cant_f_ob
+                t2 = t2 + (incremento * 3.2) + cant_f_ob
+                t3 = t3 + (incremento * 3.2) + cant_f_ob
 
             Next
 
-            t1 = t1 - (incremento * 2)
-            t2 = t2 - (incremento * 2)
-            t3 = t3 - (incremento * 2)
+            t1 = t1 - (incremento * 2) + cant_f_ob
+            t2 = t2 - (incremento * 2) + cant_f_ob
+            t3 = t3 - (incremento * 2) + cant_f_ob
 
 
             prFont = New Font("Arial", tfuente, FontStyle.Bold)
@@ -5034,11 +5210,26 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
     End Function
     Function cllenadogrilla()
 
-        cerrarconexion()
 
+
+        'seleccionamos la fecha actual
+
+        'obtener fecha y hora
+        Dim dia, mes, año, fecha, fechafinal As String
+
+        dia = Date.Now.Day
+        mes = Date.Now.Month
+        año = Date.Now.Year
+        fecha = año & "-" & mes & "-" & dia
+        fechafinal = fecha + " 23:59:59"
+        fecha = fecha + " 00:00:00"
+
+        cerrarconexion()
+        MsgBox(fecha)
+        MsgBox(fechafinal)
         conexionMysql.Open()
         Dim Sql As String
-        Sql = "select * from compra order by fecha desc;"
+        Sql = "select * from compra where fecha between '" & fecha & "' and '" & fechafinal & "' order by fecha desc;"
         Dim cmd As New MySqlCommand(Sql, conexionMysql)
         Dim dt As New DataTable
         Dim da As New MySqlDataAdapter(cmd)
@@ -5219,6 +5410,16 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     conexionMysql.Close()
                     MsgBox("Se ha creado un usuario Administrador", MsgBoxStyle.Information, "Sistema")
                     'llamar a la funcion limpiar, para limpiar las cajas cada vez que se agrege una nueva compra.
+
+                    conexionMysql.Open()
+                    Dim Sqlp1 As String
+                    Sqlp1 = "update usuario set pclientes='1',  pcompras ='1', pproductos='1', pcorte='1', pusuarios='1',pproveedores='1', preportes='1', pconfiguracion='1' where usuario='" & utxtusuario.Text & "';"
+                    Dim cmdp1 As New MySqlCommand(Sqlp1, conexionMysql)
+                    cmdp1.ExecuteNonQuery()
+                    conexionMysql.Close()
+
+                    MsgBox("Registro actualizado", MsgBoxStyle.Information, "Sistema")
+
                 ElseIf tipousuario = 2 Then
 
                     cerrarconexion()
@@ -6873,30 +7074,31 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
     End Function
     Function consultacompras()
 
-        Dim fecha, dia, mes, año As String
+        Dim fecha, dia, mes, año, fechafinal As String
         Dim valor As Double
 
         dia = Date.Now.Day
         mes = Date.Now.Month
         año = Date.Now.Year
         fecha = año & "-" & mes & "-" & dia
+        fechafinal = fecha + " 23:59:59"
+        fecha = fecha + " 00:00:00"
 
-
-        Try
-            cerrarconexion()
+        'Try
+        cerrarconexion()
 
             conexionMysql.Open()
             Dim sql1 As String
-            sql1 = "select sum(total)  from compra where fecha='" & fecha & "';"
+            sql1 = "select sum(total)  from compra where fecha between '" & fecha & "' and '" & fechafinal & "';"
             Dim cmd1 As New MySqlCommand(sql1, conexionMysql)
             reader = cmd1.ExecuteReader
             reader.Read()
             valor = reader.GetString(0).ToString()
             conexionMysql.Close()
             Return valor
-        Catch ex As Exception
+        'Catch ex As Exception
 
-        End Try
+        ' End Try
     End Function
 
 
@@ -7910,7 +8112,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             Dim err As Integer
             err = 0
 
-            Dim dia, mes, año, fecha As String
+            Dim dia, mes, año, fecha, hora, hora2, minuto, segundo As String
             hora2 = Now.Hour()
             minuto = Now.Minute()
             segundo = Now.Second()
@@ -7921,7 +8123,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             mes = Date.Now.Month
             año = Date.Now.Year
             fecha = año & "-" & mes & "-" & dia
-
+            fecha = fecha + ""
 
             '----------------------------------------- obtener id de proveedor
             Dim idproveedor As Integer
@@ -9704,7 +9906,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                 MsgBox("Falta información", MsgBoxStyle.Information, "Sistema")
 
             Else
-                Dim hora2, minuto, segundo As String
+                Dim hora2, minuto, segundo, hora As String
                 Dim total As Double
                 'obtener fecha y hora
                 hora2 = Now.Hour()
@@ -9720,7 +9922,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                 mes = Date.Now.Month
                 año = Date.Now.Year
                 fecha = año & "-" & mes & "-" & dia
-
+                fecha = fecha + " " + hora
 
                 '----------------consultamos al usuario que esta realizando la venta ------------------
                 Dim idusuario As Integer
@@ -10861,34 +11063,34 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
         picturepagado.Visible = False
 
-            TabControl1.SelectedIndex = 10
-            Button1.BackColor = Color.FromArgb(47, 56, 72)
-            Button2.BackColor = Color.FromArgb(47, 56, 72)
-            Button3.BackColor = Color.FromArgb(47, 56, 72)
-            Button4.BackColor = Color.FromArgb(47, 56, 72)
-            Button5.BackColor = Color.FromArgb(47, 56, 72)
-            Button6.BackColor = Color.FromArgb(47, 56, 72)
-            Button8.BackColor = Color.FromArgb(47, 56, 72)
-            Button10.BackColor = Color.FromArgb(47, 56, 72)
-            Button12.BackColor = Color.FromArgb(47, 56, 72)
-            Button13.BackColor = Color.FromArgb(47, 56, 72)
-            Button67.BackColor = Color.DimGray
+        TabControl1.SelectedIndex = 10
+        Button1.BackColor = Color.FromArgb(47, 56, 72)
+        Button2.BackColor = Color.FromArgb(47, 56, 72)
+        Button3.BackColor = Color.FromArgb(47, 56, 72)
+        Button4.BackColor = Color.FromArgb(47, 56, 72)
+        Button5.BackColor = Color.FromArgb(47, 56, 72)
+        Button6.BackColor = Color.FromArgb(47, 56, 72)
+        Button8.BackColor = Color.FromArgb(47, 56, 72)
+        Button10.BackColor = Color.FromArgb(47, 56, 72)
+        Button12.BackColor = Color.FromArgb(47, 56, 72)
+        Button13.BackColor = Color.FromArgb(47, 56, 72)
+        Button67.BackColor = Color.DimGray
 
 
 
 
-            listaservicios.Visible = False
-            stxtlistaclientes.Visible = False
-            lbmensaje.Visible = False
+        listaservicios.Visible = False
+        stxtlistaclientes.Visible = False
+        lbmensaje.Visible = False
 
-            '------------------se obtiene el folio para la venta del servicio
-            sobtenerfolio()
+        '------------------se obtiene el folio para la venta del servicio
+        sobtenerfolio()
 
-            grilla2.Visible = False
-            'cargarmarcos()
-            'listacolores.Visible = False
+        grilla2.Visible = False
+        'cargarmarcos()
+        'listacolores.Visible = False
 
-            cargarformadepago()
+        cargarformadepago()
 
         'End If
 
@@ -14954,6 +15156,11 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         MsgBox(valores)
     End Sub
 
+    Private Sub Btventas_Click_1(sender As Object, e As EventArgs) Handles btventas.Click
+        actualizarbd2021()
+
+    End Sub
+
     Private Sub Button82_Click_1(sender As Object, e As EventArgs) Handles btnabrircajamenu.Click
         abrircaja()
     End Sub
@@ -15692,5 +15899,52 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub cgrilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles cgrilla.CellDoubleClick
+        Dim estadocaja As Integer
+
+
+        estadocaja = comprobarcaja()
+        ' MsgBox(estadocaja)
+        If estadocaja = 0 Then
+            Dim hora2, minuto, segundo As String
+            Dim total As Double
+            'obtener fecha y hora
+            hora2 = Now.Hour()
+            minuto = Now.Minute()
+            segundo = Now.Second()
+
+            hora = hora2 & ":" & minuto & ":" & segundo
+
+
+            Dim dia, mes, año, fecha As String
+
+            dia = Date.Now.Day
+            mes = Date.Now.Month
+            año = Date.Now.Year
+            fecha = año & "-" & mes & "-" & dia
+
+
+            Dim Variable As String = cgrilla.Item(0, cgrilla.CurrentRow.Index).Value
+            'MsgBox(Variable)
+            'eliminamos de la grilla la fila seleccionada
+            cgrilla.Rows.RemoveAt(cgrilla.CurrentRow.Index)
+
+            conexionMysql.Open()
+            Dim sql2 As String
+            sql2 = "delete from compra where idcompra='" & Variable & "';"
+            Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
+            cmd2.ExecuteNonQuery()
+            conexionMysql.Close()
+
+            MsgBox("Registro eliminado", MsgBoxStyle.Information, "CTRL+y")
+            'realizamos la suma nuevamente de las compras de ttal fecha
+            ctxtcomprado.Text = consultacompras()
+
+
+        Else
+
+        End If
     End Sub
 End Class
