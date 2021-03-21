@@ -198,7 +198,6 @@ Public Class FRcerrarcaja
             cerrarconexion()
         End Try
 
-
         '-----------------CONSULTAMOS SI EN EL CORTE SE HACE DE MAS DE 1 USUARIO, YA QUE UNO DE ELLOS
         '-----------------PUDO NO HABER HECHO SU CORTE, ENTONCES LE INDICAMOS AL USUARIO QUE SE HACE DE DOS
         Dim cantidad_total_productos As String
