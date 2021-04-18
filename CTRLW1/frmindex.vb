@@ -2916,8 +2916,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
             'cantidad total es la cantidad que se va a vender
             'se le suma 1, porque es el producto que apenas se va anexar a la lista de venta
-            'Try
-            cantidad_total = comprobacion() + txtcantidad.Text
+            Try
+                cantidad_total = comprobacion() + txtcantidad.Text
 
 
                 'cantidadbd, es la cantidad que existe en la BD del producto
@@ -2933,10 +2933,10 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
                 End If
 
-            ' Catch ex As Exception
+            Catch ex As Exception
 
-            MsgBox("No podemos procesar esta solicitud, Desbordamiento", MsgBoxStyle.Exclamation, "Sistema")
-            ' End Try
+                MsgBox("No podemos procesar esta solicitud, Desbordamiento", MsgBoxStyle.Exclamation, "Sistema")
+            End Try
 
         End If
 
@@ -3939,9 +3939,9 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         End Try
         MsgBox(cant_filas)
 
-        tfuente = 10 '7
-        tfuente2 = 12
-        tfuente3 = 10
+        tfuente = 8 '7
+        tfuente2 = 10
+        tfuente3 = 8
         p1 = 10 'posicion de X
         x = 5
         y = 125
@@ -3989,7 +3989,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             prFont = New Font("Arial", tfuente, FontStyle.Bold)
             e.Graphics.DrawString("RFC:" & rfc, prFont, Brushes.Black, x, yy(7))
             prFont = New Font("Arial", tfuente, FontStyle.Bold)
-            e.Graphics.DrawString("==================================", prFont, Brushes.Black, x, yy(8))
+            e.Graphics.DrawString("=============================", prFont, Brushes.Black, x, yy(8))
 
             prFont = New Font("Arial", tfuente, FontStyle.Bold)
             e.Graphics.DrawString("ATENDIO:" & usuarioactual, prFont, Brushes.Black, x, yy(9))
@@ -4002,17 +4002,17 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             prFont = New Font("Arial", tfuente2, FontStyle.Bold)
             e.Graphics.DrawString("FOLIO:" & lbfolio.Text, prFont, Brushes.Black, x, yy(12))
             prFont = New Font("Arial", tfuente, FontStyle.Bold)
-            e.Graphics.DrawString("==================================", prFont, Brushes.Black, x, yy(13))
+            e.Graphics.DrawString("=============================", prFont, Brushes.Black, x, yy(13))
 
             'imprimir el titutlo del ticket
 
             prFont = New Font("Arial", tfuente3, FontStyle.Bold)
             e.Graphics.DrawString("ARTICULO", prFont, Brushes.Black, x, yy(14))
             prFont = New Font("Arial", tfuente3, FontStyle.Bold)
-            e.Graphics.DrawString("ID------PRECIO------CANTIDAD----TOTAL", prFont, Brushes.Black, x, yy(15))
+            e.Graphics.DrawString("ID----PRECIO----CANTIDAD---TOTAL", prFont, Brushes.Black, x, yy(15))
 
             prFont = New Font("Arial", tfuente, FontStyle.Bold)
-            e.Graphics.DrawString("==================================", prFont, Brushes.Black, x, yy(16))
+            e.Graphics.DrawString("=============================", prFont, Brushes.Black, x, yy(16))
 
 
 
@@ -4074,7 +4074,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
             prFont = New Font("Arial", tfuente, FontStyle.Bold)
-            e.Graphics.DrawString("==================================", prFont, Brushes.Black, 0, t3)
+            e.Graphics.DrawString("=============================", prFont, Brushes.Black, 0, t3)
 
             '----------------AQUI SE IMPRIME EL TOTAL A PAGAR
 
@@ -4086,7 +4086,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             e.Graphics.DrawString("  Cambio---->$" & lbcambio.Text, prFont, Brushes.Black, x, t3 + (incremento * 3))
 
             prFont = New Font("Arial", tfuente, FontStyle.Bold)
-            e.Graphics.DrawString("==================================", prFont, Brushes.Black, x, t3 + (incremento * 4))
+            e.Graphics.DrawString("=============================", prFont, Brushes.Black, x, t3 + (incremento * 4))
             prFont = New Font("Arial", tfuente3, FontStyle.Bold)
             e.Graphics.DrawString(saludo, prFont, Brushes.Black, x, t3 + (incremento * 5))
             'prFont = New Font("Arial", tfuente3, FontStyle.Bold)

@@ -198,6 +198,10 @@ Public Class FRcerrarcaja
             cerrarconexion()
         End Try
 
+
+        'MsgBox("id minimo" & min)
+        'MsgBox("id maximo" & max)
+
         '-----------------CONSULTAMOS SI EN EL CORTE SE HACE DE MAS DE 1 USUARIO, YA QUE UNO DE ELLOS
         '-----------------PUDO NO HABER HECHO SU CORTE, ENTONCES LE INDICAMOS AL USUARIO QUE SE HACE DE DOS
         Dim cantidad_total_productos As String
@@ -249,36 +253,36 @@ Public Class FRcerrarcaja
         '--------------------------------------------------------------------
         'SUMA DE LAS VENTAS DE VENTAS efectivo
         '-----------------------------------------------------------------------
-        ' Try
+        Try
 
-        cerrarconexion()
-                Dim Sqla12 As String
-                Dim totalcorteventa As String
-                conexionMysql.Open()
-                'Sql = "select sum(total), fecha from venta where fecha='" & fecha & "';"
-                Sqla12 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where fecha between '" & fechainicial & "' and '" & fechafinal & "' and idtipo_pago=1;"
-                'Sqla1 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where idventa between '" & min & "' and '" & max & "';"
-                Dim cmda12 As New MySqlCommand(Sqla12, conexionMysql)
-                reader = cmda12.ExecuteReader()
-                reader.Read()
-                'Try
-                'txtventasproductos.Text = reader.GetString(0).ToString
-                txtventasefectivo.Text = reader.GetString(0).ToString
+            cerrarconexion()
+            Dim Sqla12 As String
+            Dim totalcorteventa As String
+            conexionMysql.Open()
+            'Sql = "select sum(total), fecha from venta where fecha='" & fecha & "';"
+            Sqla12 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where fecha between '" & fechainicial & "' and '" & fechafinal & "' and idtipo_pago=1;"
+            'Sqla1 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where idventa between '" & min & "' and '" & max & "';"
+            Dim cmda12 As New MySqlCommand(Sqla12, conexionMysql)
+            reader = cmda12.ExecuteReader()
+            reader.Read()
+            'Try
+            'txtventasproductos.Text = reader.GetString(0).ToString
+            txtventasefectivo.Text = reader.GetString(0).ToString
             ' MsgBox("echo")
             'txttotalproductos.Text = reader.GetString(1).ToString
-            'Catch ex As Exception
+        Catch ex As Exception
             cerrarconexion()
-                'txtventasproductos.Text = 0
-                txtventasefectivo.Text = 0
+            'txtventasproductos.Text = 0
+            txtventasefectivo.Text = 0
 
-            ' End Try
+        End Try
 
 
-            '-------------------------------------------------------------------
-            'SUMA De ventas por transferencias
-            '---------------------------------------------------------------------------
+        '-------------------------------------------------------------------
+        'SUMA De ventas por transferencias
+        '---------------------------------------------------------------------------
 
-            Try
+        Try
 
                 cerrarconexion()
                 Dim Sqla13 As String
@@ -437,7 +441,47 @@ Public Class FRcerrarcaja
 
 
     End Function
+    Function calculoganancia(ByVal max1 As Integer, ByVal min As Integer, ByVal fechainicial As String, ByVal fechafinal As String)
+        Dim cantidad, i As Integer
+        Try
 
+            cerrarconexion()
+            Dim Sqla15 As String
+            conexionMysql.Open()
+            Sqla15 = "select count(*) from ventaind where idventa between '" & min & "' and '" & max1 & "';"
+            Dim cmda15 As New MySqlCommand(Sqla15, conexionMysql)
+            reader = cmda15.ExecuteReader()
+            reader.Read()
+            cantidad = reader.GetString(0).ToString
+        Catch ex As Exception
+            cerrarconexion()
+            cantidad = 0
+        End Try
+
+
+
+
+        Try
+
+            cerrarconexion()
+            Dim Sqla15 As String
+            conexionMysql.Open()
+            Sqla15 = "select count(*) from ventaind where idventa between '" & min & "' and '" & max1 & "';"
+            Dim cmda15 As New MySqlCommand(Sqla15, conexionMysql)
+            reader = cmda15.ExecuteReader()
+            reader.Read()
+            cantidad = reader.GetString(0).ToString
+        Catch ex As Exception
+            cerrarconexion()
+            cantidad = 0
+        End Try
+
+
+
+        For i = 1 To cantidad
+
+        Next
+    End Function
     Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
 
 
