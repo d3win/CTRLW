@@ -24,6 +24,10 @@ Partial Class frdatosorganizacion
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frdatosorganizacion))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.txtsaludoticket = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.ctxtrfc = New System.Windows.Forms.TextBox()
         Me.txtsaludo = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -57,10 +61,6 @@ Partial Class frdatosorganizacion
         Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel()
         Me.Button45 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.ctxtrfc = New System.Windows.Forms.TextBox()
-        Me.txtsaludoticket = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.FlowLayoutPanel3.SuspendLayout()
         Me.SuspendLayout()
@@ -107,6 +107,54 @@ Partial Class frdatosorganizacion
         Me.GroupBox1.Size = New System.Drawing.Size(454, 453)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
+        '
+        'txtsaludoticket
+        '
+        Me.txtsaludoticket.BackColor = System.Drawing.Color.White
+        Me.txtsaludoticket.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtsaludoticket.Location = New System.Drawing.Point(226, 376)
+        Me.txtsaludoticket.MaxLength = 30
+        Me.txtsaludoticket.Multiline = True
+        Me.txtsaludoticket.Name = "txtsaludoticket"
+        Me.txtsaludoticket.Size = New System.Drawing.Size(201, 60)
+        Me.txtsaludoticket.TabIndex = 132
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label8.Location = New System.Drawing.Point(229, 356)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(185, 17)
+        Me.Label8.TabIndex = 133
+        Me.Label8.Text = "Saludo pie de pagina Notas"
+        '
+        'Label7
+        '
+        Me.Label7.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label7.Location = New System.Drawing.Point(229, 28)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(43, 17)
+        Me.Label7.TabIndex = 131
+        Me.Label7.Text = "RFC:"
+        '
+        'ctxtrfc
+        '
+        Me.ctxtrfc.BackColor = System.Drawing.Color.White
+        Me.ctxtrfc.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ctxtrfc.Location = New System.Drawing.Point(226, 48)
+        Me.ctxtrfc.Name = "ctxtrfc"
+        Me.ctxtrfc.Size = New System.Drawing.Size(203, 23)
+        Me.ctxtrfc.TabIndex = 130
         '
         'txtsaludo
         '
@@ -502,59 +550,11 @@ Partial Class frdatosorganizacion
         Me.Button2.Text = "Cancelar"
         Me.Button2.UseVisualStyleBackColor = False
         '
-        'Label7
-        '
-        Me.Label7.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label7.Location = New System.Drawing.Point(229, 28)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(43, 17)
-        Me.Label7.TabIndex = 131
-        Me.Label7.Text = "RFC:"
-        '
-        'ctxtrfc
-        '
-        Me.ctxtrfc.BackColor = System.Drawing.Color.White
-        Me.ctxtrfc.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ctxtrfc.Location = New System.Drawing.Point(226, 48)
-        Me.ctxtrfc.Name = "ctxtrfc"
-        Me.ctxtrfc.Size = New System.Drawing.Size(203, 23)
-        Me.ctxtrfc.TabIndex = 130
-        '
-        'txtsaludoticket
-        '
-        Me.txtsaludoticket.BackColor = System.Drawing.Color.White
-        Me.txtsaludoticket.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtsaludoticket.Location = New System.Drawing.Point(226, 376)
-        Me.txtsaludoticket.MaxLength = 30
-        Me.txtsaludoticket.Multiline = True
-        Me.txtsaludoticket.Name = "txtsaludoticket"
-        Me.txtsaludoticket.Size = New System.Drawing.Size(201, 60)
-        Me.txtsaludoticket.TabIndex = 132
-        '
-        'Label8
-        '
-        Me.Label8.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label8.Location = New System.Drawing.Point(229, 356)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(185, 17)
-        Me.Label8.TabIndex = 133
-        Me.Label8.Text = "Saludo pie de pagina Notas"
-        '
         'frdatosorganizacion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.Crimson
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(104, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(602, 475)
         Me.Controls.Add(Me.FlowLayoutPanel3)
         Me.Controls.Add(Me.GroupBox1)

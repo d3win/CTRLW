@@ -33,6 +33,9 @@ Partial Class FRcerrarcaja
         Me.Label11 = New System.Windows.Forms.Label()
         Me.txtsaldocaja = New System.Windows.Forms.TextBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.Label37 = New System.Windows.Forms.Label()
+        Me.txtganancia = New System.Windows.Forms.TextBox()
+        Me.Label38 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
@@ -73,6 +76,10 @@ Partial Class FRcerrarcaja
         Me.txtventasproductos = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.ChAnticipos = New System.Windows.Forms.CheckBox()
+        Me.chproductosvendidos = New System.Windows.Forms.CheckBox()
+        Me.chproductoscomprados = New System.Windows.Forms.CheckBox()
         Me.Button45 = New System.Windows.Forms.Button()
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.Label36 = New System.Windows.Forms.Label()
@@ -94,9 +101,12 @@ Partial Class FRcerrarcaja
         Me.Label33 = New System.Windows.Forms.Label()
         Me.Label32 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.Label37 = New System.Windows.Forms.Label()
-        Me.txtganancia = New System.Windows.Forms.TextBox()
-        Me.Label38 = New System.Windows.Forms.Label()
+        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
+        Me.pblogoticket = New System.Windows.Forms.PictureBox()
+        Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
+        Me.PrintDocument2 = New System.Drawing.Printing.PrintDocument()
+        Me.PrintDocument3 = New System.Drawing.Printing.PrintDocument()
+        Me.PrintDocument4anticipos = New System.Drawing.Printing.PrintDocument()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
@@ -106,6 +116,7 @@ Partial Class FRcerrarcaja
         Me.FlowLayoutPanel3.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
+        CType(Me.pblogoticket, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -237,6 +248,47 @@ Partial Class FRcerrarcaja
         Me.GroupBox4.TabIndex = 48
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Resumen"
+        '
+        'Label37
+        '
+        Me.Label37.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label37.AutoSize = True
+        Me.Label37.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label37.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label37.Location = New System.Drawing.Point(7, 259)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(20, 24)
+        Me.Label37.TabIndex = 54
+        Me.Label37.Text = "$"
+        '
+        'txtganancia
+        '
+        Me.txtganancia.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtganancia.BackColor = System.Drawing.Color.White
+        Me.txtganancia.Enabled = False
+        Me.txtganancia.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtganancia.Location = New System.Drawing.Point(29, 254)
+        Me.txtganancia.Name = "txtganancia"
+        Me.txtganancia.Size = New System.Drawing.Size(130, 35)
+        Me.txtganancia.TabIndex = 52
+        '
+        'Label38
+        '
+        Me.Label38.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label38.AutoSize = True
+        Me.Label38.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label38.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label38.Location = New System.Drawing.Point(18, 227)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(90, 24)
+        Me.Label38.TabIndex = 53
+        Me.Label38.Text = "Ganancia"
         '
         'Label21
         '
@@ -774,9 +826,9 @@ Partial Class FRcerrarcaja
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.Button1.Location = New System.Drawing.Point(3, 157)
+        Me.Button1.Location = New System.Drawing.Point(3, 226)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(125, 44)
+        Me.Button1.Size = New System.Drawing.Size(125, 99)
         Me.Button1.TabIndex = 34
         Me.Button1.Text = "Cancelar"
         Me.Button1.UseVisualStyleBackColor = False
@@ -784,13 +836,66 @@ Partial Class FRcerrarcaja
         'FlowLayoutPanel3
         '
         Me.FlowLayoutPanel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.FlowLayoutPanel3.Controls.Add(Me.Button45)
+        Me.FlowLayoutPanel3.Controls.Add(Me.Button2)
+        Me.FlowLayoutPanel3.Controls.Add(Me.ChAnticipos)
+        Me.FlowLayoutPanel3.Controls.Add(Me.chproductosvendidos)
+        Me.FlowLayoutPanel3.Controls.Add(Me.chproductoscomprados)
         Me.FlowLayoutPanel3.Controls.Add(Me.Button1)
+        Me.FlowLayoutPanel3.Controls.Add(Me.Button45)
         Me.FlowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.FlowLayoutPanel3.Location = New System.Drawing.Point(1002, 0)
+        Me.FlowLayoutPanel3.Location = New System.Drawing.Point(915, 0)
         Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
         Me.FlowLayoutPanel3.Size = New System.Drawing.Size(128, 627)
         Me.FlowLayoutPanel3.TabIndex = 67
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(104, Byte), Integer))
+        Me.Button2.FlatAppearance.BorderSize = 0
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Location = New System.Drawing.Point(3, 3)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(127, 148)
+        Me.Button2.TabIndex = 138
+        Me.Button2.Text = "CERRAR CAJA " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Impresion ticket Caja"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'ChAnticipos
+        '
+        Me.ChAnticipos.AutoSize = True
+        Me.ChAnticipos.ForeColor = System.Drawing.Color.White
+        Me.ChAnticipos.Location = New System.Drawing.Point(3, 157)
+        Me.ChAnticipos.Name = "ChAnticipos"
+        Me.ChAnticipos.Size = New System.Drawing.Size(113, 17)
+        Me.ChAnticipos.TabIndex = 142
+        Me.ChAnticipos.Text = "Anticipos servicios"
+        Me.ChAnticipos.UseVisualStyleBackColor = True
+        '
+        'chproductosvendidos
+        '
+        Me.chproductosvendidos.AutoSize = True
+        Me.chproductosvendidos.ForeColor = System.Drawing.Color.White
+        Me.chproductosvendidos.Location = New System.Drawing.Point(3, 180)
+        Me.chproductosvendidos.Name = "chproductosvendidos"
+        Me.chproductosvendidos.Size = New System.Drawing.Size(120, 17)
+        Me.chproductosvendidos.TabIndex = 140
+        Me.chproductosvendidos.Text = "Productos vendidos"
+        Me.chproductosvendidos.UseVisualStyleBackColor = True
+        Me.chproductosvendidos.Visible = False
+        '
+        'chproductoscomprados
+        '
+        Me.chproductoscomprados.AutoSize = True
+        Me.chproductoscomprados.ForeColor = System.Drawing.Color.White
+        Me.chproductoscomprados.Location = New System.Drawing.Point(3, 203)
+        Me.chproductoscomprados.Name = "chproductoscomprados"
+        Me.chproductoscomprados.Size = New System.Drawing.Size(103, 17)
+        Me.chproductoscomprados.TabIndex = 141
+        Me.chproductoscomprados.Text = "Gastos Compras"
+        Me.chproductoscomprados.UseVisualStyleBackColor = True
+        Me.chproductoscomprados.Visible = False
         '
         'Button45
         '
@@ -799,12 +904,13 @@ Partial Class FRcerrarcaja
         Me.Button45.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button45.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button45.ForeColor = System.Drawing.Color.White
-        Me.Button45.Location = New System.Drawing.Point(3, 3)
+        Me.Button45.Location = New System.Drawing.Point(3, 331)
         Me.Button45.Name = "Button45"
-        Me.Button45.Size = New System.Drawing.Size(127, 148)
+        Me.Button45.Size = New System.Drawing.Size(127, 14)
         Me.Button45.TabIndex = 137
         Me.Button45.Text = "Cerrar Caja"
         Me.Button45.UseVisualStyleBackColor = False
+        Me.Button45.Visible = False
         '
         'GroupBox7
         '
@@ -1092,53 +1198,39 @@ Partial Class FRcerrarcaja
         'Timer1
         '
         '
-        'Label37
+        'PrintDocument1
         '
-        Me.Label37.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label37.AutoSize = True
-        Me.Label37.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label37.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label37.Location = New System.Drawing.Point(7, 259)
-        Me.Label37.Name = "Label37"
-        Me.Label37.Size = New System.Drawing.Size(20, 24)
-        Me.Label37.TabIndex = 54
-        Me.Label37.Text = "$"
         '
-        'txtganancia
+        'pblogoticket
         '
-        Me.txtganancia.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtganancia.BackColor = System.Drawing.Color.White
-        Me.txtganancia.Enabled = False
-        Me.txtganancia.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtganancia.Location = New System.Drawing.Point(29, 254)
-        Me.txtganancia.Name = "txtganancia"
-        Me.txtganancia.Size = New System.Drawing.Size(130, 35)
-        Me.txtganancia.TabIndex = 52
+        Me.pblogoticket.Location = New System.Drawing.Point(925, 22)
+        Me.pblogoticket.Name = "pblogoticket"
+        Me.pblogoticket.Size = New System.Drawing.Size(36, 33)
+        Me.pblogoticket.TabIndex = 97
+        Me.pblogoticket.TabStop = False
+        Me.pblogoticket.Visible = False
         '
-        'Label38
+        'PrintDialog1
         '
-        Me.Label38.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label38.AutoSize = True
-        Me.Label38.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label38.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label38.Location = New System.Drawing.Point(18, 227)
-        Me.Label38.Name = "Label38"
-        Me.Label38.Size = New System.Drawing.Size(90, 24)
-        Me.Label38.TabIndex = 53
-        Me.Label38.Text = "Ganancia"
+        Me.PrintDialog1.UseEXDialog = True
+        '
+        'PrintDocument2
+        '
+        '
+        'PrintDocument3
+        '
+        '
+        'PrintDocument4anticipos
+        '
         '
         'FRcerrarcaja
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(104, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(1130, 627)
+        Me.ClientSize = New System.Drawing.Size(1043, 627)
+        Me.Controls.Add(Me.pblogoticket)
         Me.Controls.Add(Me.GroupBox8)
         Me.Controls.Add(Me.GroupBox7)
         Me.Controls.Add(Me.FlowLayoutPanel3)
@@ -1160,10 +1252,12 @@ Partial Class FRcerrarcaja
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.FlowLayoutPanel3.ResumeLayout(False)
+        Me.FlowLayoutPanel3.PerformLayout()
         Me.GroupBox7.ResumeLayout(False)
         Me.GroupBox7.PerformLayout()
         Me.GroupBox8.ResumeLayout(False)
         Me.GroupBox8.PerformLayout()
+        CType(Me.pblogoticket, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1241,4 +1335,14 @@ Partial Class FRcerrarcaja
     Friend WithEvents Label37 As Label
     Friend WithEvents txtganancia As TextBox
     Friend WithEvents Label38 As Label
+    Friend WithEvents Button2 As Button
+    Friend WithEvents PrintDocument1 As Printing.PrintDocument
+    Friend WithEvents pblogoticket As PictureBox
+    Friend WithEvents PrintDialog1 As PrintDialog
+    Friend WithEvents chproductosvendidos As CheckBox
+    Friend WithEvents chproductoscomprados As CheckBox
+    Friend WithEvents PrintDocument2 As Printing.PrintDocument
+    Friend WithEvents PrintDocument3 As Printing.PrintDocument
+    Friend WithEvents ChAnticipos As CheckBox
+    Friend WithEvents PrintDocument4anticipos As Printing.PrintDocument
 End Class

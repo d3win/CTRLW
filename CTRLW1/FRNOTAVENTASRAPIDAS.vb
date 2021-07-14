@@ -2,12 +2,16 @@
 Imports Microsoft.Reporting.WinForms
 Public Class FRNOTAVENTASRAPIDAS
     Private Sub FRNOTAVENTASRAPIDAS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim fechacompleta, fecha, fechafinal As String
 
-        Dim fechacompleta As String
+        ' fechacompleta = calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
+        ' Dim fechacompleta As String
         '------------------------------------------
         'recibo el folio del corte de caja
         '----------------------------------------------
         fechacompleta = frmindex.calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
+        fecha = fechacompleta & " 00:00:00"
+        fechafinal = fechacompleta & " 23:59:59"
 
         ' MsgBox(fechacompleta)
 
@@ -89,7 +93,7 @@ Public Class FRNOTAVENTASRAPIDAS
         conexionMysql.Open()
         Dim ds24 As DataSet
         Dim Sql24 As String
-        Sql24 = "select venta.idventa, ventaind.idventaind, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, ventaind.idproducto, venta.hora,venta.fecha from ventaind, venta where ventaind.idventa = venta.idventa and fecha='" & fechacompleta & "';"
+        Sql24 = "select venta.idventa, ventaind.idventaind, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, ventaind.idproducto, venta.hora,venta.fecha from ventaind, venta where ventaind.idventa = venta.idventa and venta.tipoventa='1' and fecha between '" & fecha & "' and '" & fechafinal & "';"
         Dim cmd24 As New MySqlCommand(Sql24, conexionMysql)
         Dim dt24 As New DataTable
         Dim da24 As New MySqlDataAdapter(cmd24)

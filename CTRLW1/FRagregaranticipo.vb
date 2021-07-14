@@ -60,13 +60,14 @@ Public Class FRagregaranticipo
                 cerrarconexion()
                 conexionMysql.Open()
 
-
+                'Dim fechainicial As String
+                fecha = fecha + " " + hora
 
 
 
 
                 Dim Sql2X As String
-                Sql2X = "insert into servicios_ventas (idventa,fecha, hora, idcliente,anticipo,total) values('" & frmindex.stxtfoliobusquedaventa.Text & "', '" & fecha & "', '" & hora & "','" & frmindex.indexidusuario & "'," & txtcantidad.Text & "," & total & " )"
+                Sql2X = "insert into servicios_ventas (idventa,fecha, hora, idcliente,anticipo,total,resto) values('" & frmindex.stxtfoliobusquedaventa.Text & "', '" & fecha & "', '" & hora & "','" & frmindex.indexidusuario & "'," & txtcantidad.Text & "," & total & "," & resto & " )"
                 Dim cmd2X As New MySqlCommand(Sql2X, conexionMysql)
                 cmd2X.ExecuteNonQuery()
                 conexionMysql.Close()
@@ -84,10 +85,20 @@ Public Class FRagregaranticipo
 
                 MsgBox("Hemos actualizado la información del pago", MsgBoxStyle.Information, "CTRL+y")
 
+
+
+
+                ABRIRCAJATICKET()
+
+
                 frmindex.picturepagado.Visible = False
 
                 frmindex.stxtresto.Text = resto
                 frmindex.stxtanticipo.Text = anticipo
+
+
+
+
 
                 If total = anticipo Then
                     MsgBox("El servicio ha sido pagado completamente", MsgBoxStyle.Information, "CTRL+y")
@@ -117,6 +128,47 @@ Public Class FRagregaranticipo
 
 
     End Function
+
+    Private Sub ABRIRCAJATICKET()
+
+        'consultamos a la BD la impresora seleccionada por default
+        Dim impresora As String
+        Try
+
+            conexionMysql.Open()
+            Dim Sql1 As String
+            Sql1 = "select * from impresora;"
+            Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
+            reader = cmd1.ExecuteReader()
+            reader.Read()
+            impresora = reader.GetString(1).ToString()
+            conexionMysql.Close()
+        Catch ex As Exception
+            MsgBox("No hay una impresora seleccionada", MsgBoxStyle.Information, "Sistema")
+        End Try
+
+
+
+
+        Try
+            Dim PrintDialog1 As New PrintDialog
+            PrintDialog1.Document = PrintDocument5TICKETSERVICIO
+            PrintDialog1.PrinterSettings.PrinterName = impresora
+            If PrintDocument5TICKETSERVICIO.PrinterSettings.IsValid Then
+                PrintDocument5TICKETSERVICIO.Print() 'Imprime texto 
+            Else
+                MsgBox("Impresora invalida", MsgBoxStyle.Exclamation, "CTRL+y")
+                'MessageBox.Show("La impresora no es valida")
+            End If
+            '--------------------------------------------------- 
+        Catch ex As Exception
+            MsgBox("Hay problemas con la impresion", MsgBoxStyle.Exclamation, "CTRL+y")
+
+            'MessageBox.Show("Hay un problema de impresión",
+            ' ex.ToString()
+        End Try
+
+    End Sub
     Function cerrarconexion()
         If conexionMysql.State = ConnectionState.Open Then
             conexionMysql.Close()
@@ -371,5 +423,83 @@ Public Class FRagregaranticipo
         ElseIf ch1.Checked = False Then
             txtcantidad.Text = ""
         End If
+    End Sub
+
+    Private Sub PrintDocument5TICKETSERVICIO_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument5TICKETSERVICIO.PrintPage
+        'e.Graphics.DrawString(txtetiqueta1, New Font("verdana", 11, FontStyle.Bold), New SolidBrush(Color.Black), 1, 9)
+        'e.Graphics.DrawString(txtetiqueta2, New Font("verdana", 9, FontStyle.Bold), New SolidBrush(Color.Black), 1, 28)
+        'e.Graphics.DrawString(txtetiqueta, New Font("verdana", 13, FontStyle.Bold), New SolidBrush(Color.Black), 1, 57)
+        'traemos la información del ticket, como encabezado, datos de la empresa etc.
+        Dim saludo, ticketnombre, ticketcoloniaciudad, tickettelefono, ticketgiro, p1, p2, p3, p4, comentario As String
+        Dim callenumero, cp, estado, whatsapp, correo, rfc As String
+        Dim x, y, tfuente, tfuente2, tfuente3 As Integer
+        Try
+
+
+            conexionMysql.Open()
+            Dim Sql1 As String
+            Sql1 = "select * from datos_empresa;"
+            Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
+            reader = cmd1.ExecuteReader()
+            reader.Read()
+            ticketnombre = reader.GetString(1).ToString()
+            callenumero = reader.GetString(2).ToString()
+            ticketcoloniaciudad = reader.GetString(3).ToString()
+            cp = reader.GetString(4).ToString()
+            estado = reader.GetString(5).ToString()
+            tickettelefono = reader.GetString(6).ToString()
+            whatsapp = reader.GetString(7).ToString()
+            correo = reader.GetString(8).ToString()
+            'ctxtfacebook.Text = reader.GetString(9).ToString()
+            'ctxtsitio.Text = reader.GetString(10).ToString()
+            'ctxtencargado.Text = reader.GetString(11).ToString()
+            'ctxthorario.Text = reader.GetString(12).ToString()
+            ticketgiro = reader.GetString(13).ToString()
+            saludo = reader.GetString(24).ToString()
+            'p1 = reader.GetString(14).ToString()
+            'P2 = reader.GetString(15).ToString()
+            'P3 = reader.GetString(16).ToString()
+            'p4 = reader.GetString(17).ToString()
+            rfc = reader.GetString(22).ToString()
+
+            conexionMysql.Close()
+
+        Catch ex As Exception
+
+        End Try
+
+        Dim id, actividad, cantidad, costo, total, fecha, hora, idusuario, idmax As String
+
+
+        tfuente = 10 '7
+        tfuente2 = 12
+        tfuente3 = 10
+        p1 = 10 'posicion de X
+        x = 5
+        y = 125
+        Dim ii, incremento As Integer
+        incremento = 14
+        Dim yy(20) As Integer
+        For ii = 0 To 20
+            y = y + incremento
+            yy(ii) = y
+        Next
+
+
+
+        Try
+            ' La fuente a usar
+            Dim prFont As New Font("Arial", 15, FontStyle.Bold)
+            'POSICION DEL LOGO
+            ' la posición superior
+            'e.Graphics.DrawImage(pblogoticket.Image, 50, 20, 110, 110)
+
+            prFont = New Font("Arial", 7, FontStyle.Bold)
+            e.Graphics.DrawString("-REGISTRO DE ANTICIPO-", prFont, Brushes.Black, 0, 10)
+
+        Catch ex As Exception
+            MessageBox.Show("ERROR: " & ex.Message, "Administrador",
+                          MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class

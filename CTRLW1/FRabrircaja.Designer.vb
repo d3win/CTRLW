@@ -24,16 +24,20 @@ Partial Class FRabrircaja
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FRabrircaja))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.pblogoticket = New System.Windows.Forms.PictureBox()
         Me.btncerrar = New System.Windows.Forms.Button()
         Me.txtmontoinicial = New System.Windows.Forms.TextBox()
         Me.Label92 = New System.Windows.Forms.Label()
         Me.Button17 = New System.Windows.Forms.Button()
+        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.pblogoticket, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.Color.White
+        Me.GroupBox1.Controls.Add(Me.pblogoticket)
         Me.GroupBox1.Controls.Add(Me.btncerrar)
         Me.GroupBox1.Controls.Add(Me.txtmontoinicial)
         Me.GroupBox1.Controls.Add(Me.Label92)
@@ -44,6 +48,15 @@ Partial Class FRabrircaja
         Me.GroupBox1.TabIndex = 2
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Abriendo caja"
+        '
+        'pblogoticket
+        '
+        Me.pblogoticket.Location = New System.Drawing.Point(401, 22)
+        Me.pblogoticket.Name = "pblogoticket"
+        Me.pblogoticket.Size = New System.Drawing.Size(36, 33)
+        Me.pblogoticket.TabIndex = 98
+        Me.pblogoticket.TabStop = False
+        Me.pblogoticket.Visible = False
         '
         'btncerrar
         '
@@ -99,11 +112,14 @@ Partial Class FRabrircaja
         Me.Button17.Text = "AGREGAR"
         Me.Button17.UseVisualStyleBackColor = False
         '
+        'PrintDocument1
+        '
+        '
         'FRabrircaja
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(185, Byte), Integer))
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(104, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(461, 201)
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -113,6 +129,7 @@ Partial Class FRabrircaja
         Me.Text = "FRabrircaja"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.pblogoticket, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -122,4 +139,6 @@ Partial Class FRabrircaja
     Friend WithEvents txtmontoinicial As TextBox
     Friend WithEvents Label92 As Label
     Friend WithEvents btncerrar As Button
+    Friend WithEvents PrintDocument1 As Printing.PrintDocument
+    Friend WithEvents pblogoticket As PictureBox
 End Class

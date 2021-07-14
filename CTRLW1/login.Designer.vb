@@ -135,9 +135,9 @@ Partial Class login
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(12, 9)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(46, 14)
+        Me.Label3.Size = New System.Drawing.Size(43, 14)
         Me.Label3.TabIndex = 81
-        Me.Label3.Text = "02.2021"
+        Me.Label3.Text = "260621"
         '
         'PictureBox1
         '

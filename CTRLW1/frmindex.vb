@@ -42,6 +42,239 @@ Public Class frmindex
     Function actualizarbd2021()
 
 
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `dwin`.`venta` 
+
+ADD COLUMN `idtipo_pago` INT NULL AFTER `idsecotizacion`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+        '----------------------------------------------------
+        ''250621- AGREGAMOS UNA COLUMNA TABLA servicios_Ventas PARA QUE ALMACENEMOS EL RESTO
+
+
+
+
+
+        '----------------------------------------------------
+        ''250621- AGREGAMOS UNA COLUMNA TABLA servicios_Ventas PARA QUE ALMACENEMOS EL RESTO
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `dwin`.`datos_empresa` 
+ADD COLUMN `saludo_ticket` VARCHAR(45) NULL AFTER `rfc`,
+CHANGE COLUMN `rfc` `rfc` VARCHAR(45) NULL DEFAULT NULL ;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+        '---------------------------------------------------------------
+
+
+
+
+
+        '----------------------------------------------------
+        ''250621- AGREGAMOS UNA COLUMNA TABLA servicios_Ventas PARA QUE ALMACENEMOS EL RESTO
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = " ALTER TABLE `dwin`.`servicios_ventas` 
+ADD COLUMN `resto` DOUBLE NULL AFTER `total`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+        '---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+        '----------------------------------------------------
+        ''250621- MODIFICAMOS LA FECHA DE LA TABLA servicios_Ventas PARA QUE ACEPTE LA HORA DE VENTA
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "    ALTER TABLE `dwin`.`servicios_ventas` 
+CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+        '---------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+        '----------------------------------------------------
+        ''220621- MODIFICAMOS LA FECHA DE LA TABLA VENTA PARA QUE ACEPTE LA HORA DE VENTA
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = " ALTER TABLE `dwin`.`venta` 
+CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+        '---------------------------------------------------------------
+
+
+
+
+
+
+
+
+        '----------------------------------------------------
+        ''agregamos un atributo para almacenar la ganancia de las ventas
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `dwin`.`caja` 
+ADD COLUMN `ganancia` DOUBLE NULL AFTER `diferencia`,
+ADD COLUMN `fecha_cierre` DATE NULL AFTER `ganancia`;
+"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+        '---------------------------------------------------------------
+
+
+
+
+
+        '----------------------------------------------------
+        ''agregamos un atributo para el tipo de fuente entre arial y times new roman
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "        ALTER TABLE `dwin`.`datos_empresa` 
+ADD COLUMN `f_tipo` VARCHAR(45) NULL AFTER `f_contenido`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+        '---------------------------------------------------------------
+
+
+
+
+
+        'se agrega tamaños de fuente
+        cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `dwin`.`datos_empresa` 
+ADD COLUMN `f_titulo` INT NULL AFTER `saludo_ticket`,
+ADD COLUMN `f_contenido` INT NULL AFTER `f_titulo`
+;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+
+        '---------------------------------------------------------------
+        Dim valor As String
+        Try
+
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select f_titulo from datos_empresa;"
+            Dim cmd2 As New MySqlCommand(Sql, conexionMysql)
+            reader = cmd2.ExecuteReader()
+            reader.Read()
+            valor = reader.GetString(0).ToString()
+            conexionMysql.Close()
+        Catch ex As Exception
+            cerrarconexion()
+            'MsgBox("No hay datos de la empresa aun", MsgBoxStyle.Information, "CTRL+y")
+        End Try
+
+
+        If valor = "" Then
+
+            Try
+                conexionMysql.Open()
+                Dim Sql As String
+                Sql = "UPDATE `dwin`.`datos_empresa` SET `f_titulo` = '10', `f_contenido` = '9', `f_tipo` = 'Arial'  WHERE (`iddatos_empresa` = '1');"
+                Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                cmd.ExecuteNonQuery()
+                conexionMysql.Close()
+            Catch
+                'MsgBox
+                cerrarconexion()
+            End Try
+
+        End If
+
 
 
 
@@ -1328,7 +1561,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
 
-            llenadogrilla()
+            ' llenadogrilla()
 
 
             pgrillaproductosfaltantes.Visible = False
@@ -1494,7 +1727,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
     End Sub
     Function consultacortecalendario()
-        Dim dia, mes, año, fecha As String
+        Dim dia, mes, año, fecha, fechafinal As String
 
         hora2 = Now.Hour()
         minuto = Now.Minute()
@@ -1505,11 +1738,14 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
         fecha = calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
+
         'CONSULTA PARA TODOS LOS PRODUCTOS EXTRAS, PAPELERIA Y SERVICIOS
+        fechafinal = fecha & " 23:59:59"
+        fecha = fecha & " 00:00:00"
         cerrarconexion()
 
         'MsgBox(fecha)
-
+        'where fecha >='2021-06-26' and fecha<='2021-06-26 24:59:59'
         Try
             conexionMysql.Open()
             Dim sql1 As String
@@ -1535,7 +1771,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             conexionMysql.Open()
             Dim Sql2 As String
             '------PRIMERO SUMAMOS LAS VENTAS DE LOS SERVICIOS
-            Sql2 = "select sum(anticipo) from servicios_ventas where fecha='" & fecha & "';"
+            Sql2 = "select sum(anticipo) from servicios_ventas where fecha>='" & fecha & "' and fecha<='" & fechafinal & "' ;"
             'Sql2 = "select sum(total)as total from venta where fecha='" & fecha & "';"
             Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
             reader = cmd2.ExecuteReader
@@ -1556,7 +1792,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
             Dim Sql3 As String
             '------PRIMERO SUMAMOS LAS VENTAS generales ventas rapidas
-            Sql3 = "select sum(total) from venta where fecha='" & fecha & "' and tipoventa=1;"
+            Sql3 = "select sum(total) from venta where fecha>='" & fecha & "' and fecha<='" & fechafinal & "'  and tipoventa=1;"
 
             '           Sql2 = "select sum(total)as total from venta where fecha='" & fecha & "';"
             Dim cmd3 As New MySqlCommand(Sql3, conexionMysql)
@@ -3488,7 +3724,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             año = Date.Now.Year
             fecha = año & "-" & mes & "-" & dia
 
-            fecha = fecha + " " + hora
+            fecha = fecha & " " & hora
 
 
             '------------------ insertar reginstro en tabla venta ---------------------------------------
@@ -3599,21 +3835,27 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
 
+            Try
 
-            cerrarconexion()
+                cerrarconexion()
 
-            conexionMysql.Open()
-            Dim Sql As String
-            Sql = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario,tipoventa,pagacon,cambio,idtipo_pago) VALUES (" & lbfolio.Text & "," & txtunidades.Text & ", " & CDbl(txttotalpagar.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'1','" & lbpagacon.Text & "', '" & lbcambio.Text & "'," & tipopago & ");"
-            Dim cmd As New MySqlCommand(Sql, conexionMysql)
-            cmd.ExecuteNonQuery()
-            conexionMysql.Close()
-            txtactividad.Text = ""
-            txtcosto.Text = ""
-            txtpagar = CDbl(txttotalpagar.Text)
-            rtobservaciones.Text = ""
-            'txttotalpagar.Text = ""
-            conexionMysql.Close()
+                conexionMysql.Open()
+                Dim Sql As String
+                Sql = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario,tipoventa,pagacon,cambio,idtipo_pago) VALUES (" & lbfolio.Text & "," & txtunidades.Text & ", " & CDbl(txttotalpagar.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'1','" & lbpagacon.Text & "', '" & lbcambio.Text & "'," & tipopago & ");"
+                Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                cmd.ExecuteNonQuery()
+                conexionMysql.Close()
+                txtactividad.Text = ""
+                txtcosto.Text = ""
+                txtpagar = CDbl(txttotalpagar.Text)
+                rtobservaciones.Text = ""
+                'txttotalpagar.Text = ""
+                conexionMysql.Close()
+            Catch ex As Exception
+                MsgBox("Error")
+                cerrarconexion()
+
+            End Try
 
 
             '------------------ FIN insertar reginstro en tabla venta ---------------------------------------
@@ -3625,7 +3867,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Dim actividad As String
             Dim cantidad, costo, idventa As Double
             Dim idproducto, observaciones As String
-
+            cerrarconexion()
             conexionMysql.Open()
 
             'suma de valores
@@ -3884,8 +4126,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         'e.Graphics.DrawString(txtetiqueta, New Font("verdana", 13, FontStyle.Bold), New SolidBrush(Color.Black), 1, 57)
         'traemos la información del ticket, como encabezado, datos de la empresa etc.
         Dim saludo, ticketnombre, ticketcoloniaciudad, tickettelefono, ticketgiro, p1, p2, p3, p4, comentario As String
-        Dim callenumero, cp, estado, whatsapp, correo, rfc As String
-        Dim x, y, tfuente, tfuente2, tfuente3, cant_filas As Integer
+        Dim callenumero, cp, estado, whatsapp, correo, rfc, f_tipo As String
+        Dim x, y, tfuente, tfuente2, tfuente3, cant_filas, f_titulo, f_contenido As Integer
         Try
 
 
@@ -3910,39 +4152,75 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             'ctxthorario.Text = reader.GetString(12).ToString()
             ticketgiro = reader.GetString(13).ToString()
             saludo = reader.GetString(24).ToString()
-            'p1 = reader.GetString(14).ToString()
-            'P2 = reader.GetString(15).ToString()
-            'P3 = reader.GetString(16).ToString()
-            'p4 = reader.GetString(17).ToString()
             rfc = reader.GetString(22).ToString()
+            'p1 = reader.GetString(15).ToString()
+            'p2 = reader.GetString(16).ToString()
+            ' p3 = reader.GetString(17).ToString()
+            ' p4 = reader.GetString(18).ToString()
+
+
+
+
 
             conexionMysql.Close()
 
         Catch ex As Exception
 
         End Try
+
+
+
+
+
+        '----------------------------------------
+        'NUEVA CONSULTA MAYO 2021
+        'CONSULTAMOS EL TAMAÑO D FUENTE Y TIPO DE FUENTE
+
+        conexionMysql.Open()
+        Dim Sql1x As String
+
+        Sql1x = "Select f_titulo,f_contenido,f_tipo,p1,p2,p3 From datos_empresa;"
+        Dim cmd1x As New MySqlCommand(Sql1x, conexionMysql)
+        reader = cmd1x.ExecuteReader()
+        reader.Read()
+        ' ticketnombre = reader.GetString(1).ToString()
+
+
+
+
+
+        f_titulo = reader.GetString(0).ToString()
+        f_contenido = reader.GetString(1).ToString()
+        f_tipo = reader.GetString(2).ToString()
+        p1 = reader.GetString(3).ToString()
+        p2 = reader.GetString(4).ToString()
+        p3 = reader.GetString(5).ToString()
+
+        cerrarconexion()
+
+        '---------------------------------------------------------------------------------------------------
 
         'consultamos la cantidad de filas del richtextbos
-        Try
-            conexionMysql.Open()
-            Dim Sql1 As String
-            Sql1 = "SELECT cant_filas_descripcion FROM ventaind where idventa='" & lbfolio.Text & "';"
-            Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
-            reader = cmd1.ExecuteReader()
-            reader.Read()
-            cant_filas = reader.GetString(1).ToString()
+        'Try
+        '    conexionMysql.Open()
+        '    Dim Sql1 As String
+        '    Sql1 = "SELECT cant_filas_descripcion FROM ventaind where idventa='" & lbfolio.Text & "';"
+        '    Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
+        '    reader = cmd1.ExecuteReader()
+        '    reader.Read()
+        '    cant_filas = reader.GetString(1).ToString()
 
-            conexionMysql.Close()
+        '    conexionMysql.Close()
 
-        Catch ex As Exception
+        'Catch ex As Exception
 
-        End Try
-        MsgBox(cant_filas)
+        'End Try
+        'MsgBox(cant_filas)
 
-        tfuente = 8 '7
-        tfuente2 = 10
-        tfuente3 = 8
-        p1 = 10 'posicion de X
+        tfuente = f_contenido '7
+        tfuente2 = f_titulo
+        tfuente3 = f_contenido
+        ' p1 = 10 'posicion de X
         x = 5
         y = 125
         Dim ii, incremento As Integer
@@ -3957,7 +4235,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
         Try
             ' La fuente a usar
-            Dim prFont As New Font("Arial", 15, FontStyle.Bold)
+            Dim prFont As New Font(f_tipo, 15, FontStyle.Bold)
             'POSICION DEL LOGO
             ' la posición superior
             e.Graphics.DrawImage(pblogoticket.Image, 50, 20, 110, 110)
@@ -3967,51 +4245,51 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
 
-            prFont = New Font("Arial", tfuente2, FontStyle.Bold)
-            e.Graphics.DrawString(ticketnombre, prFont, Brushes.Black, x, yy(0))
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
-            e.Graphics.DrawString(ticketgiro, prFont, Brushes.Black, x, yy(2))
+            prFont = New Font(f_tipo, tfuente2, FontStyle.Bold)
+            e.Graphics.DrawString(ticketnombre, prFont, Brushes.Black, p1, yy(0))
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
+            e.Graphics.DrawString(ticketgiro, prFont, Brushes.Black, p2, yy(2))
             'IMPRESION DE LOGOTIPO,
             'prFont = New Font("Arial", tfuente, FontStyle.Bold)
             'e.Graphics.DrawString(ticketgiro, prFont, Brushes.Black, x, yy(2))
 
 
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString(callenumero, prFont, Brushes.Black, x, yy(3))
 
             'imprimir el titutlo del ticket
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString(ticketcoloniaciudad, prFont, Brushes.Black, x, yy(4))
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("CP:" & cp, prFont, Brushes.Black, x, yy(5))
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("TEL:" & tickettelefono, prFont, Brushes.Black, x, yy(6))
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("RFC:" & rfc, prFont, Brushes.Black, x, yy(7))
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("=============================", prFont, Brushes.Black, x, yy(8))
 
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("ATENDIO:" & usuarioactual, prFont, Brushes.Black, x, yy(9))
 
             'imprimir el titutlo del ticket
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("CLIENTE:" & txtcliente.Text, prFont, Brushes.Black, x, yy(10))
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("FECHA:" & Date.Now, prFont, Brushes.Black, x, yy(11))
-            prFont = New Font("Arial", tfuente2, FontStyle.Bold)
-            e.Graphics.DrawString("FOLIO:" & lbfolio.Text, prFont, Brushes.Black, x, yy(12))
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente2, FontStyle.Bold)
+            e.Graphics.DrawString("FOLIO:" & lbfolio.Text, prFont, Brushes.Black, p3, yy(12))
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("=============================", prFont, Brushes.Black, x, yy(13))
 
             'imprimir el titutlo del ticket
 
-            prFont = New Font("Arial", tfuente3, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente3, FontStyle.Bold)
             e.Graphics.DrawString("ARTICULO", prFont, Brushes.Black, x, yy(14))
-            prFont = New Font("Arial", tfuente3, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente3, FontStyle.Bold)
             e.Graphics.DrawString("ID----PRECIO----CANTIDAD---TOTAL", prFont, Brushes.Black, x, yy(15))
 
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("=============================", prFont, Brushes.Black, x, yy(16))
 
 
@@ -4050,12 +4328,12 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
                 'cmd2.ExecuteNonQuery()
                 'conexionMysql.Close()
 
-                prFont = New Font("Arial", tfuente3, FontStyle.Bold)
+                prFont = New Font(f_tipo, tfuente3, FontStyle.Bold)
                 e.Graphics.DrawString(actividad, prFont, Brushes.Black, x, t1)
 
-                prFont = New Font("Arial", tfuente3, FontStyle.Bold)
+                prFont = New Font(f_tipo, tfuente3, FontStyle.Bold)
                 e.Graphics.DrawString(idproducto & "-----$" & costo & "-----" & cantidad & "-----$" & (CDbl(costo) * CDbl(cantidad)), prFont, Brushes.Black, x, t2)
-                prFont = New Font("Arial", tfuente3, FontStyle.Bold)
+                prFont = New Font(f_tipo, tfuente3, FontStyle.Bold)
                 e.Graphics.DrawString(comentario, prFont, Brushes.Black, x, t3)
 
 
@@ -4073,21 +4351,21 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             t3 = t3 - (incremento * 2) + cant_f_ob
 
 
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("=============================", prFont, Brushes.Black, 0, t3)
 
             '----------------AQUI SE IMPRIME EL TOTAL A PAGAR
 
-            prFont = New Font("Arial", tfuente3, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente3, FontStyle.Bold)
             e.Graphics.DrawString("   Total---->$" & txttotalpagar.Text, prFont, Brushes.Black, x, t3 + incremento)
-            prFont = New Font("Arial", tfuente3, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente3, FontStyle.Bold)
             e.Graphics.DrawString("Efectivo---->$" & lbpagacon.Text, prFont, Brushes.Black, x, t3 + (incremento * 2))
-            prFont = New Font("Arial", tfuente3, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente3, FontStyle.Bold)
             e.Graphics.DrawString("  Cambio---->$" & lbcambio.Text, prFont, Brushes.Black, x, t3 + (incremento * 3))
 
-            prFont = New Font("Arial", tfuente, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("=============================", prFont, Brushes.Black, x, t3 + (incremento * 4))
-            prFont = New Font("Arial", tfuente3, FontStyle.Bold)
+            prFont = New Font(f_tipo, tfuente3, FontStyle.Bold)
             e.Graphics.DrawString(saludo, prFont, Brushes.Black, x, t3 + (incremento * 5))
             'prFont = New Font("Arial", tfuente3, FontStyle.Bold)
             'e.Graphics.DrawString("CTRL+y", prFont, Brushes.Black, 10, t2 + 60)
@@ -4423,10 +4701,10 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
                     Dim cmd37 As New MySqlCommand(Sql37, conexionMysql)
                     cmd37.ExecuteNonQuery()
                     conexionMysql.Close()
+                    cerrarconexion()
 
-
-                    Try
-                        conexionMysql.Open()
+                    'Try
+                    conexionMysql.Open()
 
                         Dim Sql40 As String
                         Sql40 = "INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('1', 'EFECTIVO');
@@ -4437,9 +4715,9 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                         cmd40.ExecuteNonQuery()
                         conexionMysql.Close()
 
-                    Catch ex As Exception
-                        cerrarconexion()
-                    End Try
+                    'Catch ex As Exception
+                    'cerrarconexion()
+                    'End Try
 
 
 
@@ -4902,7 +5180,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     MsgBox("Producto guardado", MsgBoxStyle.Information, "Sistema")
                     'se llena la grilla, tomando en cuenta ninguna elemento.
                     txtnombrep.Text = ""
-                    Call llenadogrilla()
+                    'Call llenadogrilla()
 
                 Catch ex As Exception
                     MsgBox("Existe un problema al guardar al registro", MsgBoxStyle.Information, "Sistema")
@@ -5225,8 +5503,8 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
         fecha = fecha + " 00:00:00"
 
         cerrarconexion()
-        MsgBox(fecha)
-        MsgBox(fechafinal)
+        ' MsgBox(fecha)
+        'MsgBox(fechafinal)
         conexionMysql.Open()
         Dim Sql As String
         Sql = "select * from compra where fecha between '" & fecha & "' and '" & fechafinal & "' order by fecha desc;"
@@ -7087,6 +7365,10 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
         'Try
         cerrarconexion()
 
+
+        Try
+
+
             conexionMysql.Open()
             Dim sql1 As String
             sql1 = "select sum(total)  from compra where fecha between '" & fecha & "' and '" & fechafinal & "';"
@@ -7096,9 +7378,12 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             valor = reader.GetString(0).ToString()
             conexionMysql.Close()
             Return valor
-        'Catch ex As Exception
+            'Catch ex As Exception
 
-        ' End Try
+            ' End Try
+        Catch ex As Exception
+
+        End Try
     End Function
 
 
@@ -7147,17 +7432,22 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
         conexionMysql.Close()
     End Function
     Function desgloseventas()
-        Dim fechacompleta As String
+        Dim fechacompleta, fecha, fechafinal As String
 
         fechacompleta = calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
+        fecha = fechacompleta & " 00:00:00"
+        fechafinal = fechacompleta & " 23:59:59"
+        'MsgBox(fecha)
+        'MsgBox(fechafinal)
+
         cerrarconexion()
         'MsgBox(fechacompleta)
         conexionMysql.Open()
         Dim Sql As String
         'Sql = "SELECT * FROM venta,ventaind where venta.idventa=ventaind.idventaind and fecha='" & fechacompleta & "';"
         '        Sql = "select venta.idventa, ventaind.idventaind,tipoventa.tipoventa, ventaind.idproducto, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, venta.anticipo,venta.resto, venta.hora from ventaind, venta,tipoventa where ventaind.idventa = venta.idventa and venta.tipoventa=tipoventa.idtipoventa and fecha='" & fechacompleta & "';"
-        Sql = "select venta.idventa, ventaind.idventaind, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, ventaind.idproducto, venta.hora,venta.fecha from ventaind, venta where ventaind.idventa = venta.idventa and fecha='" & fechacompleta & "';"
-
+        '        Sql = "select venta.idventa, ventaind.idventaind, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, ventaind.idproducto, venta.hora,venta.fecha from ventaind, venta where ventaind.idventa = venta.idventa and fecha between '" & fecha & "' and '" & fechafinal & "';"
+        Sql = "select venta.idventa, ventaind.idventaind,venta.tipoventa, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total,venta.anticipo,venta.resto, ventaind.idproducto, venta.hora,venta.fecha from ventaind, venta where ventaind.idventa = venta.idventa and fecha between '" & fecha & "' and '" & fechafinal & "';"
         'Sql = "select venta.idventa, ventaind.idventaind, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, servicios_ventas.anticipo, ventaind.idproducto, venta.hora,venta.fecha from ventaind, venta, servicios_ventas where ventaind.idventa = venta.idventa and venta.idventa= servicios_ventas.idventa and venta.fecha='" & fechacompleta & "';"
         'Sql = "select venta.idventa, ventaind.idventaind, tipoventa.tipoventa, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, servicios_ventas.anticipo, ventaind.idproducto, venta.hora,venta.fecha from tipoventa, ventaind, venta, servicios_ventas where ventaind.idventa = venta.idventa and venta.idventa= servicios_ventas.idventa and venta.tipoventa = tipoventa.idtipoventa and venta.fecha='" & fechacompleta & "';"
         'Sql = "select venta.idventa, ventaind.idventaind, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, servicios_ventas.anticipo, ventaind.idproducto, venta.hora,venta.fecha from servicios_ventas, ventaind, venta where ventaind.idventa = venta.idventa  and venta.fecha='" & fechacompleta & "';"
@@ -7518,6 +7808,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
             idcompramercangia()
             chimpresioncompra.Visible = True
+            Button89.Visible = True
 
 
         End If
@@ -7545,6 +7836,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             GroupBox24.Visible = False
             chimpresioncompra.Visible = False
             GroupBox17.Visible = True
+            Button89.Visible = False
 
 
         End If
@@ -8168,7 +8460,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     c1precio = ccgrilla.Rows(C1j).Cells(4).Value 'costo
                     c1proveedor = ccgrilla.Rows(C1j).Cells(6).Value
                     'preciopaquete = ccgrilla.Rows(C1j).Cells(7).Value
-                    'cantidadpaquete = ccgrilla.Rows(C1j).Cells(8).Value
+                    'cantidadpaquete = ccgrilla.R|1ows(C1j).Cells(8).Value
 
 
                     '    MsgBox("vamos en la vuelta numero:" & C1j)
@@ -10340,7 +10632,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
 
             valoresiniciales()
-            'inserciondedatosiniciales()
+            inserciondedatosiniciales()
             MsgBox("Se ha reiniciado el sistema completamente, no existe ningun registro, salvo los iniciales", MsgBoxStyle.Information, "CTRL+y")
 
 
@@ -10932,11 +11224,11 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
         End Try
     End Sub
 
-    Private Sub txtfecharegistroventa_TextChanged(sender As Object, e As EventArgs) Handles stxtfecharegistroventa.TextChanged
+    Private Sub txtfecharegistroventa_TextChanged(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub txthoraregistroventa_TextChanged(sender As Object, e As EventArgs) Handles stxthoraregistroventa.TextChanged
+    Private Sub txthoraregistroventa_TextChanged(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -11346,7 +11638,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             'txttotal.Text = ""
         Else
             'obtener fecha y hora
-            Dim dia, mes, año, fecha As String
+            Dim dia, mes, año, fecha, fechanueva As String
             hora2 = Now.Hour()
             minuto = Now.Minute()
             segundo = Now.Second()
@@ -11357,7 +11649,8 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             mes = Date.Now.Month
             año = Date.Now.Year
             fecha = año & "-" & mes & "-" & dia
-
+            fecha = fecha + " " + hora
+            'fechanueva = fecha + " " + hora
 
 
             '------------------ insertar reginstro en tabla venta ---------------------------------------
@@ -11430,7 +11723,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
 
             Catch ex As Exception
-
+                cerrarconexion()
             End Try
 
 
@@ -11442,7 +11735,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
             Dim fechaentrega As String
             fechaentrega = DateTimePicker1.Value.ToString("yyyy/MM/dd")
-
+            cerrarconexion()
             'MsgBox(fechaentrega)
             conexionMysql.Open()
             Dim Sql As String
@@ -11640,6 +11933,8 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             'Else
 
             MsgBox("Venta realizada", MsgBoxStyle.Information, "Sistema")
+            ABRIRCAJATICKET()
+
             cargarformadepago()
             FRNOTASERVICIO.ShowDialog()
 
@@ -14540,6 +14835,24 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
     Private Sub Button57_Click_3(sender As Object, e As EventArgs) Handles Button57.Click
 
+        cerrarconexion()
+
+        Try
+
+            conexionMysql.Open()
+
+            Dim Sql40 As String
+            Sql40 = "INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('1', 'EFECTIVO');
+INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('2', 'DEPOSITO');
+INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
+;"
+            Dim cmd40 As New MySqlCommand(Sql40, conexionMysql)
+            cmd40.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch ex As Exception
+            cerrarconexion()
+        End Try
+
 
         '.----------------------------------------------------------
         '------------------------------------------------------------
@@ -15157,12 +15470,136 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
     End Sub
 
     Private Sub Btventas_Click_1(sender As Object, e As EventArgs) Handles btventas.Click
-        actualizarbd2021()
+        '  actualizarbd2021()
 
     End Sub
 
     Private Sub Button82_Click_1(sender As Object, e As EventArgs) Handles btnabrircajamenu.Click
         abrircaja()
+    End Sub
+
+    Private Sub PrintDocument4_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument4.PrintPage
+
+    End Sub
+    Private Sub ABRIRCAJATICKET()
+
+        'consultamos a la BD la impresora seleccionada por default
+        Dim impresora As String
+        Try
+
+            conexionMysql.Open()
+            Dim Sql1 As String
+            Sql1 = "select * from impresora;"
+            Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
+            reader = cmd1.ExecuteReader()
+            reader.Read()
+            impresora = reader.GetString(1).ToString()
+            conexionMysql.Close()
+        Catch ex As Exception
+            MsgBox("No hay una impresora seleccionada", MsgBoxStyle.Information, "Sistema")
+        End Try
+
+
+
+        txtetiqueta1 = " prueba de impresión"
+        txtetiqueta2 = " Nº : " & lbfolio.Text
+        txtetiqueta = " De : " & "$" & txttotalpagar.Text &
+        Chr(10) & " " & "12/12/!2"
+        Try
+            Dim PrintDialog1 As New PrintDialog
+            PrintDialog1.Document = PrintDocument5TICKETSERVICIO
+            PrintDialog1.PrinterSettings.PrinterName = impresora
+            If PrintDocument5TICKETSERVICIO.PrinterSettings.IsValid Then
+                PrintDocument5TICKETSERVICIO.Print() 'Imprime texto 
+            Else
+                MsgBox("Impresora invalida", MsgBoxStyle.Exclamation, "CTRL+y")
+                'MessageBox.Show("La impresora no es valida")
+            End If
+            '--------------------------------------------------- 
+        Catch ex As Exception
+            MsgBox("Hay problemas con la impresion", MsgBoxStyle.Exclamation, "CTRL+y")
+
+            'MessageBox.Show("Hay un problema de impresión",
+            ' ex.ToString()
+        End Try
+
+    End Sub
+
+    Private Sub PrintDocument5TICKETSERVICIO_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument5TICKETSERVICIO.PrintPage
+        'e.Graphics.DrawString(txtetiqueta1, New Font("verdana", 11, FontStyle.Bold), New SolidBrush(Color.Black), 1, 9)
+        'e.Graphics.DrawString(txtetiqueta2, New Font("verdana", 9, FontStyle.Bold), New SolidBrush(Color.Black), 1, 28)
+        'e.Graphics.DrawString(txtetiqueta, New Font("verdana", 13, FontStyle.Bold), New SolidBrush(Color.Black), 1, 57)
+        'traemos la información del ticket, como encabezado, datos de la empresa etc.
+        Dim saludo, ticketnombre, ticketcoloniaciudad, tickettelefono, ticketgiro, p1, p2, p3, p4, comentario As String
+        Dim callenumero, cp, estado, whatsapp, correo, rfc As String
+        Dim x, y, tfuente, tfuente2, tfuente3 As Integer
+        Try
+
+
+            conexionMysql.Open()
+            Dim Sql1 As String
+            Sql1 = "select * from datos_empresa;"
+            Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
+            reader = cmd1.ExecuteReader()
+            reader.Read()
+            ticketnombre = reader.GetString(1).ToString()
+            callenumero = reader.GetString(2).ToString()
+            ticketcoloniaciudad = reader.GetString(3).ToString()
+            cp = reader.GetString(4).ToString()
+            estado = reader.GetString(5).ToString()
+            tickettelefono = reader.GetString(6).ToString()
+            whatsapp = reader.GetString(7).ToString()
+            correo = reader.GetString(8).ToString()
+            'ctxtfacebook.Text = reader.GetString(9).ToString()
+            'ctxtsitio.Text = reader.GetString(10).ToString()
+            'ctxtencargado.Text = reader.GetString(11).ToString()
+            'ctxthorario.Text = reader.GetString(12).ToString()
+            ticketgiro = reader.GetString(13).ToString()
+            saludo = reader.GetString(24).ToString()
+            'p1 = reader.GetString(14).ToString()
+            'P2 = reader.GetString(15).ToString()
+            'P3 = reader.GetString(16).ToString()
+            'p4 = reader.GetString(17).ToString()
+            rfc = reader.GetString(22).ToString()
+
+            conexionMysql.Close()
+
+        Catch ex As Exception
+
+        End Try
+
+        Dim id, actividad, cantidad, costo, total, fecha, hora, idusuario, idmax As String
+
+
+        tfuente = 10 '7
+        tfuente2 = 12
+        tfuente3 = 10
+        p1 = 10 'posicion de X
+        x = 5
+        y = 125
+        Dim ii, incremento As Integer
+        incremento = 14
+        Dim yy(20) As Integer
+        For ii = 0 To 20
+            y = y + incremento
+            yy(ii) = y
+        Next
+
+
+
+        Try
+            ' La fuente a usar
+            Dim prFont As New Font("Arial", 15, FontStyle.Bold)
+            'POSICION DEL LOGO
+            ' la posición superior
+            e.Graphics.DrawImage(pblogoticket.Image, 50, 20, 110, 110)
+
+
+
+        Catch ex As Exception
+            MessageBox.Show("ERROR: " & ex.Message, "Administrador",
+                          MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub Button76_Click_1(sender As Object, e As EventArgs) Handles Button76.Click
@@ -15177,6 +15614,19 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     Private Sub Compratxtiva_TextChanged(sender As Object, e As EventArgs) Handles compratxtiva.TextChanged
         sumatoriocompra()
+    End Sub
+
+    Private Sub Button89_Click(sender As Object, e As EventArgs) Handles Button89.Click
+        cerrarconexion()
+        'cargamos la ventana de frdatosorganizacion
+
+        Dim formulario As New FRMNuevoproducto
+
+        formulario.ShowDialog()
+
+
+        
+
     End Sub
 
     Private Sub PrintDocument2_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument2.PrintPage
@@ -15945,6 +16395,23 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
         Else
 
+        End If
+    End Sub
+
+    Private Sub btventas_DoubleClick(sender As Object, e As EventArgs) Handles btventas.DoubleClick
+        'ABRIRCAJATICKET()
+
+    End Sub
+
+    Private Sub btventas_KeyDown(sender As Object, e As KeyEventArgs) Handles btventas.KeyDown
+
+    End Sub
+
+    Private Sub Button1_KeyDown(sender As Object, e As KeyEventArgs) Handles Button1.KeyDown
+        If e.KeyCode = Keys.F1 Then
+            ABRIRCAJATICKET()
+            'ElseIf e.KeyCode = Keys.F2 Or e.KeyCode = Keys.Enter Then
+            '    agregarproductogrilla()
         End If
     End Sub
 End Class

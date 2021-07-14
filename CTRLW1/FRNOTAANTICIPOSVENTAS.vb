@@ -2,12 +2,16 @@
 Imports Microsoft.Reporting.WinForms
 Public Class FRNOTAANTICIPOSVENTAS
     Private Sub FRNOTAANTICIPOSVENTAS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim fechacompleta As String
+        ' Dim fechacompleta As String
         '------------------------------------------
         'recibo el folio del corte de caja
         '----------------------------------------------
-        fechacompleta = frmindex.calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
 
+        Dim fechacompleta, fecha, fechafinal As String
+        fechacompleta = frmindex.calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
+        ' fechacompleta = calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
+        fecha = fechacompleta & " 00:00:00"
+        fechafinal = fechacompleta & " 23:59:59"
         ' MsgBox(fechacompleta)
 
 
@@ -88,12 +92,20 @@ Public Class FRNOTAANTICIPOSVENTAS
         conexionMysql.Open()
         Dim ds24 As DataSet
         Dim Sql24 As String
+        '        Sql24 = "select concat (cliente.nombre,' ',cliente.ap,' ',cliente.am) as cliente
+        ', servicios_ventas.idservicios_ventas,servicios_ventas.idventa ,servicios_ventas.fecha, servicios_ventas.hora,
+        'servicios_ventas.idcliente, servicios_ventas.anticipo,servicios_ventas.total 
+        'from servicios_ventas, cliente 
+        'where  servicios_ventas.fecha='" & fechacompleta & "'
+        'and cliente.idcliente = servicios_ventas.idcliente;"
+
         Sql24 = "select concat (cliente.nombre,' ',cliente.ap,' ',cliente.am) as cliente
 , servicios_ventas.idservicios_ventas,servicios_ventas.idventa ,servicios_ventas.fecha, servicios_ventas.hora,
 servicios_ventas.idcliente, servicios_ventas.anticipo,servicios_ventas.total 
 from servicios_ventas, cliente 
-where  servicios_ventas.fecha='" & fechacompleta & "'
-and cliente.idcliente = servicios_ventas.idcliente;"
+where  cliente.idcliente = servicios_ventas.idcliente and servicios_ventas.fecha between '" & fecha & "' and '" & fechafinal & "';"
+
+
         Dim cmd24 As New MySqlCommand(Sql24, conexionMysql)
         Dim dt24 As New DataTable
         Dim da24 As New MySqlDataAdapter(cmd24)

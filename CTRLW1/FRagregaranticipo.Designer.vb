@@ -24,11 +24,12 @@ Partial Class FRagregaranticipo
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FRagregaranticipo))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.ch1 = New System.Windows.Forms.CheckBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button17 = New System.Windows.Forms.Button()
         Me.txtcantidad = New System.Windows.Forms.TextBox()
         Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
-        Me.ch1 = New System.Windows.Forms.CheckBox()
+        Me.PrintDocument5TICKETSERVICIO = New System.Drawing.Printing.PrintDocument()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -44,6 +45,16 @@ Partial Class FRagregaranticipo
         Me.GroupBox1.Size = New System.Drawing.Size(380, 226)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
+        '
+        'ch1
+        '
+        Me.ch1.AutoSize = True
+        Me.ch1.Location = New System.Drawing.Point(223, 27)
+        Me.ch1.Name = "ch1"
+        Me.ch1.Size = New System.Drawing.Size(135, 17)
+        Me.ch1.TabIndex = 22
+        Me.ch1.Text = "Autocompletar restante"
+        Me.ch1.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -88,15 +99,8 @@ Partial Class FRagregaranticipo
         'PrintDocument1
         '
         '
-        'ch1
+        'PrintDocument5TICKETSERVICIO
         '
-        Me.ch1.AutoSize = True
-        Me.ch1.Location = New System.Drawing.Point(223, 27)
-        Me.ch1.Name = "ch1"
-        Me.ch1.Size = New System.Drawing.Size(135, 17)
-        Me.ch1.TabIndex = 22
-        Me.ch1.Text = "Autocompletar restante"
-        Me.ch1.UseVisualStyleBackColor = True
         '
         'FRagregaranticipo
         '
@@ -122,4 +126,5 @@ Partial Class FRagregaranticipo
     Friend WithEvents txtcantidad As TextBox
     Friend WithEvents PrintDocument1 As Printing.PrintDocument
     Friend WithEvents ch1 As CheckBox
+    Friend WithEvents PrintDocument5TICKETSERVICIO As Printing.PrintDocument
 End Class

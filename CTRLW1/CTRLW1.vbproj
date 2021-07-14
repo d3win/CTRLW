@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Dw\Documents\sis10\</PublishUrl>
+    <PublishUrl>C:\Users\Dw\Documents\ctrl\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -26,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <PublisherName>Darwin</PublisherName>
-    <ApplicationRevision>42</ApplicationRevision>
+    <ApplicationRevision>43</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -311,6 +311,12 @@
     <Compile Include="FRMNOTAVENTASCORTE.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FRMNuevoproducto.Designer.vb">
+      <DependentUpon>FRMNuevoproducto.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FRMNuevoproducto.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmnuevovinil.Designer.vb">
       <DependentUpon>frmnuevovinil.vb</DependentUpon>
     </Compile>
@@ -584,6 +590,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FRMNOTAVENTASCORTE.resx">
       <DependentUpon>FRMNOTAVENTASCORTE.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FRMNuevoproducto.resx">
+      <DependentUpon>FRMNuevoproducto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmnuevovinil.resx">
       <DependentUpon>frmnuevovinil.vb</DependentUpon>
