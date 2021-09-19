@@ -17,16 +17,16 @@ Partial Public Class dwinDataSet
     End Class
 
     Partial Public Class dsventascorteDataTable
-        Private Sub dsventascorteDataTable_dsventascorteRowChanging(sender As Object, e As dsventascorteRowChangeEvent) Handles Me.dsventascorteRowChanging
+        'Private Sub dsventascorteDataTable_dsventascorteRowChanging(sender As Object, e As dsventascorteRowChangeEvent) Handles Me.dsventascorteRowChanging
 
-        End Sub
+        'End Sub
 
     End Class
 
     Partial Public Class dsservicioDataTable
-        Private Sub dsservicioDataTable_dsservicioRowChanging(sender As Object, e As dsservicioRowChangeEvent) Handles Me.dsservicioRowChanging
+        'Private Sub dsservicioDataTable_dsservicioRowChanging(sender As Object, e As dsservicioRowChangeEvent) Handles Me.dsservicioRowChanging
 
-        End Sub
+        'End Sub
 
     End Class
 
@@ -38,4 +38,12 @@ Partial Public Class dwinDataSet
     Partial Public Class ventaproDataTable
 
     End Class
+
+    Friend Function SchemaSerializationMode() As SchemaSerializationMode
+        Throw New NotImplementedException()
+    End Function
+
+    Friend Function DataSetName() As String
+        Throw New NotImplementedException()
+    End Function
 End Class

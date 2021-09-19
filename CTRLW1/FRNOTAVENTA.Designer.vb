@@ -51,10 +51,10 @@ Partial Class FRNOTAVENTA
         Me.ventaproBindingSource.DataSource = Me.dwinDataSet
         '
         'dwinDataSet
-        '
-        Me.dwinDataSet.DataSetName = "dwinDataSet"
-        Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
+        ''
+        'Me.dwinDataSet.DataSetName = "dwinDataSet"
+        'Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        ''
         'datos_empresaBindingSource
         '
         Me.datos_empresaBindingSource.DataMember = "datos_empresa"

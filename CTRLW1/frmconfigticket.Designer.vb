@@ -163,6 +163,7 @@ Partial Class frmconfigticket
         Me.txtruta.Name = "txtruta"
         Me.txtruta.Size = New System.Drawing.Size(263, 20)
         Me.txtruta.TabIndex = 13
+        Me.txtruta.WordWrap = False
         '
         'Label2
         '

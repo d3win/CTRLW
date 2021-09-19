@@ -59,8 +59,8 @@ Partial Class FRinventario
         '
         'dwinDataSet
         '
-        Me.dwinDataSet.DataSetName = "dwinDataSet"
-        Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        'Me.dwinDataSet.DataSetName = "dwinDataSet"
+        ' Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'dslogoBindingSource
         '

@@ -275,6 +275,7 @@ Partial Class FRcerrarcaja
         Me.txtganancia.Name = "txtganancia"
         Me.txtganancia.Size = New System.Drawing.Size(130, 35)
         Me.txtganancia.TabIndex = 52
+        Me.txtganancia.Text = "0"
         '
         'Label38
         '

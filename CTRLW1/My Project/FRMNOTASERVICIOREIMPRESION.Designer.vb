@@ -70,8 +70,8 @@ Partial Class FRMNOTASERVICIOREIMPRESION
         '
         'dwinDataSet
         '
-        Me.dwinDataSet.DataSetName = "dwinDataSet"
-        Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        'Me.dwinDataSet.DataSetName = "dwinDataSet"
+        'Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'dslogoBindingSource
         '

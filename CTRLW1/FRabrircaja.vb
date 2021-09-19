@@ -99,7 +99,7 @@ Public Class FRabrircaja
                     ''--------------------------------------------------------
                 End If
                 'Catch ex As Exception
-                MsgBox("Existe un problema con la entrada de información", MsgBoxStyle.Information, "CTRL+y")
+                ' MsgBox("Existe un problema con la entrada de información", MsgBoxStyle.Information, "CTRL+y")
                 'End Try
 
             Catch ex As Exception

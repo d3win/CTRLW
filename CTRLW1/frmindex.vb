@@ -1322,15 +1322,17 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         cerrarconexion()
         Try
 
-            Dim valorticket, valorcambio As String
+            Dim valorticket, valorcambio, MostrarCorte As String
             conexionMysql.Open()
             Dim Sql111 As String
-            Sql111 = "select obligarticket,obligarcambio from datos_empresa;"
+            Sql111 = "select obligarticket,obligarcambio,mostrar_corte from datos_empresa;"
             Dim cmd111 As New MySqlCommand(Sql111, conexionMysql)
             reader = cmd111.ExecuteReader()
             reader.Read()
             valorticket = reader.GetString(0).ToString
             valorcambio = reader.GetString(1).ToString
+            MostrarCorte = reader.GetString(2).ToString
+
             conexionMysql.Close()
 
             If valorticket = 1 Then
@@ -1344,6 +1346,12 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
                 chcalcularcambio.Checked = True
             Else
                 chcalcularcambio.Checked = False
+            End If
+
+            If MostrarCorte = 1 Then
+                chcierre.Checked = True
+            Else
+                chcierre.Checked = False
             End If
         Catch ex As Exception
             ' MsgBox("fallo", MsgBoxStyle.Information)
@@ -4706,14 +4714,14 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
                     'Try
                     conexionMysql.Open()
 
-                        Dim Sql40 As String
-                        Sql40 = "INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('1', 'EFECTIVO');
+                    Dim Sql40 As String
+                    Sql40 = "INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('1', 'EFECTIVO');
 INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('2', 'DEPOSITO');
 INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 ;"
-                        Dim cmd40 As New MySqlCommand(Sql40, conexionMysql)
-                        cmd40.ExecuteNonQuery()
-                        conexionMysql.Close()
+                    Dim cmd40 As New MySqlCommand(Sql40, conexionMysql)
+                    cmd40.ExecuteNonQuery()
+                    conexionMysql.Close()
 
                     'Catch ex As Exception
                     'cerrarconexion()
@@ -15264,7 +15272,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         nuevoservicio()
     End Sub
 
-    Private Sub Btnconactualizararticulosminimos_Click(sender As Object, e As EventArgs) Handles btnconactualizararticulosminimos.Click
+    Private Sub Btnconactualizararticulosminimos_Click(sender As Object, e As EventArgs)
 
         Try
 
@@ -15625,8 +15633,35 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         formulario.ShowDialog()
 
 
-        
 
+
+    End Sub
+
+    Private Sub Chcierre_CheckedChanged(sender As Object, e As EventArgs) Handles chcierre.CheckedChanged
+        Try
+            Dim valor As Integer
+            valor = 0
+            If chcierre.Checked = True Then
+                valor = 1
+            ElseIf chcierre.Checked = False Then
+                valor = 0
+            End If
+
+            'MsgBox("LA IMPRESORA A GUARDAR ES:" & impresosaPredt)
+
+
+            conexionMysql.Open()
+            Dim Sql22 As String
+            Sql22 = "UPDATE `dwin`.`datos_empresa` SET `mostrar_corte` = '" & valor & "';"
+            Dim cmd22 As New MySqlCommand(Sql22, conexionMysql)
+            cmd22.ExecuteNonQuery()
+            conexionMysql.Close()
+            'MsgBox("Valor Actualizado", MsgBoxStyle.Information, "CTRL+y")
+
+        Catch ex As Exception
+            cerrarconexion()
+            'MsgBox(ex.Message, "13")
+        End Try
     End Sub
 
     Private Sub PrintDocument2_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument2.PrintPage

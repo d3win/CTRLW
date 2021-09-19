@@ -64,8 +64,8 @@ Partial Class FRNOTAVENTASRAPIDAS
         '
         'dwinDataSet
         '
-        Me.dwinDataSet.DataSetName = "dwinDataSet"
-        Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        'Me.dwinDataSet.DataSetName = "dwinDataSet"
+        'Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'datos_empresaBindingSource
         '

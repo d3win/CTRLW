@@ -15,7 +15,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Dw\Documents\ctrl\</PublishUrl>
+    <TargetFrameworkProfile />
+    <PublishUrl>C:\Users\Dw\Documents\ctrl2\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -26,7 +27,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <PublisherName>Darwin</PublisherName>
-    <ApplicationRevision>43</ApplicationRevision>
+    <ApplicationRevision>47</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -153,18 +154,8 @@
     <Compile Include="ds1.vb">
       <DependentUpon>ds1.xsd</DependentUpon>
     </Compile>
-    <Compile Include="dwinDataSet.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dwinDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="dwinDataSet.vb">
       <DependentUpon>dwinDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="dwinDataSet1.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dwinDataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
@@ -236,6 +227,12 @@
       <DependentUpon>FRinventario.vb</DependentUpon>
     </Compile>
     <Compile Include="FRinventario.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAceptarTrans.Designer.vb">
+      <DependentUpon>FrmAceptarTrans.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmAceptarTrans.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FRMANTICIPOSERVICIOVINIL.Designer.vb">
@@ -488,6 +485,12 @@
     <Compile Include="print.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="REP1.Designer.vb">
+      <DependentUpon>REP1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="REP1.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="REPORTES\DataSet1.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -554,6 +557,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FRinventario.resx">
       <DependentUpon>FRinventario.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAceptarTrans.resx">
+      <DependentUpon>FrmAceptarTrans.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FRMANTICIPOSERVICIOVINIL.resx">
       <DependentUpon>FRMANTICIPOSERVICIOVINIL.vb</DependentUpon>
@@ -682,6 +688,7 @@
     <EmbeddedResource Include="Report2.rdlc" />
     <EmbeddedResource Include="Report3.rdlc" />
     <EmbeddedResource Include="Report4.rdlc" />
+    <EmbeddedResource Include="Report5.rdlc" />
     <EmbeddedResource Include="REPORTES\informe1.rdlc" />
     <EmbeddedResource Include="REPORTES\informe1.resx">
       <DependentUpon>informe1.vb</DependentUpon>
@@ -725,7 +732,6 @@
     </None>
     <None Include="dwinDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dwinDataSet.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
     <None Include="dwinDataSet.xss">
@@ -736,7 +742,6 @@
     </None>
     <None Include="dwinDataSet1.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>dwinDataSet1.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
     <None Include="dwinDataSet1.xss">

@@ -11,6 +11,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "C TRLP2021", "CTRLP2021\CTR
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup3", "Setup3\Setup3.vdproj", "{D3B60110-8E12-41D1-AAEF-67EE4207543A}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup4", "Setup4\Setup4.vdproj", "{D7216B20-340A-4D8F-84DD-F3067FE98423}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,8 @@ Global
 		{16F83598-027E-4505-BEDE-255769F14ACE}.Release|Any CPU.ActiveCfg = Release
 		{D3B60110-8E12-41D1-AAEF-67EE4207543A}.Debug|Any CPU.ActiveCfg = Debug
 		{D3B60110-8E12-41D1-AAEF-67EE4207543A}.Release|Any CPU.ActiveCfg = Release
+		{D7216B20-340A-4D8F-84DD-F3067FE98423}.Debug|Any CPU.ActiveCfg = Debug
+		{D7216B20-340A-4D8F-84DD-F3067FE98423}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -59,9 +59,9 @@ Partial Class FRNOTAPRODUCTOSFALTANTES
         '
         'dwinDataSet
         '
-        Me.dwinDataSet.DataSetName = "dwinDataSet"
-        Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
+        'Me.dwinDataSet.DataSetName = "dwinDataSet"
+        'Me.dwinDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
+        ''
         'dslogoBindingSource
         '
         Me.dslogoBindingSource.DataMember = "dslogo"

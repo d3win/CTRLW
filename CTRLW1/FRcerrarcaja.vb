@@ -2,15 +2,62 @@
 Imports MySql.Data.MySqlClient
 Public Class FRcerrarcaja
 
-
+    Dim valorvisible As Integer
     Private Sub FRcerrarcaja_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         lbmensaje.Visible = False
         Timer1.Enabled = True
 
         desglosecorte()
         cargarlogoticket()
-    End Sub
+        visibilidad()
 
+    End Sub
+    Function visibilidad()
+        Dim valor As Integer
+        Try
+
+            conexionMysql.Open()
+            Dim Sql1 As String
+            Sql1 = "SELECT mostrar_corte FROM dwin.datos_empresa;"
+            Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
+            reader = cmd1.ExecuteReader()
+            reader.Read()
+            valor = reader.GetString(0).ToString()
+            conexionMysql.Close()
+        Catch ex As Exception
+            'MsgBox("ERROR:1", MsgBoxStyle.Information, "Sistema")
+            cerrarconexion()
+            valor = 0
+        End Try
+
+
+
+        'MsgBox(valor)
+        If valor = 1 Then
+
+
+            txtdeberialexistir.Visible = False
+            txtventasproductos.Visible = False
+            txtanticipos.Visible = False
+            txtventasefectivo.Visible = False
+            txtventastransferencias.Visible = False
+            txtventastarjeta.Visible = False
+            txtventavales.Visible = False
+            txttotalfinalventas.Visible = False
+            txtdiferencia.Visible = False
+            txtganancia.Visible = False
+            lbmensaje.Visible = False
+            txttotalventascompras.Visible = False
+
+            valorvisible = 1
+        Else
+            valorvisible = 0
+        End If
+
+
+
+
+    End Function
     Function cargarlogoticket()
 
 
@@ -251,7 +298,7 @@ Public Class FRcerrarcaja
 
             'imprimir el titutlo del ticket
             prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
-            '''''''''e.Graphics.DrawString("CLIENTE:" & txtcliente.Text, prFont, Brushes.Black, x, yy(10))
+            '''''''''e.Graphics.DrawString("CLIENTE:" & txtcliente.Text, prF ont, Brushes.Black, x, yy(10))
             prFont = New Font(f_tipo, tfuente, FontStyle.Bold)
             e.Graphics.DrawString("FECHA:" & Date.Now, prFont, Brushes.Black, x, yy(10))
             prFont = New Font(f_tipo, tfuente2, FontStyle.Bold)
@@ -995,40 +1042,49 @@ Public Class FRcerrarcaja
 
             For i = idmin To idmax
 
+                Try
 
-                '  MsgBox(i)
+                    '  MsgBox(i)
 
-                cerrarconexion()
-                Dim Sqla15 As String
-                conexionMysql.Open()
-                Sqla15 = "select idproducto,costo from ventaind where idventaind=" & i & ";"
-                Dim cmda15 As New MySqlCommand(Sqla15, conexionMysql)
-                reader = cmda15.ExecuteReader()
-                reader.Read()
-                clave = reader.GetString(0).ToString
-                precio = reader.GetString(1).ToString
-                cerrarconexion()
+                    cerrarconexion()
+                    Dim Sqla15 As String
+                    conexionMysql.Open()
+                    Sqla15 = "select idproducto,costo from ventaind where idventaind=" & i & ";"
+                    Dim cmda15 As New MySqlCommand(Sqla15, conexionMysql)
+                    reader = cmda15.ExecuteReader()
+                    reader.Read()
+                    clave = reader.GetString(0).ToString
+                    precio = reader.GetString(1).ToString
+                    cerrarconexion()
 
-                '  MsgBox("precio" & precio)
-
-
-                cerrarconexion()
-                Dim Sqla16 As String
-                conexionMysql.Open()
-                Sqla16 = "select costo from producto where idproducto='" & clave & "';"
-                Dim cmda16 As New MySqlCommand(Sqla16, conexionMysql)
-                reader = cmda16.ExecuteReader()
-                reader.Read()
-                costo = reader.GetString(0).ToString
-                cerrarconexion()
-
-                ' MsgBox("costo" & costo)
+                    '  MsgBox("precio" & precio)
 
 
-                valor = CDbl(precio) - CDbl(costo)
-                ' MsgBox(valor)
-                sumaGanancia = sumaGanancia + valor
-                ' MsgBox(sumaGanancia)
+                    cerrarconexion()
+                    Dim Sqla16 As String
+                    conexionMysql.Open()
+                    Sqla16 = "select costo from producto where idproducto='" & clave & "';"
+                    Dim cmda16 As New MySqlCommand(Sqla16, conexionMysql)
+                    reader = cmda16.ExecuteReader()
+                    reader.Read()
+                    costo = reader.GetString(0).ToString
+                    cerrarconexion()
+
+                    ' MsgBox("costo" & costo)
+
+
+                    valor = CDbl(precio) - CDbl(costo)
+                    ' MsgBox(valor)
+                    sumaGanancia = sumaGanancia + valor
+                    ' MsgBox(sumaGanancia)
+                Catch ex As Exception
+                    MsgBox("Hay venta corruptas", MsgBoxStyle.Information, "CTRL+y")
+                    cerrarconexion()
+                    sumaGanancia = 0
+                    i = idmax
+
+
+                End Try
 
 
             Next
@@ -1090,13 +1146,20 @@ Public Class FRcerrarcaja
             txtdiferencia.Text = CDbl(txtsaldocaja.Text) - CDbl(txtdeberialexistir.Text)
             If txtdiferencia.Text < 0 Then
                 txtdiferencia.BackColor = Color.Coral
-                lbmensaje.Visible = True
+
+
+
+
+                If valorvisible = 0 Then
+
+                    lbmensaje.Visible = True
+                End If
 
 
 
                 'txtdiferencia.ForeColor = Color.White
             Else
-                txtdiferencia.BackColor = Color.White
+                    txtdiferencia.BackColor = Color.White
                 'txtdiferencia.ForeColor = Color.Black
                 lbmensaje.Visible = False
 
