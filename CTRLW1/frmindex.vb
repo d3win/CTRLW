@@ -204,7 +204,7 @@ ADD COLUMN `fecha_cierre` DATE NULL AFTER `ganancia`;
         Try
             conexionMysql.Open()
             Dim Sql As String
-            Sql = "        ALTER TABLE `dwin`.`datos_empresa` 
+            Sql = "ALTER TABLE `dwin`.`datos_empresa` 
 ADD COLUMN `f_tipo` VARCHAR(45) NULL AFTER `f_contenido`;"
             Dim cmd As New MySqlCommand(Sql, conexionMysql)
             cmd.ExecuteNonQuery()
@@ -582,6 +582,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
 
+        'Me.ReportViewer1.RefreshReport()
     End Sub
     Function cargarlogoticket()
 
@@ -4008,7 +4009,12 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
 
-            MsgBox("Venta realizada", MsgBoxStyle.Information, "Sistema")
+            'MsgBox("Venta realizada", MsgBoxStyle.Information, "Sistema")
+
+
+            Dim formulario As New FrmAceptarTrans
+
+            formulario.ShowDialog()
 
 
 
@@ -4052,7 +4058,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
                 'este codigo si funcionaba
                 cargardatosnotaventa()
-                FRNOTAVENTA.ShowDialog()
+                FRMNotaVenta.ShowDialog()
                 'imprimirnotaventa()
 
             End If
@@ -4124,7 +4130,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             MsgBox("Hay problemas con la impresion", MsgBoxStyle.Exclamation, "CTRL+y")
 
             'MessageBox.Show("Hay un problema de impresión",
-            ex.ToString()
+            'ex.ToString()
         End Try
 
     End Sub
@@ -5185,7 +5191,13 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
                     '---------------------------------------------------------
 
-                    MsgBox("Producto guardado", MsgBoxStyle.Information, "Sistema")
+                    'MsgBox("Producto guardado", MsgBoxStyle.Information, "Sistema")
+                    Dim formulario As New FrmAceptarTrans
+
+                    formulario.ShowDialog()
+
+
+
                     'se llena la grilla, tomando en cuenta ninguna elemento.
                     txtnombrep.Text = ""
                     'Call llenadogrilla()
@@ -5659,7 +5671,14 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                 cmd.ExecuteNonQuery()
                 conexionMysql.Close()
                 'llamar a la funcion limpiar, para limpiar las cajas cada vez que se agrege una nueva compra.
-                MsgBox("Registro guardado correctamente", MsgBoxStyle.Information, "Sistema")
+                'MsgBox("Registro guardado correctamente", MsgBoxStyle.Information, "Sistema")
+
+                Dim formulario As New FrmAceptarTrans
+
+                formulario.ShowDialog()
+
+
+
                 conexionMysql.Close()
 
                 '------------------------------------------------------------------------------------------------
@@ -6718,7 +6737,11 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     'limpiamos los campos de cliente.
                     limpiarcliente()
                     conexionMysql.Close()
-                    MsgBox("Cliente registrado", MsgBoxStyle.Information, "Sistema")
+                    'MsgBox("Cliente registrado", MsgBoxStyle.Information, "Sistema")
+
+                    Dim formulario As New FrmAceptarTrans
+
+                    formulario.ShowDialog()
                     cllenadocliente()
 
                 Catch ex As Exception
@@ -7519,7 +7542,11 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     'limpiamos los campos de cliente.
                     limpiarproveedor()
                     conexionMysql.Close()
-                    MsgBox("Proveedor registrado", MsgBoxStyle.Information, "Sistema")
+                    'MsgBox("Proveedor registrado", MsgBoxStyle.Information, "Sistema")
+                    Dim formulario As New FrmAceptarTrans
+
+                    formulario.ShowDialog()
+
                     llenadoproveedor()
 
                 Catch ex As Exception
@@ -8532,7 +8559,12 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
                     cmd22.ExecuteNonQuery()
                     conexionMysql.Close()
                 Next
-                MsgBox("Transferencia completa", MsgBoxStyle.Information, "Sistema")
+                'MsgBox("Transferencia completa", MsgBoxStyle.Information, "Sistema")
+
+                Dim formulario As New FrmAceptarTrans
+
+                formulario.ShowDialog()
+
                 limpiarcompramercancia()
                 borrarcompra()
                 ctxtcomprado2.Text = ""
@@ -8540,8 +8572,8 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
 
 
-                Dim formulario As New FRNOTACOMPRAMERCANCIA
-                formulario.ShowDialog()
+                Dim formulario2 As New FRNOTACOMPRAMERCANCIA
+                formulario2.ShowDialog()
 
                 'ctxtcostomercancia.Text = ""
                 'ctxtcostototalmercancia.Text = ""
@@ -11940,11 +11972,15 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
             'Else
 
-            MsgBox("Venta realizada", MsgBoxStyle.Information, "Sistema")
+            'MsgBox("Venta realizada", MsgBoxStyle.Information, "Sistema")
+            Dim formulario As New FrmAceptarTrans
+
+            formulario.ShowDialog()
             ABRIRCAJATICKET()
 
             cargarformadepago()
-            FRNOTASERVICIO.ShowDialog()
+            FRMNotaServicio.ShowDialog()
+            'FRMNotaServicio.ShowDialog()
 
 
 
@@ -14708,11 +14744,12 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
             'formulario.ShowDialog()
 
-
+            stxtfoliobusquedaventa.Text = rptidservicio.Text
+            cargarfolioventa()
             'cargardatosnotaventa2()
             'imprimirnotaventa2()
-
-            FRNNOTASERVICIOREIMPRESION.Show()
+            FRMNotaAnticipoServicio.Show()
+            'FRNNOTASERVICIOREIMPRESION.Show()
 
         End If
     End Sub
@@ -15475,6 +15512,8 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         Dim valores As String
         valores = My.Computer.Name.ToString
         MsgBox(valores)
+
+
     End Sub
 
     Private Sub Btventas_Click_1(sender As Object, e As EventArgs) Handles btventas.Click

@@ -83,8 +83,10 @@ Public Class FRagregaranticipo
 
                 conexionMysql.Close()
 
-                MsgBox("Hemos actualizado la información del pago", MsgBoxStyle.Information, "CTRL+y")
+                ' MsgBox("Hemos actualizado la información del pago", MsgBoxStyle.Information, "CTRL+y")
+                Dim formulario As New FrmAceptarTrans
 
+                formulario.ShowDialog()
 
 
 
@@ -107,9 +109,9 @@ Public Class FRagregaranticipo
                 End If
 
                 'llamamos a la funcion imprimir de cualquier modo
-                Dim formulario As New FRNOTAANTICIPOSERVICIO
+                Dim formulario2 As New FRMNotaAnticipoServicio
                 'FRagregaranticipo.ShowDialog()
-                formulario.ShowDialog()
+                formulario2.ShowDialog()
 
                 'imprimir()
 

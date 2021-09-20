@@ -499,6 +499,24 @@
     <Compile Include="REPORTES\DataSet1.vb">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="REPORTES\FormReport2021\FRMNotaAnticipoServicio.Designer.vb">
+      <DependentUpon>FRMNotaAnticipoServicio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="REPORTES\FormReport2021\FRMNotaAnticipoServicio.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="REPORTES\FormReport2021\FRMNotaServicio.Designer.vb">
+      <DependentUpon>FRMNotaServicio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="REPORTES\FormReport2021\FRMNotaServicio.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="REPORTES\FormReport2021\FRMNotaVenta.Designer.vb">
+      <DependentUpon>FRMNotaVenta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="REPORTES\FormReport2021\FRMNotaVenta.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="REPORTES\informe1.Designer.vb">
       <DependentUpon>informe1.vb</DependentUpon>
     </Compile>
@@ -689,10 +707,22 @@
     <EmbeddedResource Include="Report3.rdlc" />
     <EmbeddedResource Include="Report4.rdlc" />
     <EmbeddedResource Include="Report5.rdlc" />
+    <EmbeddedResource Include="REPORTES\FormReport2021\FRMNotaAnticipoServicio.resx">
+      <DependentUpon>FRMNotaAnticipoServicio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="REPORTES\FormReport2021\FRMNotaServicio.resx">
+      <DependentUpon>FRMNotaServicio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="REPORTES\FormReport2021\FRMNotaVenta.resx">
+      <DependentUpon>FRMNotaVenta.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="REPORTES\informe1.rdlc" />
     <EmbeddedResource Include="REPORTES\informe1.resx">
       <DependentUpon>informe1.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="REPORTES\Report2021\RPTNotaAnticipoServicio.rdlc" />
+    <EmbeddedResource Include="REPORTES\Report2021\RPTNotaServicio.rdlc" />
+    <EmbeddedResource Include="REPORTES\Report2021\RPTNotaVenta.rdlc" />
     <EmbeddedResource Include="rptanticiposservicios.rdlc" />
     <EmbeddedResource Include="rptCOMPRAMERCANCIA.rdlc" />
     <EmbeddedResource Include="rptCOMPRAS.rdlc" />

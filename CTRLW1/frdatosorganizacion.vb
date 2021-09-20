@@ -171,8 +171,13 @@ Public Class frdatosorganizacion
             Dim cmd5 As New MySqlCommand(Sql5, conexionMysql)
             cmd5.ExecuteNonQuery()
             conexionMysql.Close()
-            MsgBox("Datos actualizados correctamente", MsgBoxStyle.Information, "Ctrl+y")
-            frmindex.cargardatos_empresa()
+
+
+        Dim formulario As New FrmAceptarTrans
+
+        formulario.ShowDialog()
+        'MsgBox("Datos actualizados correctamente", MsgBoxStyle.Information, "Ctrl+y")
+        frmindex.cargardatos_empresa()
             Me.Close()
         'Catch ex As Exception
         MsgBox("Al parecer hay datos demasiado largos, revisa nuevamente", MsgBoxStyle.Exclamation, "CTRL+y")
