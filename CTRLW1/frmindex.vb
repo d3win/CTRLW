@@ -8664,14 +8664,14 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             MsgBox("Ingresa un ID valido", MsgBoxStyle.Exclamation, "Sistema")
         Else
 
-            Dim formulario As New FRNOTAVENTAREIMPRESION
+            indexidusuario = rptid.Text
+            Dim formulario As New FRMNotaVenta
             formulario.ShowDialog()
-
 
             'cargardatosnotaventa2()
             'imprimirnotaventa2()
 
-            '   FReventa.Show()
+            '            FRMNotaVenta.Show()
 
         End If
 

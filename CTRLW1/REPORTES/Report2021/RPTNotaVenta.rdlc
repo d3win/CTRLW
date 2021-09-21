@@ -203,7 +203,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.15562cm</Height>
+              <Height>0.65291cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -250,14 +250,9 @@
                               <Style />
                             </TextRun>
                             <TextRun>
-                              <Value xml:space="preserve"> </Value>
+                              <Value> / </Value>
                               <Style />
                             </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
                             <TextRun>
                               <Value>=Fields!descripcion.Value</Value>
                               <Style />
@@ -408,7 +403,7 @@
         <DataSetName>dsventapro</DataSetName>
         <Top>0.42364cm</Top>
         <Left>0.15014cm</Left>
-        <Height>1.75562cm</Height>
+        <Height>1.25291cm</Height>
         <Width>18.49879cm</Width>
         <Style>
           <Border>
@@ -436,7 +431,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox20</rd:DefaultName>
-        <Top>2.35565cm</Top>
+        <Top>1.85294cm</Top>
         <Left>8.44966cm</Left>
         <Height>0.87313cm</Height>
         <Width>5.47688cm</Width>
@@ -472,7 +467,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>total1</rd:DefaultName>
-        <Top>2.35565cm</Top>
+        <Top>1.85294cm</Top>
         <Left>14.03237cm</Left>
         <Height>0.87313cm</Height>
         <Width>4.61656cm</Width>
@@ -488,7 +483,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>3.44957cm</Height>
+    <Height>3.02624cm</Height>
     <Style />
   </Body>
   <Width>19.46578cm</Width>
