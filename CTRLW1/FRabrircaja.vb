@@ -78,7 +78,10 @@ Public Class FRabrircaja
 
 
 
-                    MsgBox("Registro almacenado", MsgBoxStyle.Information, "CTRL+y")
+                    Dim formulario As New FrmAceptarTrans
+
+                    formulario.ShowDialog()
+                    'MsgBox("Registro almacenado", MsgBoxStyle.Information, "CTRL+y")
                     ' MsgBox("aqui")
                     imprimirabrircaja()
 

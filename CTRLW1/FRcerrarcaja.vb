@@ -1206,7 +1206,11 @@ Public Class FRcerrarcaja
             Dim cmd5 As New MySqlCommand(Sql5, conexionMysql)
             cmd5.ExecuteNonQuery()
             conexionMysql.Close()
-            MsgBox("Se ha cerrado la caja", MsgBoxStyle.Information, "CTRL+y")
+
+            Dim formulario As New FrmAceptarTrans
+
+            formulario.ShowDialog()
+            'MsgBox("Se ha cerrado la caja", MsgBoxStyle.Information, "CTRL+y")
             'llamamos al a funcion de impresion de tickets
             imprimir()
             If ChAnticipos.Checked = True Then
@@ -1643,5 +1647,9 @@ Public Class FRcerrarcaja
                 MessageBox.Show("ERROR: " & ex.Message, "Administrador",
                           MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub GroupBox8_Enter(sender As Object, e As EventArgs) Handles GroupBox8.Enter
+
     End Sub
 End Class

@@ -154,6 +154,11 @@
     <Compile Include="ds1.vb">
       <DependentUpon>ds1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="dwinDataSet.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dwinDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="dwinDataSet.vb">
       <DependentUpon>dwinDataSet.xsd</DependentUpon>
     </Compile>
@@ -505,6 +510,12 @@
     <Compile Include="REPORTES\FormReport2021\FRMNotaAnticipoServicio.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="REPORTES\FormReport2021\FRMNotaCompra.Designer.vb">
+      <DependentUpon>FRMNotaCompra.vb</DependentUpon>
+    </Compile>
+    <Compile Include="REPORTES\FormReport2021\FRMNotaCompra.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="REPORTES\FormReport2021\FRMNotaServicio.Designer.vb">
       <DependentUpon>FRMNotaServicio.vb</DependentUpon>
     </Compile>
@@ -710,6 +721,9 @@
     <EmbeddedResource Include="REPORTES\FormReport2021\FRMNotaAnticipoServicio.resx">
       <DependentUpon>FRMNotaAnticipoServicio.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="REPORTES\FormReport2021\FRMNotaCompra.resx">
+      <DependentUpon>FRMNotaCompra.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="REPORTES\FormReport2021\FRMNotaServicio.resx">
       <DependentUpon>FRMNotaServicio.vb</DependentUpon>
     </EmbeddedResource>
@@ -721,6 +735,7 @@
       <DependentUpon>informe1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="REPORTES\Report2021\RPTNotaAnticipoServicio.rdlc" />
+    <EmbeddedResource Include="REPORTES\Report2021\RPTNotaCompra.rdlc" />
     <EmbeddedResource Include="REPORTES\Report2021\RPTNotaServicio.rdlc" />
     <EmbeddedResource Include="REPORTES\Report2021\RPTNotaVenta.rdlc" />
     <EmbeddedResource Include="rptanticiposservicios.rdlc" />
@@ -763,6 +778,7 @@
     <None Include="dwinDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>dwinDataSet.Designer.vb</LastGenOutput>
     </None>
     <None Include="dwinDataSet.xss">
       <DependentUpon>dwinDataSet.xsd</DependentUpon>

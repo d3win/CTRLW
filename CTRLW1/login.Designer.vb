@@ -45,10 +45,10 @@ Partial Class login
         Me.Button3.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Button3.Location = New System.Drawing.Point(222, 571)
+        Me.Button3.Location = New System.Drawing.Point(25, 530)
         Me.Button3.Margin = New System.Windows.Forms.Padding(5)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(28, 25)
+        Me.Button3.Size = New System.Drawing.Size(40, 39)
         Me.Button3.TabIndex = 80
         Me.Button3.UseVisualStyleBackColor = False
         '
@@ -62,7 +62,7 @@ Partial Class login
         Me.Button2.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Button2.Location = New System.Drawing.Point(15, 569)
+        Me.Button2.Location = New System.Drawing.Point(260, 566)
         Me.Button2.Margin = New System.Windows.Forms.Padding(5)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(28, 25)
@@ -75,7 +75,7 @@ Partial Class login
         Me.Label2.BackColor = System.Drawing.Color.White
         Me.Label2.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(21, 347)
+        Me.Label2.Location = New System.Drawing.Point(22, 323)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(89, 18)
         Me.Label2.TabIndex = 78
@@ -87,7 +87,7 @@ Partial Class login
         Me.Label1.BackColor = System.Drawing.Color.White
         Me.Label1.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(24, 276)
+        Me.Label1.Location = New System.Drawing.Point(25, 252)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(62, 18)
         Me.Label1.TabIndex = 77
@@ -96,7 +96,7 @@ Partial Class login
         'txtpass
         '
         Me.txtpass.Font = New System.Drawing.Font("Calibri", 14.25!)
-        Me.txtpass.Location = New System.Drawing.Point(24, 370)
+        Me.txtpass.Location = New System.Drawing.Point(25, 346)
         Me.txtpass.Margin = New System.Windows.Forms.Padding(5)
         Me.txtpass.Name = "txtpass"
         Me.txtpass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
@@ -106,7 +106,7 @@ Partial Class login
         'txtusuario
         '
         Me.txtusuario.Font = New System.Drawing.Font("Calibri", 14.25!)
-        Me.txtusuario.Location = New System.Drawing.Point(24, 299)
+        Me.txtusuario.Location = New System.Drawing.Point(25, 275)
         Me.txtusuario.Margin = New System.Windows.Forms.Padding(5)
         Me.txtusuario.Name = "txtusuario"
         Me.txtusuario.Size = New System.Drawing.Size(240, 31)
@@ -119,10 +119,10 @@ Partial Class login
         Me.Button1.Font = New System.Drawing.Font("Calibri", 15.75!)
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Button1.Location = New System.Drawing.Point(27, 431)
+        Me.Button1.Location = New System.Drawing.Point(25, 399)
         Me.Button1.Margin = New System.Windows.Forms.Padding(5)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(235, 89)
+        Me.Button1.Size = New System.Drawing.Size(240, 89)
         Me.Button1.TabIndex = 76
         Me.Button1.Text = "Ingresar"
         Me.Button1.UseVisualStyleBackColor = False
@@ -133,11 +133,11 @@ Partial Class login
         Me.Label3.BackColor = System.Drawing.Color.White
         Me.Label3.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
-        Me.Label3.Location = New System.Drawing.Point(12, 9)
+        Me.Label3.Location = New System.Drawing.Point(2, 9)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(43, 14)
+        Me.Label3.Size = New System.Drawing.Size(49, 14)
         Me.Label3.TabIndex = 81
-        Me.Label3.Text = "260621"
+        Me.Label3.Text = "v280921"
         '
         'PictureBox1
         '

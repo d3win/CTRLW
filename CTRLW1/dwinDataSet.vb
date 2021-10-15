@@ -39,9 +39,9 @@ Partial Public Class dwinDataSet
 
     End Class
 
-    Friend Function SchemaSerializationMode() As SchemaSerializationMode
-        Throw New NotImplementedException()
-    End Function
+    'Friend Function SchemaSerializationMode() As SchemaSerializationMode
+    '    Throw New NotImplementedException()
+    'End Function
 
     Friend Function DataSetName() As String
         Throw New NotImplementedException()
