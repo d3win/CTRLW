@@ -235,6 +235,7 @@ Partial Class frmcotizadorvinil
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 189
+        Me.TextBox1.Visible = False
         '
         'picturepagado
         '
@@ -373,7 +374,7 @@ Partial Class frmcotizadorvinil
         Me.stxtlistaclientes.ItemHeight = 24
         Me.stxtlistaclientes.Location = New System.Drawing.Point(6, 61)
         Me.stxtlistaclientes.Name = "stxtlistaclientes"
-        Me.stxtlistaclientes.Size = New System.Drawing.Size(279, 26)
+        Me.stxtlistaclientes.Size = New System.Drawing.Size(279, 50)
         Me.stxtlistaclientes.TabIndex = 65
         '
         'Button68

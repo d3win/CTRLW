@@ -12227,6 +12227,7 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
             MsgBox("No hay ventas que realizar, revisa tu información", MsgBoxStyle.Information, "Sistema")
             'txttotal.Text = ""
         Else
+
             'obtener fecha y hora
             Dim dia, mes, año, fecha, fechanueva As String
             hora2 = Now.Hour()
@@ -12319,6 +12320,11 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
 
 
+            '----------------si la hora de entrega esta vacia, la asignamos 00:00
+
+            If txthoraentrega.Text = "" Then
+                txthoraentrega.Text = "12:00:00"
+            End If
 
             '------------------------------------ insertamos el anticipo o el total que debe ..
             '-------------------------------------EN LA TABLA DE SERVICIOS_ANTICIPO
@@ -12339,18 +12345,18 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
 
 
 
-            '---------------------------------------------------------
-            'MsgBox(fechaentrega)
-            conexionMysql.Open()
-            Dim Sql33 As String
-            ' Sql33 = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario, fechaentrega, anticipo, resto, tipoventa) VALUES (" & slbfolio.Text & "," & stxttotalproductos.Text & ", " & CDbl(stxttotal.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'" & fechaentrega & "'," & stxtanticipo.Text & "," & stxtresto.Text & ",'2');"
-            Sql33 = "INSERT INTO `dwin`.`SERVICIOS_vENTAS` (`idventa`, `fecha`, `hora`, `idcliente`, `anticipo`, `total`) VALUES (" & slbfolio.Text & ", '" & fecha & "', '" & hora & "', " & idcliente & ", " & stxtanticipo.Text & ", " & CDbl(stxttotal.Text) & ");"
-            Dim cmd33 As New MySqlCommand(Sql33, conexionMysql)
-            cmd33.ExecuteNonQuery()
-            conexionMysql.Close()
+            ''---------------------------------------------------------
+            ''MsgBox(fechaentrega)
+            'conexionMysql.Open()
+            'Dim Sql33 As String
+            '' Sql33 = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario, fechaentrega, anticipo, resto, tipoventa) VALUES (" & slbfolio.Text & "," & stxttotalproductos.Text & ", " & CDbl(stxttotal.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'" & fechaentrega & "'," & stxtanticipo.Text & "," & stxtresto.Text & ",'2');"
+            'Sql33 = "INSERT INTO `dwin`.`SERVICIOS_vENTAS` (`idventa`, `fecha`, `hora`, `idcliente`, `anticipo`, `total`) VALUES (" & slbfolio.Text & ", '" & fecha & "', '" & hora & "', " & idcliente & ", " & stxtanticipo.Text & ", " & CDbl(stxttotal.Text) & ");"
+            'Dim cmd33 As New MySqlCommand(Sql33, conexionMysql)
+            'cmd33.ExecuteNonQuery()
+            'conexionMysql.Close()
 
-            '---------------------------------------------------------------
-            'ANTES DE BORRAR TODA LA INFORMACIÓN, MANDO A IMPRIMIR EL REPORTE (NOTA)
+            ''---------------------------------------------------------------
+            ''ANTES DE BORRAR TODA LA INFORMACIÓN, MANDO A IMPRIMIR EL REPORTE (NOTA)
 
 
 
@@ -15052,8 +15058,8 @@ INSERT INTO `dwin`.`tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENC
         fechacompleta1 = fechacompleta & " 00:00:00"
         fechacompletafinal = fechacompleta & " 23:59:59"
 
-        MsgBox(fechacompleta1)
-        MsgBox(fechacompletafinal)
+        'MsgBox(fechacompleta1)
+        'MsgBox(fechacompletafinal)
 
         cerrarconexion()
         'MsgBox(fechacompleta)
@@ -16048,7 +16054,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
     End Function
     Function consultaproductosfaltantes()
         Try
-
+            cerrarconexion()
             Dim cantidadminima As Integer
             'primero consultamos cual es el minimo de productos por mostrar
             conexionMysql.Open()

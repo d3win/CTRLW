@@ -23,6 +23,7 @@ Partial Class FRMPASS
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.Button53 = New System.Windows.Forms.Button()
         Me.Label73 = New System.Windows.Forms.Label()
         Me.Label61 = New System.Windows.Forms.Label()
@@ -30,7 +31,6 @@ Partial Class FRMPASS
         Me.txtpassnuevo = New System.Windows.Forms.TextBox()
         Me.Label59 = New System.Windows.Forms.Label()
         Me.txtpassactual = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -45,11 +45,25 @@ Partial Class FRMPASS
         Me.GroupBox1.Controls.Add(Me.txtpassnuevo)
         Me.GroupBox1.Controls.Add(Me.Label59)
         Me.GroupBox1.Controls.Add(Me.txtpassactual)
-        Me.GroupBox1.Location = New System.Drawing.Point(15, 12)
+        Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(314, 417)
+        Me.GroupBox1.Size = New System.Drawing.Size(320, 426)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(185, Byte), Integer))
+        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Location = New System.Drawing.Point(250, 300)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(58, 98)
+        Me.Button1.TabIndex = 63
+        Me.Button1.Text = "X"
+        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'Button53
         '
@@ -103,7 +117,7 @@ Partial Class FRMPASS
         Me.txtpassnuevore.Location = New System.Drawing.Point(63, 212)
         Me.txtpassnuevore.Name = "txtpassnuevore"
         Me.txtpassnuevore.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtpassnuevore.Size = New System.Drawing.Size(169, 35)
+        Me.txtpassnuevore.Size = New System.Drawing.Size(175, 35)
         Me.txtpassnuevore.TabIndex = 57
         '
         'txtpassnuevo
@@ -116,7 +130,7 @@ Partial Class FRMPASS
         Me.txtpassnuevo.Location = New System.Drawing.Point(63, 149)
         Me.txtpassnuevo.Name = "txtpassnuevo"
         Me.txtpassnuevo.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtpassnuevo.Size = New System.Drawing.Size(169, 35)
+        Me.txtpassnuevo.Size = New System.Drawing.Size(175, 35)
         Me.txtpassnuevo.TabIndex = 58
         '
         'Label59
@@ -143,22 +157,8 @@ Partial Class FRMPASS
         Me.txtpassactual.Location = New System.Drawing.Point(63, 48)
         Me.txtpassactual.Name = "txtpassactual"
         Me.txtpassactual.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtpassactual.Size = New System.Drawing.Size(172, 35)
+        Me.txtpassactual.Size = New System.Drawing.Size(178, 35)
         Me.txtpassactual.TabIndex = 56
-        '
-        'Button1
-        '
-        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(185, Byte), Integer))
-        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(250, 300)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(58, 98)
-        Me.Button1.TabIndex = 63
-        Me.Button1.Text = "X"
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button1.UseVisualStyleBackColor = False
         '
         'FRMPASS
         '
