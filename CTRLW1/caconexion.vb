@@ -34,7 +34,7 @@ Module caconexion
             'servidor = "localhost"
             'MsgBox(servidor)
             'MsgBox(contenido) 'pego primera linea
-            bd = "dwin" 'leo segunda linea
+            bd = "ctrl" 'leo segunda linea
             'user = freader.ReadLine()
             'pass = freader.ReadLine()
             puerto = port

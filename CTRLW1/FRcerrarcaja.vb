@@ -48,6 +48,9 @@ Public Class FRcerrarcaja
             txtganancia.Visible = False
             lbmensaje.Visible = False
             txttotalventascompras.Visible = False
+            txtcompramercancia.Visible = False
+            txtcompras.Visible = False
+            txtcomprastotales.Visible = False
 
             valorvisible = 1
         Else
