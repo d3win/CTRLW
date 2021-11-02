@@ -42,6 +42,31 @@ Public Class frmindex
     Function actualizarbd2021()
 
 
+        'creamos la nueva tabla para agenda
+
+         cerrarconexion()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = " CREATE TABLE `ctrl`.`agenda` (
+  `idagenda` INT NOT NULL,
+  `descripcion` TINYTEXT NULL,
+  `total` DOUBLE NULL,
+  `fecha` DATE NULL,
+  PRIMARY KEY (`idagenda`));"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+
+
 
         cerrarconexion()
 
