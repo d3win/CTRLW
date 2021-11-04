@@ -1047,7 +1047,7 @@ Public Class FRcerrarcaja
 
                 Try
 
-                    '  MsgBox(i)
+                    ' MsgBox(i)
 
                     cerrarconexion()
                     Dim Sqla15 As String
@@ -1205,7 +1205,7 @@ Public Class FRcerrarcaja
             conexionMysql.Open()
             'actualizo el dato
             Dim Sql5 As String
-            Sql5 = "UPDATE `dwin`.`caja` SET `monto_final` = '" & txttotalfinalventas.Text & "', `existencia_caja` = '" & txtsaldocaja.Text & "', `hora_final` = '" & hora & "', `estado` = '1', observaciones='" & txtobservaciones.Text & "', venta_rapida=" & txtventasproductos.Text & ", anticipos=" & txtanticipos.Text & ", compras=" & txtcompras.Text & ", total_ventas_compras=" & txttotalventascompras.Text & ", total_deberia_existir=" & txtdeberialexistir.Text & ", diferencia=" & txtdiferencia.Text & ", ganancia='" & txtganancia.Text & "', fecha_cierre='" & fecha & "'   WHERE (`idcaja` = '" & txtid.Text & "');"
+            Sql5 = "UPDATE `caja` SET `monto_final` = '" & txttotalfinalventas.Text & "', `existencia_caja` = '" & txtsaldocaja.Text & "', `hora_final` = '" & hora & "', `estado` = '1', observaciones='" & txtobservaciones.Text & "', venta_rapida=" & txtventasproductos.Text & ", anticipos=" & txtanticipos.Text & ", compras=" & txtcompras.Text & ", total_ventas_compras=" & txttotalventascompras.Text & ", total_deberia_existir=" & txtdeberialexistir.Text & ", diferencia=" & txtdiferencia.Text & ", ganancia='" & txtganancia.Text & "', fecha_cierre='" & fecha & "'   WHERE (`idcaja` = '" & txtid.Text & "');"
             Dim cmd5 As New MySqlCommand(Sql5, conexionMysql)
             cmd5.ExecuteNonQuery()
             conexionMysql.Close()

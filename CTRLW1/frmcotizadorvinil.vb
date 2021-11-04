@@ -870,8 +870,6 @@ Public Class frmcotizadorvinil
             '--------------------------------------------------------------------------
             cerrarconexion()
 
-
-
             '-------------------------------------
             Try
 
@@ -922,7 +920,7 @@ Public Class frmcotizadorvinil
             conexionMysql.Open()
             Dim Sql33 As String
             ' Sql33 = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario, fechaentrega, anticipo, resto, tipoventa) VALUES (" & slbfolio.Text & "," & stxttotalproductos.Text & ", " & CDbl(stxttotal.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'" & fechaentrega & "'," & stxtanticipo.Text & "," & stxtresto.Text & ",'2');"
-            Sql33 = "INSERT INTO `dwin`.`SERVICIOS_vENTAS` (`idventa`, `fecha`, `hora`, `idcliente`, `anticipo`, `total`) VALUES (" & lbfolio.Text & ", '" & fecha & "', '" & hora & "', " & idcliente & ", " & stxtanticipo1.Text & ", " & CDbl(stxttotal1.Text) & ");"
+            Sql33 = "INSERT INTO `SERVICIOS_vENTAS` (`idventa`, `fecha`, `hora`, `idcliente`, `anticipo`, `total`) VALUES (" & lbfolio.Text & ", '" & fecha & "', '" & hora & "', " & idcliente & ", " & stxtanticipo1.Text & ", " & CDbl(stxttotal1.Text) & ");"
             Dim cmd33 As New MySqlCommand(Sql33, conexionMysql)
             cmd33.ExecuteNonQuery()
             conexionMysql.Close()

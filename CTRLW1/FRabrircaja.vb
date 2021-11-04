@@ -71,7 +71,7 @@ Public Class FRabrircaja
                     conexionMysql.Open()
                     'se registra el valor
                     Dim Sql2X As String
-                    Sql2X = "INSERT INTO `dwin`.`caja` (`monto_inicial`, `fecha`, `hora_inicial`, `estado`) VALUES ('" & txtmontoinicial.Text & "', '" & fecha & "', '" & horax & "', '0');"
+                    Sql2X = "INSERT INTO `caja` (`monto_inicial`, `fecha`, `hora_inicial`, `estado`) VALUES ('" & txtmontoinicial.Text & "', '" & fecha & "', '" & horax & "', '0');"
                     Dim cmd2X As New MySqlCommand(Sql2X, conexionMysql)
                     cmd2X.ExecuteNonQuery()
                     conexionMysql.Close()

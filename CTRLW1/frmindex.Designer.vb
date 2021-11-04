@@ -246,6 +246,13 @@ Partial Class frmindex
         Me.btncerrarcajamenu = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Label165 = New System.Windows.Forms.Label()
+        Me.Label164 = New System.Windows.Forms.Label()
+        Me.AGtxtTotal = New System.Windows.Forms.TextBox()
+        Me.Label163 = New System.Windows.Forms.Label()
+        Me.AGDate = New System.Windows.Forms.DateTimePicker()
+        Me.AGtxtDescripcion = New System.Windows.Forms.RichTextBox()
+        Me.AGBtnAgendar = New System.Windows.Forms.Button()
         Me.pblogoticket = New System.Windows.Forms.PictureBox()
         Me.Button66 = New System.Windows.Forms.Button()
         Me.agendagrilla = New System.Windows.Forms.DataGridView()
@@ -653,10 +660,10 @@ Partial Class frmindex
         Me.Timer5 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer6 = New System.Windows.Forms.Timer(Me.components)
         Me.PrintDocument5CompraGastos = New System.Drawing.Printing.PrintDocument()
+        Me.agtxtid = New System.Windows.Forms.TextBox()
+        Me.Label166 = New System.Windows.Forms.Label()
         Me.Button90 = New System.Windows.Forms.Button()
-        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
-        Me.Label163 = New System.Windows.Forms.Label()
+        Me.Button91 = New System.Windows.Forms.Button()
         CType(Me.cccgrilla, System.ComponentModel.ISupportInitialize).BeginInit
         CType(Me.ccgrilla, System.ComponentModel.ISupportInitialize).BeginInit
         Me.TabPage3.SuspendLayout
@@ -2241,7 +2248,7 @@ Partial Class frmindex
         Me.txtnombre.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtnombre.Location = New System.Drawing.Point(9, 45)
         Me.txtnombre.Name = "txtnombre"
-        Me.txtnombre.Size = New System.Drawing.Size(306, 35)
+        Me.txtnombre.Size = New System.Drawing.Size(275, 35)
         Me.txtnombre.TabIndex = 12
         '
         'Label60
@@ -3225,9 +3232,9 @@ Partial Class frmindex
         DataGridViewCellStyle87.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.grilla2.DefaultCellStyle = DataGridViewCellStyle87
         Me.grilla2.GridColor = System.Drawing.Color.PaleGreen
-        Me.grilla2.Location = New System.Drawing.Point(0, 13)
+        Me.grilla2.Location = New System.Drawing.Point(0, 111)
         Me.grilla2.Name = "grilla2"
-        Me.grilla2.Size = New System.Drawing.Size(866, 506)
+        Me.grilla2.Size = New System.Drawing.Size(866, 408)
         Me.grilla2.TabIndex = 0
         Me.grilla2.TabStop = False
         '
@@ -3382,10 +3389,17 @@ Partial Class frmindex
         '
         Me.TabPage1.BackgroundImage = CType(resources.GetObject("TabPage1.BackgroundImage"), System.Drawing.Image)
         Me.TabPage1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.TabPage1.Controls.Add(Me.Label163)
-        Me.TabPage1.Controls.Add(Me.DateTimePicker2)
-        Me.TabPage1.Controls.Add(Me.RichTextBox1)
+        Me.TabPage1.Controls.Add(Me.Button91)
         Me.TabPage1.Controls.Add(Me.Button90)
+        Me.TabPage1.Controls.Add(Me.Label166)
+        Me.TabPage1.Controls.Add(Me.agtxtid)
+        Me.TabPage1.Controls.Add(Me.Label165)
+        Me.TabPage1.Controls.Add(Me.Label164)
+        Me.TabPage1.Controls.Add(Me.AGtxtTotal)
+        Me.TabPage1.Controls.Add(Me.Label163)
+        Me.TabPage1.Controls.Add(Me.AGDate)
+        Me.TabPage1.Controls.Add(Me.AGtxtDescripcion)
+        Me.TabPage1.Controls.Add(Me.AGBtnAgendar)
         Me.TabPage1.Controls.Add(Me.pblogoticket)
         Me.TabPage1.Controls.Add(Me.Button66)
         Me.TabPage1.Controls.Add(Me.agendagrilla)
@@ -3401,9 +3415,94 @@ Partial Class frmindex
         Me.TabPage1.Text = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
+        'Label165
+        '
+        Me.Label165.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label165.AutoSize = True
+        Me.Label165.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label165.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label165.Location = New System.Drawing.Point(9, 71)
+        Me.Label165.Name = "Label165"
+        Me.Label165.Size = New System.Drawing.Size(206, 17)
+        Me.Label165.TabIndex = 103
+        Me.Label165.Text = "Describe lo que se va agendar"
+        '
+        'Label164
+        '
+        Me.Label164.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label164.AutoSize = True
+        Me.Label164.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label164.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label164.Location = New System.Drawing.Point(8, 310)
+        Me.Label164.Name = "Label164"
+        Me.Label164.Size = New System.Drawing.Size(154, 17)
+        Me.Label164.TabIndex = 102
+        Me.Label164.Text = "¿Cuanto sería el total?"
+        '
+        'AGtxtTotal
+        '
+        Me.AGtxtTotal.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.AGtxtTotal.BackColor = System.Drawing.Color.White
+        Me.AGtxtTotal.Font = New System.Drawing.Font("Arial Black", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AGtxtTotal.Location = New System.Drawing.Point(10, 330)
+        Me.AGtxtTotal.Name = "AGtxtTotal"
+        Me.AGtxtTotal.Size = New System.Drawing.Size(246, 53)
+        Me.AGtxtTotal.TabIndex = 101
+        Me.AGtxtTotal.TabStop = False
+        '
+        'Label163
+        '
+        Me.Label163.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label163.AutoSize = True
+        Me.Label163.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label163.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label163.Location = New System.Drawing.Point(8, 260)
+        Me.Label163.Name = "Label163"
+        Me.Label163.Size = New System.Drawing.Size(219, 17)
+        Me.Label163.TabIndex = 100
+        Me.Label163.Text = "¿Para cuando lo vas a agendar?"
+        '
+        'AGDate
+        '
+        Me.AGDate.Location = New System.Drawing.Point(10, 284)
+        Me.AGDate.Name = "AGDate"
+        Me.AGDate.Size = New System.Drawing.Size(205, 20)
+        Me.AGDate.TabIndex = 99
+        '
+        'AGtxtDescripcion
+        '
+        Me.AGtxtDescripcion.Location = New System.Drawing.Point(8, 97)
+        Me.AGtxtDescripcion.Name = "AGtxtDescripcion"
+        Me.AGtxtDescripcion.Size = New System.Drawing.Size(248, 159)
+        Me.AGtxtDescripcion.TabIndex = 98
+        Me.AGtxtDescripcion.Text = ""
+        '
+        'AGBtnAgendar
+        '
+        Me.AGBtnAgendar.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(185, Byte), Integer))
+        Me.AGBtnAgendar.FlatAppearance.BorderSize = 0
+        Me.AGBtnAgendar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.AGBtnAgendar.ForeColor = System.Drawing.Color.White
+        Me.AGBtnAgendar.Image = CType(resources.GetObject("AGBtnAgendar.Image"), System.Drawing.Image)
+        Me.AGBtnAgendar.Location = New System.Drawing.Point(11, 392)
+        Me.AGBtnAgendar.Name = "AGBtnAgendar"
+        Me.AGBtnAgendar.Size = New System.Drawing.Size(248, 42)
+        Me.AGBtnAgendar.TabIndex = 97
+        Me.AGBtnAgendar.Text = "Agendar"
+        Me.AGBtnAgendar.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.AGBtnAgendar.UseVisualStyleBackColor = False
+        '
         'pblogoticket
         '
-        Me.pblogoticket.Location = New System.Drawing.Point(6, 567)
+        Me.pblogoticket.Location = New System.Drawing.Point(8, 602)
         Me.pblogoticket.Name = "pblogoticket"
         Me.pblogoticket.Size = New System.Drawing.Size(39, 36)
         Me.pblogoticket.TabIndex = 96
@@ -3425,7 +3524,7 @@ Partial Class frmindex
         Me.agendagrilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.agendagrilla.Location = New System.Drawing.Point(270, 36)
         Me.agendagrilla.Name = "agendagrilla"
-        Me.agendagrilla.Size = New System.Drawing.Size(927, 573)
+        Me.agendagrilla.Size = New System.Drawing.Size(927, 363)
         Me.agendagrilla.TabIndex = 4
         '
         'chagenda
@@ -3440,7 +3539,7 @@ Partial Class frmindex
         '
         'agendacalendario
         '
-        Me.agendacalendario.Location = New System.Drawing.Point(10, 303)
+        Me.agendacalendario.Location = New System.Drawing.Point(12, 444)
         Me.agendacalendario.Name = "agendacalendario"
         Me.agendacalendario.TabIndex = 2
         '
@@ -3449,7 +3548,7 @@ Partial Class frmindex
         Me.lbventastotal.AutoSize = True
         Me.lbventastotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbventastotal.ForeColor = System.Drawing.SystemColors.ActiveCaption
-        Me.lbventastotal.Location = New System.Drawing.Point(26, 102)
+        Me.lbventastotal.Location = New System.Drawing.Point(28, 161)
         Me.lbventastotal.Name = "lbventastotal"
         Me.lbventastotal.Size = New System.Drawing.Size(19, 20)
         Me.lbventastotal.TabIndex = 1
@@ -3460,7 +3559,7 @@ Partial Class frmindex
         Me.lbventas.AutoSize = True
         Me.lbventas.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbventas.ForeColor = System.Drawing.SystemColors.ActiveCaption
-        Me.lbventas.Location = New System.Drawing.Point(26, 44)
+        Me.lbventas.Location = New System.Drawing.Point(28, 79)
         Me.lbventas.Name = "lbventas"
         Me.lbventas.Size = New System.Drawing.Size(19, 20)
         Me.lbventas.TabIndex = 0
@@ -8899,6 +8998,34 @@ Partial Class frmindex
         'PrintDocument5CompraGastos
         '
         '
+        'agtxtid
+        '
+        Me.agtxtid.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.agtxtid.BackColor = System.Drawing.Color.White
+        Me.agtxtid.Enabled = False
+        Me.agtxtid.Font = New System.Drawing.Font("Arial Black", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.agtxtid.Location = New System.Drawing.Point(32, 34)
+        Me.agtxtid.Name = "agtxtid"
+        Me.agtxtid.Size = New System.Drawing.Size(78, 30)
+        Me.agtxtid.TabIndex = 104
+        Me.agtxtid.TabStop = False
+        '
+        'Label166
+        '
+        Me.Label166.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label166.AutoSize = True
+        Me.Label166.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label166.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label166.Location = New System.Drawing.Point(9, 41)
+        Me.Label166.Name = "Label166"
+        Me.Label166.Size = New System.Drawing.Size(22, 17)
+        Me.Label166.TabIndex = 105
+        Me.Label166.Text = "ID"
+        '
         'Button90
         '
         Me.Button90.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(185, Byte), Integer))
@@ -8906,42 +9033,26 @@ Partial Class frmindex
         Me.Button90.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button90.ForeColor = System.Drawing.Color.White
         Me.Button90.Image = CType(resources.GetObject("Button90.Image"), System.Drawing.Image)
-        Me.Button90.Location = New System.Drawing.Point(9, 251)
+        Me.Button90.Location = New System.Drawing.Point(116, 32)
         Me.Button90.Name = "Button90"
-        Me.Button90.Size = New System.Drawing.Size(248, 42)
-        Me.Button90.TabIndex = 97
-        Me.Button90.Text = "(F2)"
+        Me.Button90.Size = New System.Drawing.Size(46, 32)
+        Me.Button90.TabIndex = 106
         Me.Button90.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button90.UseVisualStyleBackColor = False
         '
-        'RichTextBox1
+        'Button91
         '
-        Me.RichTextBox1.Location = New System.Drawing.Point(6, 36)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.Size = New System.Drawing.Size(248, 159)
-        Me.RichTextBox1.TabIndex = 98
-        Me.RichTextBox1.Text = ""
-        '
-        'DateTimePicker2
-        '
-        Me.DateTimePicker2.Location = New System.Drawing.Point(8, 225)
-        Me.DateTimePicker2.Name = "DateTimePicker2"
-        Me.DateTimePicker2.Size = New System.Drawing.Size(246, 20)
-        Me.DateTimePicker2.TabIndex = 99
-        '
-        'Label163
-        '
-        Me.Label163.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label163.AutoSize = True
-        Me.Label163.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label163.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label163.Location = New System.Drawing.Point(6, 201)
-        Me.Label163.Name = "Label163"
-        Me.Label163.Size = New System.Drawing.Size(219, 17)
-        Me.Label163.TabIndex = 100
-        Me.Label163.Text = "¿Para cuando lo vas a agendar?"
+        Me.Button91.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(185, Byte), Integer))
+        Me.Button91.FlatAppearance.BorderSize = 0
+        Me.Button91.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button91.ForeColor = System.Drawing.Color.White
+        Me.Button91.Image = CType(resources.GetObject("Button91.Image"), System.Drawing.Image)
+        Me.Button91.Location = New System.Drawing.Point(166, 32)
+        Me.Button91.Name = "Button91"
+        Me.Button91.Size = New System.Drawing.Size(46, 32)
+        Me.Button91.TabIndex = 107
+        Me.Button91.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button91.UseVisualStyleBackColor = False
         '
         'frmindex
         '
@@ -9677,8 +9788,15 @@ Partial Class frmindex
     Friend WithEvents Label161 As Label
     Friend WithEvents Label162 As Label
     Friend WithEvents CheckBox1 As CheckBox
-    Friend WithEvents RichTextBox1 As RichTextBox
-    Friend WithEvents Button90 As Button
+    Friend WithEvents AGtxtDescripcion As RichTextBox
+    Friend WithEvents AGBtnAgendar As Button
     Friend WithEvents Label163 As Label
-    Friend WithEvents DateTimePicker2 As DateTimePicker
+    Friend WithEvents AGDate As DateTimePicker
+    Friend WithEvents Label164 As Label
+    Friend WithEvents AGtxtTotal As TextBox
+    Friend WithEvents Label165 As Label
+    Friend WithEvents Label166 As Label
+    Friend WithEvents agtxtid As TextBox
+    Friend WithEvents Button90 As Button
+    Friend WithEvents Button91 As Button
 End Class
