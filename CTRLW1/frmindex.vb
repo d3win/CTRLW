@@ -42,9 +42,11 @@ Public Class frmindex
     Function actualizarbd2021()
 
 
-        'creamos la nueva tabla para agenda
 
-         cerrarconexion()
+
+
+
+
 
         Try
             conexionMysql.Open()
@@ -571,6 +573,11 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         AGBtnAgendar.Visible = False
         AGtxtTotal.Visible = False
         AGtxtDescripcion.Visible = False
+        Label166.Visible = False
+        agtxtid.Visible = False
+        Button90.Visible = False
+        Button91.Visible = False
+
 
 
 
@@ -2982,7 +2989,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             cerrarconexion()
             conexionMysql.Open()
             Dim Sql2 As String
-            Sql2 = "INSERT INTO `dwin`.`impresora` (`idimpresora`, `nombre_impresora`) VALUES ('1', '" & impresosaPredt & "');"
+            Sql2 = "INSERT INTO `impresora` (`idimpresora`, `nombre_impresora`) VALUES ('1', '" & impresosaPredt & "');"
             Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
             cmd2.ExecuteNonQuery()
             conexionMysql.Close()
@@ -3631,10 +3638,17 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Dim cmd As New MySqlCommand(Sql, conexionMysql)
             reader = cmd.ExecuteReader()
             reader.Read()
-            cantidad = reader.GetString(0).ToString()
-            pmayoreo = reader.GetString(1).ToString()
 
-            conexionMysql.Close()
+
+            cantidad = reader.GetString(0).ToString()
+                pmayoreo = reader.GetString(1).ToString()
+
+                conexionMysql.Close()
+
+
+
+
+
             ' MsgBox(pmayoreo)
 
             If txtcantidad.Text >= cantidad Then
@@ -3664,6 +3678,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
         Catch ex As Exception
             txttotal.Text = ""
+
         End Try
     End Sub
 
@@ -10814,8 +10829,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
 
 
-                ' Try
-                cerrarconexion()
+                Try
+                    cerrarconexion()
                     conexionMysql.Open()
 
                     Dim Sql As String
@@ -10844,9 +10859,9 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
 
 
-                ' Catch ex As Exception
-                MsgBox("Existe un error, comprueba nuevamente", MsgBoxStyle.Exclamation, "Sistema")
-                ' End Try
+                Catch ex As Exception
+                    MsgBox("Existe un error, comprueba nuevamente", MsgBoxStyle.Exclamation, "Sistema")
+                End Try
 
 
             End If
@@ -13952,7 +13967,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
         conexionMysql.Open()
         Dim Sql22 As String
-        Sql22 = "UPDATE `dwin`.`datos_empresa` SET `obligarcambio` = '" & valor & "';"
+        Sql22 = "UPDATE `datos_empresa` SET `obligarcambio` = '" & valor & "';"
         Dim cmd22 As New MySqlCommand(Sql22, conexionMysql)
         cmd22.ExecuteNonQuery()
         conexionMysql.Close()
@@ -14117,9 +14132,14 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
             txtnombreimpresora.Text = impresosaPredt
 
+            'Dim nuevaruta As String
+            txtnombreimpresora.Text = Replace(txtnombreimpresora.Text, "\", "\\")
+
+
+
             conexionMysql.Open()
             Dim Sql22 As String
-            Sql22 = "UPDATE `dwin`.`impresora` SET `nombre_impresora` = '" & impresosaPredt & "';"
+            Sql22 = "UPDATE `impresora` SET `nombre_impresora` = '" & txtnombreimpresora.Text & "';"
             Dim cmd22 As New MySqlCommand(Sql22, conexionMysql)
             cmd22.ExecuteNonQuery()
             conexionMysql.Close()
@@ -15539,6 +15559,10 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             AGDate.Visible = True
             AGBtnAgendar.Visible = True
             AGtxtTotal.Visible = True
+            Label166.Visible = True
+            agtxtid.Visible = True
+            Button90.Visible = True
+            Button91.Visible = True
 
 
 
@@ -15554,6 +15578,11 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             AGBtnAgendar.Visible = False
             AGtxtTotal.Visible = False
             AGtxtDescripcion.Visible = False
+            Label166.Visible = False
+            agtxtid.Visible = False
+            Button90.Visible = False
+            Button91.Visible = False
+
         End If
     End Sub
     Function cargaragenda()

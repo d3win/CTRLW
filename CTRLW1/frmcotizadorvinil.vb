@@ -805,8 +805,8 @@ Public Class frmcotizadorvinil
             'txttotal.Text = ""
         Else
             'obtener fecha y hora
-            Dim dia, mes, año, fecha As String
-            Dim hora2, minutos, segundo, hora, minuto As String
+
+            Dim dia, mes, año, fecha, fechanueva, hora, minuto, segundo, hora2 As String
             hora2 = Now.Hour()
             minuto = Now.Minute()
             segundo = Now.Second()
@@ -817,6 +817,20 @@ Public Class frmcotizadorvinil
             mes = Date.Now.Month
             año = Date.Now.Year
             fecha = año & "-" & mes & "-" & dia
+            fecha = fecha + " " + hora
+
+            'Dim dia, mes, año, fecha As String
+            'Dim hora2, minutos, segundo, hora, minuto As String
+            'hora2 = Now.Hour()
+            'minuto = Now.Minute()
+            'segundo = Now.Second()
+
+            'hora = hora2 & ":" & minuto & ":" & segundo
+
+            'dia = Date.Now.Day
+            'mes = Date.Now.Month
+            'año = Date.Now.Year
+            'fecha = año & "-" & mes & "-" & dia
 
 
 
