@@ -805,8 +805,8 @@ Public Class frmcotizadorvinil
             'txttotal.Text = ""
         Else
             'obtener fecha y hora
-            Dim dia, mes, año, fecha As String
-            Dim hora2, minutos, segundo, hora, minuto As String
+
+            Dim dia, mes, año, fecha, fechanueva, hora, minuto, segundo, hora2 As String
             hora2 = Now.Hour()
             minuto = Now.Minute()
             segundo = Now.Second()
@@ -817,6 +817,20 @@ Public Class frmcotizadorvinil
             mes = Date.Now.Month
             año = Date.Now.Year
             fecha = año & "-" & mes & "-" & dia
+            fecha = fecha + " " + hora
+
+            'Dim dia, mes, año, fecha As String
+            'Dim hora2, minutos, segundo, hora, minuto As String
+            'hora2 = Now.Hour()
+            'minuto = Now.Minute()
+            'segundo = Now.Second()
+
+            'hora = hora2 & ":" & minuto & ":" & segundo
+
+            'dia = Date.Now.Day
+            'mes = Date.Now.Month
+            'año = Date.Now.Year
+            'fecha = año & "-" & mes & "-" & dia
 
 
 
@@ -870,8 +884,6 @@ Public Class frmcotizadorvinil
             '--------------------------------------------------------------------------
             cerrarconexion()
 
-
-
             '-------------------------------------
             Try
 
@@ -922,7 +934,7 @@ Public Class frmcotizadorvinil
             conexionMysql.Open()
             Dim Sql33 As String
             ' Sql33 = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario, fechaentrega, anticipo, resto, tipoventa) VALUES (" & slbfolio.Text & "," & stxttotalproductos.Text & ", " & CDbl(stxttotal.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'" & fechaentrega & "'," & stxtanticipo.Text & "," & stxtresto.Text & ",'2');"
-            Sql33 = "INSERT INTO `dwin`.`SERVICIOS_vENTAS` (`idventa`, `fecha`, `hora`, `idcliente`, `anticipo`, `total`) VALUES (" & lbfolio.Text & ", '" & fecha & "', '" & hora & "', " & idcliente & ", " & stxtanticipo1.Text & ", " & CDbl(stxttotal1.Text) & ");"
+            Sql33 = "INSERT INTO `SERVICIOS_vENTAS` (`idventa`, `fecha`, `hora`, `idcliente`, `anticipo`, `total`) VALUES (" & lbfolio.Text & ", '" & fecha & "', '" & hora & "', " & idcliente & ", " & stxtanticipo1.Text & ", " & CDbl(stxttotal1.Text) & ");"
             Dim cmd33 As New MySqlCommand(Sql33, conexionMysql)
             cmd33.ExecuteNonQuery()
             conexionMysql.Close()
