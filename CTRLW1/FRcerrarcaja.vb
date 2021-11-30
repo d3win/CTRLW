@@ -1,7 +1,8 @@
 ﻿Imports System.IO
 Imports MySql.Data.MySqlClient
 Public Class FRcerrarcaja
-
+    Public respaldar As New SaveFileDialog
+    Public carpeta As New FolderBrowserDialog
     Dim valorvisible As Integer
     Private Sub FRcerrarcaja_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         lbmensaje.Visible = False
@@ -635,33 +636,57 @@ Public Class FRcerrarcaja
         lbfechacierre.Text = fechafinal
 
 
-
-
+        Dim anticiposServicios As Double
 
         '-----------------------------------------------------------------------------
-
+        'anticipos pero cuando ya se hizo la venta de servicio.
         '-----------------------------------------------------------------------------
         Try
 
             conexionMysql.Open()
-            Dim Sql2bx As String
+            Dim Sql2bxs As String
             '------PRIMERO SUMAMOS LAS VENTAS DE LOS SERVICIOS
             'Sql2bx = "select sum(anticipo)  from servicios_ventas where fecha between '" & fechainicial & "' and '" & fechafinal & "'"
-            Sql2bx = "select sum(anticipo) from venta where tipoventa>=2 and  fecha between '" & fechainicial & "' and '" & fechafinal & "'"
+            Sql2bxs = "select sum(anticipo) from servicios_ventas where  fecha between '" & fechainicial & "' and '" & fechafinal & "'"
 
             'Sql2 = "select sum(total)as total from venta where fecha='" & fecha & "';"
-            Dim cmd2bx As New MySqlCommand(Sql2bx, conexionMysql)
-            reader = cmd2bx.ExecuteReader
+            Dim cmd2bxs As New MySqlCommand(Sql2bxs, conexionMysql)
+            reader = cmd2bxs.ExecuteReader
             reader.Read()
 
-            txtanticipos.Text = reader.GetString(0).ToString()
+            anticiposServicios = reader.GetString(0).ToString()
             'MsgBox(anticipo)
             'MsgBox(reader.GetString(0).ToString())
             conexionMysql.Close()
             cerrarconexion()
         Catch ex As Exception
-            txtanticipos.Text = 0
+            anticiposServicios = 0
         End Try
+        'MsgBox(anticiposServicios)
+        '-----------------------------------------------------------------------------
+
+        '-----------------------------------------------------------------------------
+        'Try
+
+        '    conexionMysql.Open()
+        '    Dim Sql2bx As String
+        '    '------PRIMERO SUMAMOS LAS VENTAS DE LOS SERVICIOS
+        '    'Sql2bx = "select sum(anticipo)  from servicios_ventas where fecha between '" & fechainicial & "' and '" & fechafinal & "'"
+        '    Sql2bx = "select sum(anticipo) from venta where tipoventa>=2 and  fecha between '" & fechainicial & "' and '" & fechafinal & "'"
+
+        '    'Sql2 = "select sum(total)as total from venta where fecha='" & fecha & "';"
+        '    Dim cmd2bx As New MySqlCommand(Sql2bx, conexionMysql)
+        '    reader = cmd2bx.ExecuteReader
+        '    reader.Read()
+
+        '    txtanticipos.Text = reader.GetString(0).ToString()
+        '    'MsgBox(anticipo)
+        '    'MsgBox(reader.GetString(0).ToString())
+        '    conexionMysql.Close()
+        '    cerrarconexion()
+        'Catch ex As Exception
+        '    txtanticipos.Text = 0
+        'End Try
         'Try
 
         '    conexionMysql.Open()
@@ -994,6 +1019,9 @@ Public Class FRcerrarcaja
         'hacemos la ultima oepracion matematica
         'Try
 
+        txtanticipos.Text = CDbl(txtanticipos.Text) + CDbl(anticiposServicios)
+
+
         txttotalfinalventas.Text = CDbl(txtventasproductos.Text) + CDbl(txtanticipos.Text)
 
 
@@ -1229,6 +1257,32 @@ Public Class FRcerrarcaja
             'MsgBox(txtid.Text)
             'FRNOTACERRARCAJA.ShowDialog()
 
+
+            Dim respaldoAuto As String
+
+            'comprobacion del respaldo automatico
+            Try
+
+                conexionMysql.Open()
+                Dim Sql111 As String
+                Sql111 = "select respaldo_auto from datos_empresa;"
+                Dim cmd111 As New MySqlCommand(Sql111, conexionMysql)
+                reader = cmd111.ExecuteReader()
+                reader.Read()
+                respaldoAuto = reader.GetString(0).ToString
+
+            Catch ex As Exception
+                respaldoAuto = 0
+                cerrarconexion()
+            End Try
+
+            If respaldoAuto = 1 Then
+                respaldoautomatico()
+            End If
+
+
+
+
             frmindex.btnabrircajamenu.Visible = True
             frmindex.btncerrarcajamenu.Visible = False
             Me.Close()
@@ -1236,6 +1290,34 @@ Public Class FRcerrarcaja
             MsgBox("Verifica la información", MsgBoxStyle.Information, "CTRL+y")
         End Try
 
+    End Function
+    Function respaldoautomatico()
+        respaldar.DefaultExt = "sql"
+        Dim pathmysql As String
+        Dim comando As String
+        'pathmysql = My.Computer.Registry.GetValue("HKEY_LOCAL_MACHINE\SOFTWARE\MySQL AB\MYSQL Server 5.5", "Location", 0)
+        pathmysql = "C:\Program Files\MySQL\MySQL Server 5.5"
+        If pathmysql = Nothing Then
+            MsgBox("No se encontro en tu equipo Mysql, escoge la carpeta donde esta ubicado")
+            carpeta.ShowDialog()
+            pathmysql = carpeta.SelectedPath
+        End If
+        respaldar.Filter = "File MYSQL (*.sql)|*.sql"
+        If respaldar.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            Try
+
+                Dim contra As String
+                'Call InputBox_Password(frmindex, "*")
+                'contra = InputBox("Ingresa la contraseña del administrador", "CTRL+Y")
+                contra = "conexion"
+                comando = pathmysql & "\bin\mysqldump --user=root --password=" & contra & " --databases dwin --routines -r """ & respaldar.FileName & """"
+                Shell(comando, AppWinStyle.MinimizedFocus, True)
+                MsgBox("Se realizo el respaldo correctamente", MsgBoxStyle.Information, "Sistema")
+            Catch ex As Exception
+                MsgBox("Ocurrio un error al respaldar", MsgBoxStyle.Critical, "Informacion")
+            End Try
+
+        End If
     End Function
     Private Sub imprimiranticipos()
 

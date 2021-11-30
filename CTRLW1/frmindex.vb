@@ -6,6 +6,8 @@ Imports System.IO
 
 Public Class frmindex
     Dim p1, p2, p3, p4, p5, p6, p7, p8 As Integer
+    Public estadoBusquedaClientes As Integer
+
 
     Public respaldar As New SaveFileDialog
     Public carpeta As New FolderBrowserDialog
@@ -42,7 +44,18 @@ Public Class frmindex
     Function actualizarbd2021()
 
 
-
+         Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `datos_empresa` 
+ADD COLUMN `respaldo_auto` INT NULL AFTER `mostrar_corte`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
 
 
 
@@ -51,8 +64,8 @@ Public Class frmindex
         Try
             conexionMysql.Open()
             Dim Sql As String
-            Sql = " CREATE TABLE `ctrl`.`agenda` (
-  `idagenda` INT NOT NULL,
+            Sql = " CREATE TABLE `agenda` (
+  `idagenda` INT NOT NULL AUTO_INCREMENT,
   `descripcion` TINYTEXT NULL,
   `total` DOUBLE NULL,
   `fecha` DATE NULL,
@@ -1384,16 +1397,17 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         cerrarconexion()
         Try
 
-            Dim valorticket, valorcambio, MostrarCorte As String
+            Dim valorticket, valorcambio, MostrarCorte, respaldoAuto As String
             conexionMysql.Open()
             Dim Sql111 As String
-            Sql111 = "select obligarticket,obligarcambio,mostrar_corte from datos_empresa;"
+            Sql111 = "select obligarticket,obligarcambio,mostrar_corte, respaldo_auto from datos_empresa;"
             Dim cmd111 As New MySqlCommand(Sql111, conexionMysql)
             reader = cmd111.ExecuteReader()
             reader.Read()
             valorticket = reader.GetString(0).ToString
             valorcambio = reader.GetString(1).ToString
             MostrarCorte = reader.GetString(2).ToString
+            respaldoAuto = reader.GetString(3).ToString
 
             conexionMysql.Close()
 
@@ -1415,6 +1429,13 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Else
                 chcierre.Checked = False
             End If
+            If respaldoAuto = 1 Then
+                chRespaldo.Checked = True
+            Else
+                chRespaldo.Checked = False
+            End If
+
+
         Catch ex As Exception
             ' MsgBox("fallo", MsgBoxStyle.Information)
         End Try
@@ -1689,6 +1710,13 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
 
+            fecha = calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
+
+            'CONSULTA PARA TODOS LOS PRODUCTOS EXTRAS, PAPELERIA Y SERVICIOS
+            fechafinal = fecha & " 23:59:59"
+            fecha = fecha & " 00:00:00"
+
+
 
             'CONSULTA PARA TODOS LOS PRODUCTOS EXTRAS, PAPELERIA Y SERVICIOS
 
@@ -1802,11 +1830,34 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
                 txtgastos.Text = reader.GetString(0).ToString()
                 conexionMysql.Close()
                 cerrarconexion()
+                'MsgBox(txtgastos.Text)
             Catch ex As Exception
                 'MsgBox("Aun no hay compras realizadas", MsgBoxStyle.Information, "Sistema")
-                txtgastos.Text = 0
+                txtgastos.Text = "0"
+
                 cerrarconexion()
             End Try
+
+            Try
+                conexionMysql.Open()
+                Dim sql1c As String
+                sql1c = "select sum(totalcompra)  from compramercancia where fecha between '" & fechainicial & "' and '" & fechafinal & "';"
+                Dim cmd1c As New MySqlCommand(sql1c, conexionMysql)
+                reader = cmd1c.ExecuteReader
+                reader.Read()
+                'cbtncompras.Text = reader.GetString(0).ToString()
+                cbtncompras.Text = reader.GetString(0).ToString()
+
+                conexionMysql.Close()
+                cerrarconexion()
+            Catch ex As Exception
+                ' MsgBox("Aun no hay compras realizadas", MsgBoxStyle.Information, "Sistema")
+                'cbtncompras.Text = "00.0"
+                cbtncompras.Text = "0.0"
+
+                cerrarconexion()
+            End Try
+
 
             '------------------------------------------------------------
             'MsgBox(fechacaja)
@@ -1814,27 +1865,29 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             '.--------------------------------------------------------
             'COMPROBACION DE LAS COMPRAS de mercancia
             '----------------------------------------------------------
-            Try
-                cerrarconexion()
+            'Try
+            '    cerrarconexion()
 
-                conexionMysql.Open()
-                Dim sql1ab As String
-                sql1ab = "select sum(totalcompra)  from compramercancia where fecha between '" & fechainicial & "' and '" & fechafinal & "';"
-                Dim cmd1ab As New MySqlCommand(sql1ab, conexionMysql)
-                reader = cmd1ab.ExecuteReader
-                reader.Read()
-                '            txtcompramercancia.Text = reader.GetString(0).ToString()
-                cbtncompras.Text = reader.GetString(0).ToString()
+            '    conexionMysql.Open()
+            '    Dim sql1ab As String
+            '    sql1ab = "Select sum(totalcompra)  from compramercancia where fecha between '" & fechainicial & "' and '" & fechafinal & "';"
+            '    Dim cmd1ab As New MySqlCommand(sql1ab, conexionMysql)
+            '    reader = cmd1ab.ExecuteReader
+            '    reader.Read()
+            '    '            txtcompramercancia.Text = reader.GetString(0).ToString()
+            '    'cbtncompras.Text = reader.GetString(0).ToString()
+            '    txtgastos.Text = reader.GetString(0).ToString()
 
-                conexionMysql.Close()
-                cerrarconexion()
-            Catch ex As Exception
-                'MsgBox("Aun no hay compras realizadas", MsgBoxStyle.Information, "Sistema")
-                cbtncompras.Text = 0
+            '    conexionMysql.Close()
+            '    cerrarconexion()
+            'Catch ex As Exception
+            '    'MsgBox("Aun no hay compras realizadas", MsgBoxStyle.Information, "Sistema")
+            '    'cbtncompras.Text = 0
+            '    txtgastos.Text = 0
 
-                ' txtcompramercancia.Text = 0
-                cerrarconexion()
-            End Try
+            '    ' txtcompramercancia.Text = 0
+            '    cerrarconexion()
+            'End Try
 
             '------------------------------------------------------------
 
@@ -1932,8 +1985,31 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
             End Try
 
+            'MsgBox(cbtnventas.Text)
+            Dim anticipos, TotalPre As Double
+            Try
+                cerrarconexion()
+                conexionMysql.Open()
+                Dim Sql2bx As String
+                '------PRIMERO SUMAMOS LAS VENTAS DE LOS SERVICIOS
+                Sql2bx = "select sum(anticipo)  from venta where fecha between '" & fechainicial & "' and '" & fechafinal & "' and tipoventa=2"
+                'Sql2 = "select sum(total)as total from venta where fecha='" & fecha & "';"
+                Dim cmd2bx As New MySqlCommand(Sql2bx, conexionMysql)
+                reader = cmd2bx.ExecuteReader
+                reader.Read()
 
+                anticipos = reader.GetString(0).ToString()
 
+                'MsgBox(anticipo)
+                'MsgBox(reader.GetString(0).ToString())
+                conexionMysql.Close()
+                cerrarconexion()
+            Catch ex As Exception
+                'MsgBox(anticipos)
+                anticipos = 0
+            End Try
+            cbtnanticipos.Text = anticipos
+            'Try
             '--------------------------------------------------------------------
             'SUMA DE LAS VENTAS DE VENTAS efectivo
             '-----------------------------------------------------------------------
@@ -2103,31 +2179,11 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             ' cbttotales.Text = "$ " & CDbl(cbtnextras.Text) - CDbl(cbtncompras.Text)
             'hacemos la ultima oepracion matematica
             'Try
-            Dim anticipos, TotalPre As Double
-            Try
 
-                conexionMysql.Open()
-                Dim Sql2bx As String
-                '------PRIMERO SUMAMOS LAS VENTAS DE LOS SERVICIOS
-                Sql2bx = "select sum(anticipo)  from servicios_ventas where fecha between '" & fechainicial & "' and '" & fechafinal & "'"
-                'Sql2 = "select sum(total)as total from venta where fecha='" & fecha & "';"
-                Dim cmd2bx As New MySqlCommand(Sql2bx, conexionMysql)
-                reader = cmd2bx.ExecuteReader
-                reader.Read()
-
-                anticipos = reader.GetString(0).ToString()
-                'MsgBox(anticipo)
-                'MsgBox(reader.GetString(0).ToString())
-                conexionMysql.Close()
-                cerrarconexion()
-            Catch ex As Exception
-                anticipos = 0
-            End Try
-            'Try
 
             cbttotales.Text = CDbl(cbtnventas.Text) + CDbl(anticipos)
 
-
+            ' MsgBox(cbttotales.Text)
 
             Dim ComprasTotales, VentasTotales As Double
             ComprasTotales = CDbl(txtgastos.Text) + CDbl(cbtncompras.Text)
@@ -2135,11 +2191,11 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             'txttotalventascompras.Text = CDbl(TotalPre) - CDbl(ComprasTotales)
             'txtdeberialexistir.Text = CDbl(txtsaldoinicial.Text) + CDbl(txttotalventascompras.Text)
 
-            'Catch ex As Exception
+        Catch ex As Exception
 
             'End Try
 
-        Catch ex As Exception
+            ' Catch ex As Exception
             '    MsgBox("error")
             cerrarconexion()
         End Try
@@ -2147,7 +2203,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
     End Function
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
 
-
+        GroupBox14.Text = "Información del corte"
         obtener_chticket_Chcambio_venta()
         btncortes.Visible = False
         btnventasrapidas.Visible = True
@@ -2304,14 +2360,40 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Dim cmd1 As New MySqlCommand(sql1, conexionMysql)
             reader = cmd1.ExecuteReader
             reader.Read()
-            cbtncompras.Text = "$ " & reader.GetString(0).ToString()
+            'cbtncompras.Text = reader.GetString(0).ToString()
+            txtgastos.Text = reader.GetString(0).ToString()
+
             conexionMysql.Close()
             cerrarconexion()
         Catch ex As Exception
-            MsgBox("Aun no hay compras realizadas", MsgBoxStyle.Information, "Sistema")
-            cbtncompras.Text = "$00.0"
+            ' MsgBox("Aun no hay compras realizadas", MsgBoxStyle.Information, "Sistema")
+            'cbtncompras.Text = "00.0"
+            txtgastos.Text = "0"
+
             cerrarconexion()
         End Try
+
+
+        Try
+            conexionMysql.Open()
+            Dim sql1 As String
+            sql1 = "select sum(totalcompra)  from compramercancia where fecha='"& fecha &"';"
+            Dim cmd1 As New MySqlCommand(sql1, conexionMysql)
+            reader = cmd1.ExecuteReader
+            reader.Read()
+            'cbtncompras.Text = reader.GetString(0).ToString()
+            cbtncompras.Text = reader.GetString(0).ToString()
+
+            conexionMysql.Close()
+            cerrarconexion()
+        Catch ex As Exception
+            ' MsgBox("Aun no hay compras realizadas", MsgBoxStyle.Information, "Sistema")
+            'cbtncompras.Text = "00.0"
+            cbtncompras.Text = "0.0"
+
+            cerrarconexion()
+        End Try
+
 
 
         'Try
@@ -2322,12 +2404,13 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             conexionMysql.Open()
             Dim Sql2 As String
             '------PRIMERO SUMAMOS LAS VENTAS DE LOS SERVICIOS
-            Sql2 = "select sum(anticipo) from servicios_ventas where fecha>='" & fecha & "' and fecha<='" & fechafinal & "' ;"
+            Sql2 = "select sum(anticipo) from venta where fecha>='" & fecha & "' and fecha<='" & fechafinal & "' and tipoventa=2 ;"
             'Sql2 = "select sum(total)as total from venta where fecha='" & fecha & "';"
             Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
             reader = cmd2.ExecuteReader
             reader.Read()
             sumaanticipo = reader.GetString(0).ToString()
+
             'MsgBox(reader.GetString(0).ToString())
             conexionMysql.Close()
             cerrarconexion()
@@ -2337,7 +2420,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             sumaanticipo = 0
             cerrarconexion()
         End Try
-
+        cbtnanticipos.Text = sumaanticipo
         Try
             conexionMysql.Open()
 
@@ -2363,7 +2446,9 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         'MsgBox(sumatotalventa)
         'MsgBox(sumaanticipo)
 
-        cbtnventas.Text = CDbl(sumatotalventa) + CDbl(sumaanticipo)
+        'cbtnventas.Text = CDbl(sumatotalventa) + CDbl(sumaanticipo)
+        cbtnventas.Text = CDbl(sumatotalventa)
+
         'conexionMysql.Open()
         'Dim Sql3 As String
         ' Sql3 = "select sum(recargas_venta)as suma1, sum(ciber) as suma from corte where fecha_registro='" & fecha & "';"
@@ -2382,10 +2467,14 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         Try
 
             'calculamos las operaciones para que de el final.
-            cbttotales.Text = "$ " & CDbl(cbtnventas.Text) - CDbl(cbtncompras.Text)
+            'cbttotales.Text = CDbl(cbtnventas.Text) - CDbl(cbtncompras.Text)
+            ' Dim suma As Double
+
+            cbttotales.Text = (CDbl(cbtnventas.Text) + CDbl(cbtnanticipos.Text)) - CDbl(txtgastos.Text)
+            '= suma - CDbl(txtgastos.Text)
         Catch ex As Exception
             MsgBox("La información es corrupta", MsgBoxStyle.Information, "Sistema")
-            cbttotales.Text = "$00.0"
+            cbttotales.Text = "0"
             cerrarconexion()
         End Try
 
@@ -2691,6 +2780,10 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
     End Function
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        estadoBusquedaClientes = 0
+
+        ulistaclientes.Visible = False
+
         obtener_chticket_Chcambio_venta()
         'llenamos la grilla de los clientes existentes
         'cllenadocliente()
@@ -7422,8 +7515,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
                 limpiarcliente()
 
             Catch ex As Exception
-                comprobartipoingreso()
-
+                'comprobartipoingreso()
+                MsgBox("Para mantener la integridad del sistema, no se permite eliminar clientes con ventas", MsgBoxStyle.Exclamation, "CTRL+y")
             End Try
         End If
 
@@ -7605,7 +7698,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             Dim cmd23 As New MySqlCommand(Sql23, conexionMysql)
             reader = cmd23.ExecuteReader
             reader.Read()
-            cbtncompras.Text = reader.GetString(0).ToString()
+            txtgastos.Text = reader.GetString(0).ToString()
+
             compra = reader.GetString(0).ToString()
 
             conexionMysql.Close()
@@ -7665,7 +7759,9 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             Dim cmd1 As New MySqlCommand(sql1, conexionMysql)
             reader = cmd1.ExecuteReader
             reader.Read()
-            cbtncompras.Text = "$" & reader.GetString(0).ToString()
+            'cbtncompras.Text = "$" & reader.GetString(0).ToString()
+            txtgastos.Text = reader.GetString(0).ToString()
+
             conexionMysql.Close()
 
 
@@ -7688,7 +7784,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             conexionMysql.Close()
 
             'calculamos las operaciones para que de el final.
-            cbttotales.Text = "$ " & CDbl(cbtnextras.Text) - CDbl(cbtncompras.Text)
+            'cbttotales.Text = "$ " & CDbl(cbtnextras.Text) - CDbl(cbtncompras.Text)
+            cbttotales.Text = CDbl(cbtnextras.Text) - CDbl(txtgastos.Text)
 
         Catch ex As Exception
 
@@ -7975,10 +8072,10 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
     End Sub
 
     Private Sub calendario_DateChanged(sender As Object, e As DateRangeEventArgs) Handles calendario.DateChanged
-
+        GroupBox14.Text = "Información del Día"
 
         consultacortecalendario()
-        desgloseventas()
+        desgloseventascalendario()
 
     End Sub
 
@@ -8014,14 +8111,59 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         'al dar clic al boton que se cargue todo lo vendido de papeleria y de servicios en la fecha seleccionada.
         conexionMysql.Close()
     End Function
-    Function desgloseventas()
-        Dim fechacompleta, fecha, fechafinal As String
+    Function desgloseventascalendario()
+        Dim fechacompleta, fecha, fechafinal, fechacaja, horacaja As String
 
         fechacompleta = calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
         fecha = fechacompleta & " 00:00:00"
         fechafinal = fechacompleta & " 23:59:59"
-        'MsgBox(fecha)
+        ' MsgBox(fecha)
         'MsgBox(fechafinal)
+
+        ''consulto el id maximo mas actual y obtengo la fecha para saber que id se quedo con caja abierta
+        ''------------------------------------------------------------------
+        'Dim id As Integer
+        'cerrarconexion()
+        'conexionMysql.Open()
+        'Dim sql1 As String
+        'sql1 = "select max(idcaja) from caja where estado=0;"
+        'Dim cmd1 As New MySqlCommand(sql1, conexionMysql)
+        'reader = cmd1.ExecuteReader
+        'reader.Read()
+        ''id del registro abierto para cerrarlo
+        'id = reader.GetString(0).ToString()
+        'txtid.Text = id
+        'conexionMysql.Close()
+        ''------------------------------------------------------------------
+        ''consulto la hora inicial y la fecha en que se abrio la caja, esto significa que  desde ese momento vamos a comenzar a contar lo vendido
+        ''------------------------------------------------------------------
+        'cerrarconexion()
+        'conexionMysql.Open()
+        'Dim sql13 As String
+        'sql13 = "select DATE_FORMAT(fecha, '%Y-%m-%d')as fecha, hora_inicial,monto_inicial   from caja where idcaja=" & id & ";"
+        'Dim cmd13 As New MySqlCommand(sql13, conexionMysql)
+        'reader = cmd13.ExecuteReader
+        'reader.Read()
+        ''fecha que se abrio la caja
+        'fechacaja = reader.GetString(0).ToString()
+        ''hora en que se abrio la caja
+        'horacaja = reader.GetString(1).ToString()
+        ''txtsaldoinicial.Text = reader.GetString(2).ToString()
+        'conexionMysql.Close()
+        ''MsgBox(fechacaja & " hora: " & horacaja)
+
+        'cerrarconexion()
+
+        ''        MsgBox(fecha)
+        ''---------------------------------------------------------
+        ''----------------------------------------------------'
+        ''comprobar si el cierre de caja se hizo en el mismo dia, o se hace ne otro dia diferente. 
+        ''---------------------------------------------------
+        ''-----------------------------------------------------
+        'Dim fechainicial As String
+        'fechainicial = fechacaja + " " + horacaja
+
+
 
         cerrarconexion()
         'MsgBox(fechacompleta)
@@ -8043,6 +8185,91 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         cgrillacorte.DataSource = dt
         'al dar clic al boton que se cargue todo lo vendido de papeleria y de servicios en la fecha seleccionada.
         conexionMysql.Close()
+
+    End Function
+    Function desgloseventas()
+        Dim fechacompleta, fecha, fechafinal, fechacaja, horacaja As String
+
+        fechacompleta = calendario.SelectionRange.Start.ToString("yyyy/MM/dd")
+        fecha = fechacompleta & " 00:00:00"
+        fechafinal = fechacompleta & " 23:59:59"
+        'MsgBox(fecha)
+        'MsgBox(fechafinal)
+        Dim id As Integer
+        Try
+
+            'consulto el id maximo mas actual y obtengo la fecha para saber que id se quedo con caja abierta
+            '------------------------------------------------------------------
+
+            cerrarconexion()
+            conexionMysql.Open()
+            Dim sql1 As String
+            sql1 = "select max(idcaja) from caja where estado=0;"
+            Dim cmd1 As New MySqlCommand(sql1, conexionMysql)
+            reader = cmd1.ExecuteReader
+            reader.Read()
+            'id del registro abierto para cerrarlo
+            id = reader.GetString(0).ToString()
+            txtid.Text = id
+            conexionMysql.Close()
+        Catch ex As Exception
+            id = 0
+            cerrarconexion()
+        End Try
+        If id > 0 Then
+
+            '------------------------------------------------------------------
+            'consulto la hora inicial y la fecha en que se abrio la caja, esto significa que  desde ese momento vamos a comenzar a contar lo vendido
+            '------------------------------------------------------------------
+            cerrarconexion()
+            conexionMysql.Open()
+            Dim sql13 As String
+            sql13 = "select DATE_FORMAT(fecha, '%Y-%m-%d')as fecha, hora_inicial,monto_inicial   from caja where idcaja=" & id & ";"
+            Dim cmd13 As New MySqlCommand(sql13, conexionMysql)
+            reader = cmd13.ExecuteReader
+            reader.Read()
+            'fecha que se abrio la caja
+            fechacaja = reader.GetString(0).ToString()
+            'hora en que se abrio la caja
+            horacaja = reader.GetString(1).ToString()
+            'txtsaldoinicial.Text = reader.GetString(2).ToString()
+            conexionMysql.Close()
+            'MsgBox(fechacaja & " hora: " & horacaja)
+
+            cerrarconexion()
+
+            '        MsgBox(fecha)
+            '---------------------------------------------------------
+            '----------------------------------------------------'
+            'comprobar si el cierre de caja se hizo en el mismo dia, o se hace ne otro dia diferente. 
+            '---------------------------------------------------
+            '-----------------------------------------------------
+            Dim fechainicial As String
+            fechainicial = fechacaja + " " + horacaja
+
+
+
+            cerrarconexion()
+            'MsgBox(fechacompleta)
+            conexionMysql.Open()
+            Dim Sql As String
+            'Sql = "SELECT * FROM venta,ventaind where venta.idventa=ventaind.idventaind and fecha='" & fechacompleta & "';"
+            '        Sql = "select venta.idventa, ventaind.idventaind,tipoventa.tipoventa, ventaind.idproducto, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, venta.anticipo,venta.resto, venta.hora from ventaind, venta,tipoventa where ventaind.idventa = venta.idventa and venta.tipoventa=tipoventa.idtipoventa and fecha='" & fechacompleta & "';"
+            '        Sql = "select venta.idventa, ventaind.idventaind, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, ventaind.idproducto, venta.hora,venta.fecha from ventaind, venta where ventaind.idventa = venta.idventa and fecha between '" & fecha & "' and '" & fechafinal & "';"
+            Sql = "select venta.idventa, ventaind.idventaind,venta.tipoventa, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total,venta.anticipo,venta.resto, ventaind.idproducto, venta.hora,venta.fecha from ventaind, venta where ventaind.idventa = venta.idventa and fecha between '" & fechainicial & "' and '" & fechafinal & "';"
+            'Sql = "select venta.idventa, ventaind.idventaind, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, servicios_ventas.anticipo, ventaind.idproducto, venta.hora,venta.fecha from ventaind, venta, servicios_ventas where ventaind.idventa = venta.idventa and venta.idventa= servicios_ventas.idventa and venta.fecha='" & fechacompleta & "';"
+            'Sql = "select venta.idventa, ventaind.idventaind, tipoventa.tipoventa, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, servicios_ventas.anticipo, ventaind.idproducto, venta.hora,venta.fecha from tipoventa, ventaind, venta, servicios_ventas where ventaind.idventa = venta.idventa and venta.idventa= servicios_ventas.idventa and venta.tipoventa = tipoventa.idtipoventa and venta.fecha='" & fechacompleta & "';"
+            'Sql = "select venta.idventa, ventaind.idventaind, ventaind.actividad, ventaind.cantidad, ventaind.costo,(ventaind.cantidad * ventaind.costo) as Total, servicios_ventas.anticipo, ventaind.idproducto, venta.hora,venta.fecha from servicios_ventas, ventaind, venta where ventaind.idventa = venta.idventa  and venta.fecha='" & fechacompleta & "';"
+
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            'cargamos el formulario  resumen
+            da.Fill(dt)
+            cgrillacorte.DataSource = dt
+            'al dar clic al boton que se cargue todo lo vendido de papeleria y de servicios en la fecha seleccionada.
+            conexionMysql.Close()
+        End If
 
     End Function
 
@@ -8730,15 +8957,19 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             MsgBox("No se encontro en tu equipo Mysql, escoge la carpeta donde esta ubicado")
             carpeta.ShowDialog()
             pathmysql = carpeta.SelectedPath
+            'pathmysql = "C:\"
         End If
         respaldar.Filter = "File MYSQL (*.sql)|*.sql"
+
+        respaldar.FileName = "C:\f.sql"
+
         If respaldar.ShowDialog() = Windows.Forms.DialogResult.OK Then
             Try
 
                 Dim contra As String
                 'Call InputBox_Password(frmindex, "*")
-                contra = InputBox("Ingresa la contraseña del administrador", "CTRL+Y")
-
+                'contra = InputBox("Ingresa la contraseña del administrador", "CTRL+Y")
+                contra = "conexion"
                 comando = pathmysql & "\bin\mysqldump --user=root --password=" & contra & " --databases dwin --routines -r """ & respaldar.FileName & """"
                 Shell(comando, AppWinStyle.MinimizedFocus, True)
                 MsgBox("Se realizo el respaldo correctamente", MsgBoxStyle.Information, "Sistema")
@@ -10058,9 +10289,12 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
     End Sub
 
     Private Sub ctxtnombre_TextChanged(sender As Object, e As EventArgs) Handles ctxtnombre.TextChanged
-        'lbclientes.Visible = True
-        'lbclientes.Items.Clear()
-
+        'listaclientes.Visible = True
+        'listaclientes.Items.Clear()
+        If ctxtnombre.Text = "" Then
+            estadoBusquedaClientes = 0
+            limpiarcliente()
+        End If
 
         ''cerramos la conexion
         'cerrarconexion()
@@ -10069,7 +10303,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         'cantidad = 0
         'conexionMysql.Open()
         'Dim Sql2 As String
-        'Sql2 = "select count(*) from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & ctxtnombre.Text & "%';"
+        'Sql2 = "select count(*) from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & txtcliente.Text & "%';"
         'Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
         'reader = cmd2.ExecuteReader
         'reader.Read()
@@ -10083,29 +10317,79 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         'cerrarconexion()
 
 
-        'If cantidad = 0 Then
-        '    lbclientes.Visible = False
-        'Else
+        'conexionMysql.Open()
+        'Dim Sql As String
+        'Sql = "select concat(nombre, ' ', ap, ' ', am) as nombre from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & txtcliente.Text & "%';"
+        'Dim cmd As New MySqlCommand(Sql, conexionMysql)
+        'reader = cmd.ExecuteReader
+        'For i = 1 To cantidad
+        '    reader.Read()
+
+        '    listaclientes.Items.Add(reader.GetString(0).ToString)
+        'Next
+        If estadoBusquedaClientes = 1 Then
+
+        Else
 
 
-        '    conexionMysql.Open()
-        '    Dim Sql As String
-        '    Sql = "select concat(nombre, ' ', ap, ' ', am) as nombre from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & ctxtnombre.Text & "%';"
-        '    Dim cmd As New MySqlCommand(Sql, conexionMysql)
-        '    reader = cmd.ExecuteReader
-        '    For i = 1 To cantidad
-        '        reader.Read()
+            'conexionMysql.Close()
+            ''Catch ex As Exception
 
-        '        lbclientes.Items.Add(reader.GetString(0).ToString)
-        '    Next
+            ''End Try
+            '-----------------------------------------------------------------
+            If ctxtnombre.Text = "" Then
+                ulistaclientes.Visible = False
+            Else
+
+                ulistaclientes.Visible = True
+                ulistaclientes.Items.Clear()
 
 
-        '    conexionMysql.Close()
-        'End If
+                'cerramos la conexion
+                cerrarconexion()
 
-        ''Catch ex As Exception
+                Dim cantidad, i As Integer
+                cantidad = 0
+                conexionMysql.Open()
+                Dim Sql2 As String
+                Sql2 = "select count(*) from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & ctxtnombre.Text & "%';"
+                Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+                reader = cmd2.ExecuteReader
+                reader.Read()
+                cantidad = reader.GetString(0).ToString
 
-        ''End Try
+                'cargamos el formulario  resumen
+                conexionMysql.Close()
+
+                'MsgBox("hay tantos resultados:" & cantidad)
+
+                cerrarconexion()
+
+
+                If cantidad = 0 Then
+                    ulistaclientes.Visible = False
+                Else
+
+
+                    conexionMysql.Open()
+                    Dim Sql As String
+                    Sql = "select concat(nombre, ' ', ap, ' ', am) as nombre from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & ctxtnombre.Text & "%';"
+                    Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                    reader = cmd.ExecuteReader
+                    For i = 1 To cantidad
+                        reader.Read()
+
+                        ulistaclientes.Items.Add(reader.GetString(0).ToString)
+                    Next
+
+
+                    conexionMysql.Close()
+                End If
+            End If
+        End If
+        'Catch ex As Exception
+
+        'End Try
     End Sub
 
     Private Sub ctxtedad_TextChanged(sender As Object, e As EventArgs) Handles ctxtedad.TextChanged
@@ -12455,17 +12739,23 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
             ''---------------------------------------------------------
             ''MsgBox(fechaentrega)
-            'conexionMysql.Open()
-            'Dim Sql33 As String
-            '' Sql33 = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario, fechaentrega, anticipo, resto, tipoventa) VALUES (" & slbfolio.Text & "," & stxttotalproductos.Text & ", " & CDbl(stxttotal.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'" & fechaentrega & "'," & stxtanticipo.Text & "," & stxtresto.Text & ",'2');"
-            'Sql33 = "INSERT INTO `dwin`.`SERVICIOS_vENTAS` (`idventa`, `fecha`, `hora`, `idcliente`, `anticipo`, `total`) VALUES (" & slbfolio.Text & ", '" & fecha & "', '" & hora & "', " & idcliente & ", " & stxtanticipo.Text & ", " & CDbl(stxttotal.Text) & ");"
-            'Dim cmd33 As New MySqlCommand(Sql33, conexionMysql)
-            'cmd33.ExecuteNonQuery()
-            'conexionMysql.Close()
+            cerrarconexion()
+            Try
 
-            ''---------------------------------------------------------------
-            ''ANTES DE BORRAR TODA LA INFORMACIÓN, MANDO A IMPRIMIR EL REPORTE (NOTA)
+                conexionMysql.Open()
+                Dim Sql33 As String
+                ' Sql33 = "insert into servicios_ventas (idventa,fecha, hora, idcliente,anticipo,total,resto) values('" & frmindex.stxtfoliobusquedaventa.Text & "', '" & fecha & "', '" & hora & "','" & frmindex.indexidusuario & "'," & txtcantidad.Text & "," & total & "," & resto & " )"
+                Sql33 = "INSERT INTO `SERVICIOS_vENTAS` (`idventa`, `fecha`, `hora`, `idcliente`, `anticipo`, `total`) VALUES (" & slbfolio.Text & ", '" & fecha & "', '" & hora & "', " & idcliente & ", " & stxtanticipo.Text & ", " & CDbl(stxttotal.Text) & ");"
+                Dim cmd33 As New MySqlCommand(Sql33, conexionMysql)
+                cmd33.ExecuteNonQuery()
+                conexionMysql.Close()
 
+                ''---------------------------------------------------------------
+                ''ANTES DE BORRAR TODA LA INFORMACIÓN, MANDO A IMPRIMIR EL REPORTE (NOTA)
+
+            Catch ex As Exception
+
+            End Try
 
 
 
@@ -14919,19 +15209,14 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         ctxtid.Text = reader.GetString(0).ToString
         conexionMysql.Close()
 
-
-
         cerrarconexion()
         conexionMysql.Open()
-
         Dim Sql As String
         Sql = "select * from cliente where idcliente='" & ctxtid.Text & "';"
         Dim cmd As New MySqlCommand(Sql, conexionMysql)
         reader = cmd.ExecuteReader()
         reader.Read()
-
         '        ctxtid.Text = reader.GetString(0).ToString
-
         ctxtnombre.Text = reader.GetString(1).ToString
         ctxtap.Text = reader.GetString(2).ToString
         ctxtam.Text = reader.GetString(3).ToString
@@ -14940,17 +15225,11 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         ctxttelefono.Text = reader.GetString(6).ToString
         ctxtcorreo.Text = reader.GetString(7).ToString
         conexionMysql.Close()
-
-
         'Catch ex As Exception
         '    cerrarconexion()
         '    MsgBox(lbclientes.Text)
         '    MsgBox("Controlador de errores:" & ex.Message, MsgBoxStyle.Exclamation, "CTRL+y")
         'End Try
-
-
-
-
         lbclientes.Visible = False
     End Function
     Function cargarhistorialventascliente()
@@ -15237,7 +15516,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
         'cgrillaentrada.Visible = True
         'resumenventas()
-        desgloseventas()
+        desgloseventascalendario()
         cgrillacorte.Visible = True
         cgrillaentrada.Visible = False
         cgrillasalida.Visible = False
@@ -17039,9 +17318,9 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
     Private Sub AGBtnAgendar_Click(sender As Object, e As EventArgs) Handles AGBtnAgendar.Click
         'insertamos el registro en la tabla agenda
         cerrarconexion()
-        Try
+        'Try
 
-            If AGtxtTotal.Text = "" Then
+        If AGtxtTotal.Text = "" Then
                 AGtxtTotal.Text = "0"
             End If
 
@@ -17068,9 +17347,9 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
 
 
-        Catch ex As Exception
+        ' Catch ex As Exception
 
-        End Try
+        ' End Try
 
     End Sub
 
@@ -17418,8 +17697,39 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     End Sub
 
+    Private Sub ulistaclientes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ulistaclientes.SelectedIndexChanged
+
+    End Sub
+
     Private Sub Button2_GotFocus(sender As Object, e As EventArgs) Handles Button2.GotFocus
 
+    End Sub
+
+    Private Sub chRespaldo_CheckedChanged(sender As Object, e As EventArgs) Handles chRespaldo.CheckedChanged
+        Try
+            Dim valor As Integer
+            valor = 0
+            If chRespaldo.Checked = True Then
+                valor = 1
+            ElseIf chRespaldo.Checked = False Then
+                valor = 0
+            End If
+
+            'MsgBox("LA IMPRESORA A GUARDAR ES:" & impresosaPredt)
+
+            'respaldo_auto
+            conexionMysql.Open()
+            Dim Sql22 As String
+            Sql22 = "UPDATE `datos_empresa` SET `respaldo_auto` = '" & valor & "';"
+            Dim cmd22 As New MySqlCommand(Sql22, conexionMysql)
+            cmd22.ExecuteNonQuery()
+            conexionMysql.Close()
+            'MsgBox("Valor Actualizado", MsgBoxStyle.Information, "CTRL+y")
+
+        Catch ex As Exception
+            cerrarconexion()
+            'MsgBox(ex.Message, "13")
+        End Try
     End Sub
 
     Private Sub stxtcantidad_GotFocus(sender As Object, e As EventArgs) Handles stxtcantidad.GotFocus
@@ -17491,6 +17801,8 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
     End Sub
 
     Private Sub grillacliente_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles grillacliente.CellClick
+        estadoBusquedaClientes = 1
+
         Try
 
             Dim Variable As Integer = grillacliente.Item(0, grillacliente.CurrentRow.Index).Value
@@ -17627,5 +17939,128 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
         Dim Variable As String = agendagrilla.Item(0, agendagrilla.CurrentRow.Index).Value
         agtxtid.Text = Variable
+    End Sub
+
+    Private Sub calendario_Click(sender As Object, e As EventArgs) Handles calendario.Click
+
+    End Sub
+
+    Private Sub calendario_DateSelected(sender As Object, e As DateRangeEventArgs) Handles calendario.DateSelected
+        GroupBox14.Text = "Información del Día"
+
+        consultacortecalendario()
+        desgloseventascalendario()
+    End Sub
+
+    Private Sub ulistaclientes_DoubleClick(sender As Object, e As EventArgs) Handles ulistaclientes.DoubleClick
+
+        estadoBusquedaClientes = 1
+
+
+        'Try
+
+        'Dim Variable As Integer = grillacliente.Item(0, grillacliente.CurrentRow.Index).Value
+        cerrarconexion()
+        Dim nombreCompleto As String
+        Dim idCliente As Integer
+        nombreCompleto = ulistaclientes.Text
+        ulistaclientes.Visible = False
+
+        'Try
+
+        'MsgBox(nombreCompleto)
+        conexionMysql.Open()
+            Dim sql As String
+        sql = "select idcliente from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & nombreCompleto & "%';"
+        'sql = "select concat(nombre, ' ', ap, ' ', am) as nombre from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & ctxtnombre.Text & "%';"
+        Dim cmd As New MySqlCommand(sql, conexionMysql)
+            reader = cmd.ExecuteReader
+            reader.Read()
+            idCliente = reader.GetString(0).ToString()
+
+            conexionMysql.Close()
+            ulistaclientes.Visible = False
+
+
+        ' MsgBox(idCliente)
+
+
+        'Try
+
+
+        conexionMysql.Open()
+                Dim sql2 As String
+                sql2 = "select * from cliente where idcliente =" & idCliente & ";"
+                Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
+                reader = cmd2.ExecuteReader
+                reader.Read()
+        Try
+
+            ctxtidcliente.Text = reader.GetString(0).ToString()
+        Catch ex As Exception
+
+        End Try
+        Try
+
+
+            ctxtnombre.Text = reader.GetString(1).ToString()
+        Catch ex As Exception
+
+        End Try
+        Try
+
+                ctxtap.Text = reader.GetString(2).ToString()
+            Catch ex As Exception
+
+            End Try
+        Try
+
+            ctxtam.Text = reader.GetString(3).ToString()
+        Catch ex As Exception
+
+        End Try
+        Try
+
+            ctxtdireccion.Text = reader.GetString(5).ToString()
+        Catch ex As Exception
+
+        End Try
+        Try
+
+            ctxttelefono.Text = reader.GetString(6).ToString()
+        Catch ex As Exception
+
+        End Try
+        Try
+
+            ctxtcorreo.Text = reader.GetString(7).ToString()
+
+        Catch ex As Exception
+
+        End Try
+        Try
+
+            ctxtedad.Text = reader.GetString(4).ToString()
+        Catch ex As Exception
+
+        End Try
+
+        conexionMysql.Close()
+
+            'Catch ex As Exception
+            cerrarconexion()
+                btninconsistencia.Visible = True
+
+
+            'End Try
+
+            ' Catch ex As Exception
+            cerrarconexion()
+            'btninconsistencia.Visible = True
+        'End Try
+        'Catch ex As Exception
+
+        ' End Try
+
     End Sub
 End Class

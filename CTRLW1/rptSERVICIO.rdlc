@@ -380,7 +380,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!cantidad2.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>0;(0)</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -700,7 +702,7 @@
   <Width>19.27079cm</Width>
   <Page>
     <PageHeader>
-      <Height>7.79349cm</Height>
+      <Height>7.92211cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -758,9 +760,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
           <Top>3.43021cm</Top>
-          <Left>1.1047cm</Left>
+          <Left>0.45349cm</Left>
           <Height>0.6cm</Height>
-          <Width>3.71442cm</Width>
+          <Width>4.36563cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -782,6 +784,7 @@
                   <Value>CLIENTE:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -793,7 +796,7 @@
           <rd:DefaultName>Textbox23</rd:DefaultName>
           <Top>5.43129cm</Top>
           <Left>0.44272cm</Left>
-          <Height>0.65699cm</Height>
+          <Height>0.63528cm</Height>
           <Width>3.71442cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
@@ -1170,6 +1173,7 @@
                   <Value>DIRECCIÓN:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1215,8 +1219,8 @@
           <rd:DefaultName>direccion</rd:DefaultName>
           <Top>6.28638cm</Top>
           <Left>4.27374cm</Left>
-          <Height>0.6cm</Height>
-          <Width>6.12544cm</Width>
+          <Height>0.50773cm</Height>
+          <Width>6.58332cm</Width>
           <ZIndex>17</ZIndex>
           <Style>
             <Border>
@@ -1238,6 +1242,7 @@
                   <Value>TELÉFONO:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1272,6 +1277,7 @@
                   <Value>EMAIL:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1345,10 +1351,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>correo1</rd:DefaultName>
-          <Top>6.19411cm</Top>
-          <Left>14.05622cm</Left>
-          <Height>0.6cm</Height>
-          <Width>4.80259cm</Width>
+          <Top>6.2511cm</Top>
+          <Left>14.14678cm</Left>
+          <Height>0.54301cm</Height>
+          <Width>4.71203cm</Width>
           <ZIndex>21</ZIndex>
           <Style>
             <Border>
@@ -1481,6 +1487,7 @@
                 <TextRun>
                   <Value>=First(Fields!idsecotizacion.Value, "dsservicio")</Value>
                   <Style>
+                    <FontSize>8pt</FontSize>
                     <FontWeight>Bold</FontWeight>
                   </Style>
                 </TextRun>
@@ -1492,9 +1499,9 @@
           </Paragraphs>
           <rd:DefaultName>idsecotizacion</rd:DefaultName>
           <Top>3.43932cm</Top>
-          <Left>15.16155cm</Left>
-          <Height>0.6cm</Height>
-          <Width>3.10924cm</Width>
+          <Left>15.29189cm</Left>
+          <Height>0.60284cm</Height>
+          <Width>3.56241cm</Width>
           <ZIndex>26</ZIndex>
           <Style>
             <Border>
@@ -1622,7 +1629,7 @@
           <Top>5.46657cm</Top>
           <Left>4.30902cm</Left>
           <Height>0.6cm</Height>
-          <Width>6.12544cm</Width>
+          <Width>6.54804cm</Width>
           <ZIndex>29</ZIndex>
           <Style>
             <Border>
@@ -1676,17 +1683,19 @@
               <TextRuns>
                 <TextRun>
                   <Value>=First(Fields!hora.Value, "dsservicio")</Value>
-                  <Style />
+                  <Style>
+                    <FontSize>8pt</FontSize>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox64</rd:DefaultName>
-          <Top>4.13604cm</Top>
-          <Left>15.16155cm</Left>
+          <Top>4.10076cm</Top>
+          <Left>15.29189cm</Left>
           <Height>0.49417cm</Height>
-          <Width>3.10924cm</Width>
+          <Width>3.56241cm</Width>
           <ZIndex>31</ZIndex>
           <Style>
             <Border>
@@ -1708,6 +1717,7 @@
                   <Value>FORMA DE PAGO:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1749,10 +1759,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>7.06277cm</Top>
+          <Top>7.00578cm</Top>
           <Left>4.3443cm</Left>
-          <Height>0.6cm</Height>
-          <Width>6.05488cm</Width>
+          <Height>0.61132cm</Height>
+          <Width>6.51276cm</Width>
           <ZIndex>33</ZIndex>
           <Style>
             <Border>
@@ -1774,6 +1784,7 @@
                   <Value>RFC:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1816,9 +1827,9 @@
           </Paragraphs>
           <rd:DefaultName>correo1</rd:DefaultName>
           <Top>7.0171cm</Top>
-          <Left>14.15755cm</Left>
+          <Left>14.19282cm</Left>
           <Height>0.6cm</Height>
-          <Width>4.80259cm</Width>
+          <Width>4.66148cm</Width>
           <ZIndex>35</ZIndex>
           <Style>
             <Border>
