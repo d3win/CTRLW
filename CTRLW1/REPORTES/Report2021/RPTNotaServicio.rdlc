@@ -350,7 +350,7 @@
                             <TextRun>
                               <Value>=Fields!cantidad2.Value</Value>
                               <Style>
-                                <Format>0.00;(0.00)</Format>
+                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -703,7 +703,7 @@
   <Width>19.46578cm</Width>
   <Page>
     <PageHeader>
-      <Height>9.25807cm</Height>
+      <Height>8.39903cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1003,6 +1003,7 @@
                   <Value>CLIENTE:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1012,7 +1013,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>6.72975cm</Top>
+          <Top>6.09475cm</Top>
           <Left>0.1372cm</Left>
           <Height>0.65699cm</Height>
           <Width>3.71442cm</Width>
@@ -1037,6 +1038,7 @@
                   <Value>DIRECCIÓN:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1046,7 +1048,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>7.52785cm</Top>
+          <Top>6.89285cm</Top>
           <Left>0.14797cm</Left>
           <Height>0.65699cm</Height>
           <Width>3.71442cm</Width>
@@ -1080,7 +1082,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox56</rd:DefaultName>
-          <Top>6.02094cm</Top>
+          <Top>5.38594cm</Top>
           <Left>0.1372cm</Left>
           <Height>0.51886cm</Height>
           <Width>19.02314cm</Width>
@@ -1106,6 +1108,7 @@
                   <Value>FORMA DE PAGO:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1115,7 +1118,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>8.29067cm</Top>
+          <Top>7.65567cm</Top>
           <Left>0.14797cm</Left>
           <Height>0.65699cm</Height>
           <Width>3.71442cm</Width>
@@ -1140,6 +1143,7 @@
                   <Value>TELÉFONO:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1149,7 +1153,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>6.71618cm</Top>
+          <Top>6.08118cm</Top>
           <Left>10.56402cm</Left>
           <Height>0.65699cm</Height>
           <Width>2.60176cm</Width>
@@ -1174,6 +1178,7 @@
                   <Value>EMAIL:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1183,7 +1188,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>7.40845cm</Top>
+          <Top>6.77345cm</Top>
           <Left>10.53325cm</Left>
           <Height>0.65699cm</Height>
           <Width>2.60176cm</Width>
@@ -1208,6 +1213,7 @@
                   <Value>RFC:</Value>
                   <Style>
                     <FontFamily>Arial BLACK</FontFamily>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1217,7 +1223,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>8.23368cm</Top>
+          <Top>7.59868cm</Top>
           <Left>10.52874cm</Left>
           <Height>0.65699cm</Height>
           <Width>2.60176cm</Width>
@@ -1285,79 +1291,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>4.37617cm</Top>
-          <Left>0.44662cm</Left>
+          <Top>3.69367cm</Top>
+          <Left>9.85319cm</Left>
           <Height>0.6cm</Height>
           <Width>4.40091cm</Width>
           <ZIndex>19</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox29">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>CLAVE COTIZADOR:</Value>
-                  <Style>
-                    <FontFamily>Arial BLACK</FontFamily>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Right</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>3.63506cm</Top>
-          <Left>9.78263cm</Left>
-          <Height>0.6cm</Height>
-          <Width>4.40091cm</Width>
-          <ZIndex>20</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="Textbox31">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>HORA DE VENTA:</Value>
-                  <Style>
-                    <FontFamily>Arial BLACK</FontFamily>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Right</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>4.27034cm</Top>
-          <Left>10.46912cm</Left>
-          <Height>0.6cm</Height>
-          <Width>3.71442cm</Width>
-          <ZIndex>21</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1392,7 +1330,7 @@
           <Left>15.33007cm</Left>
           <Height>1.74625cm</Height>
           <Width>3.83646cm</Width>
-          <ZIndex>22</ZIndex>
+          <ZIndex>20</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1412,18 +1350,22 @@
               <TextRuns>
                 <TextRun>
                   <Value>=First(Fields!fechaentrega.Value, "dsservicio")</Value>
-                  <Style />
+                  <Style>
+                    <Format>d</Format>
+                  </Style>
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>fechaentrega</rd:DefaultName>
-          <Top>4.37617cm</Top>
-          <Left>4.95336cm</Left>
+          <Top>3.69367cm</Top>
+          <Left>14.39521cm</Left>
           <Height>0.6cm</Height>
           <Width>4.71267cm</Width>
-          <ZIndex>23</ZIndex>
+          <ZIndex>21</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1453,69 +1395,7 @@
           <Left>4.92885cm</Left>
           <Height>0.6cm</Height>
           <Width>4.78323cm</Width>
-          <ZIndex>24</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="idsecotizacion">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!idsecotizacion.Value, "dsservicio")</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>idsecotizacion</rd:DefaultName>
-          <Top>3.63506cm</Top>
-          <Left>14.2541cm</Left>
-          <Height>0.6cm</Height>
-          <Width>4.90624cm</Width>
-          <ZIndex>25</ZIndex>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-            <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>2pt</PaddingRight>
-            <PaddingTop>2pt</PaddingTop>
-            <PaddingBottom>2pt</PaddingBottom>
-          </Style>
-        </Textbox>
-        <Textbox Name="hora">
-          <CanGrow>true</CanGrow>
-          <KeepTogether>true</KeepTogether>
-          <Paragraphs>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>=First(Fields!hora.Value, "dsservicio")</Value>
-                  <Style />
-                </TextRun>
-              </TextRuns>
-              <Style />
-            </Paragraph>
-          </Paragraphs>
-          <rd:DefaultName>hora</rd:DefaultName>
-          <Top>4.30562cm</Top>
-          <Left>14.2541cm</Left>
-          <Height>0.6cm</Height>
-          <Width>4.90624cm</Width>
-          <ZIndex>26</ZIndex>
+          <ZIndex>22</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1557,11 +1437,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>nombre1</rd:DefaultName>
-          <Top>6.72975cm</Top>
+          <Top>6.09475cm</Top>
           <Left>3.93294cm</Left>
           <Height>0.6cm</Height>
           <Width>6.46997cm</Width>
-          <ZIndex>27</ZIndex>
+          <ZIndex>23</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1587,11 +1467,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>direccion</rd:DefaultName>
-          <Top>7.58484cm</Top>
+          <Top>6.94984cm</Top>
           <Left>3.93294cm</Left>
           <Height>0.6cm</Height>
           <Width>6.4592cm</Width>
-          <ZIndex>28</ZIndex>
+          <ZIndex>24</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1617,11 +1497,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>telefono1</rd:DefaultName>
-          <Top>6.71618cm</Top>
+          <Top>6.08118cm</Top>
           <Left>13.27894cm</Left>
           <Height>0.6cm</Height>
           <Width>5.88139cm</Width>
-          <ZIndex>29</ZIndex>
+          <ZIndex>25</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1647,11 +1527,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>correo1</rd:DefaultName>
-          <Top>7.46544cm</Top>
+          <Top>6.83044cm</Top>
           <Left>13.29422cm</Left>
           <Height>0.6cm</Height>
           <Width>5.86611cm</Width>
-          <ZIndex>30</ZIndex>
+          <ZIndex>26</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1677,11 +1557,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>rfc</rd:DefaultName>
-          <Top>8.29067cm</Top>
+          <Top>7.65567cm</Top>
           <Left>13.29422cm</Left>
           <Height>0.6cm</Height>
           <Width>5.86611cm</Width>
-          <ZIndex>31</ZIndex>
+          <ZIndex>27</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1707,11 +1587,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>tipo</rd:DefaultName>
-          <Top>8.30424cm</Top>
+          <Top>7.66924cm</Top>
           <Left>3.96822cm</Left>
           <Height>0.6cm</Height>
           <Width>6.39941cm</Width>
-          <ZIndex>32</ZIndex>
+          <ZIndex>28</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1748,7 +1628,7 @@
           <Left>15.33007cm</Left>
           <Height>0.90276cm</Height>
           <Width>3.83646cm</Width>
-          <ZIndex>33</ZIndex>
+          <ZIndex>29</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1774,11 +1654,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>horaentrega</rd:DefaultName>
-          <Top>5.15256cm</Top>
-          <Left>4.92885cm</Left>
+          <Top>4.47006cm</Top>
+          <Left>14.43049cm</Left>
           <Height>0.6cm</Height>
-          <Width>4.73718cm</Width>
-          <ZIndex>34</ZIndex>
+          <Width>4.63135cm</Width>
+          <ZIndex>30</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
@@ -1808,11 +1688,11 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox23</rd:DefaultName>
-          <Top>5.15256cm</Top>
-          <Left>0.45738cm</Left>
+          <Top>4.47006cm</Top>
+          <Left>9.85319cm</Left>
           <Height>0.6cm</Height>
           <Width>4.40091cm</Width>
-          <ZIndex>35</ZIndex>
+          <ZIndex>31</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>

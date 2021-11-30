@@ -1,7 +1,19 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class FRagregaranticipo
     Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
-        sumaranticipo()
+
+        Dim estadocaja As Integer
+
+
+        estadocaja = frmindex.comprobarcaja()
+
+        If estadocaja = 0 Then
+
+            sumaranticipo()
+        Else
+            MsgBox("No existe algúna caja abierta", MsgBoxStyle.Information, "CTRL+y")
+        End If
+
 
     End Sub
 
