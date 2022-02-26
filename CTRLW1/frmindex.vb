@@ -44,7 +44,119 @@ Public Class frmindex
     Function actualizarbd2021()
 
 
-         Try
+
+
+
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "CREATE TABLE `dwin`.`producto_ubicacion` (
+  `idproducto_ubicacion` INT NOT NULL AUTO_INCREMENT,
+  `idproducto` VARCHAR(45) NULL,
+  `idubicacion_producto` INT NULL,
+  `cantidad` DOUBLE NULL,
+  PRIMARY KEY (`idproducto_ubicacion`),
+  INDEX `idproducto_idx` (`idproducto` ASC),
+  INDEX `idubicacion_producto_idx` (`idubicacion_producto` ASC),
+  CONSTRAINT `idproducto`
+    FOREIGN KEY (`idproducto`)
+    REFERENCES `dwin`.`producto` (`idproducto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idubicacion_producto`
+    FOREIGN KEY (`idubicacion_producto`)
+    REFERENCES `dwin`.`ubicacion_producto` (`idubicacion_producto`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `dwin`.`producto` 
+ADD COLUMN `idubicacion` INT NULL AFTER `cantidad_mayoreo`,
+ADD INDEX `idubicacion_idx` (`idubicacion` ASC);
+;
+ALTER TABLE `producto` 
+ADD CONSTRAINT `idubicacion`
+  FOREIGN KEY (`idubicacion`)
+  REFERENCES `ubicacion_producto` (`idubicacion_producto`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "CREATE TABLE `ubicacion_producto` (
+  `idubicacion_producto` INT NOT NULL AUTO_INCREMENT,
+  `ubicacion` VARCHAR(45) NULL,
+  PRIMARY KEY (`idubicacion_producto`));
+"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+        '-------------------------insertar el registro iniciar, en caso de que no exista
+
+        Dim valor As String
+        Try
+
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select ubicacion from ubicacion_producto where ubicacion='PREDETERMINADO';"
+            Dim cmd2 As New MySqlCommand(Sql, conexionMysql)
+            reader = cmd2.ExecuteReader()
+            reader.Read()
+            valor = reader.GetString(0).ToString()
+            conexionMysql.Close()
+        Catch ex As Exception
+            cerrarconexion()
+            valor = ""
+            'MsgBox("No hay datos de la empresa aun", MsgBoxStyle.Information, "CTRL+y")
+        End Try
+
+        If valor = "" Then
+
+
+            Try
+                conexionMysql.Open()
+                Dim Sql As String
+                Sql = "INSERT IGNORE into `ubicacion_producto` (`ubicacion`) VALUES ('PREDETERMINADO');"
+                Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                cmd.ExecuteNonQuery()
+                conexionMysql.Close()
+            Catch
+                'MsgBox
+                cerrarconexion()
+            End Try
+
+        End If
+
+
+        Try
             conexionMysql.Open()
             Dim Sql As String
             Sql = "ALTER TABLE `datos_empresa` 
@@ -301,7 +413,7 @@ ADD COLUMN `f_contenido` INT NULL AFTER `f_titulo`
 
 
         '---------------------------------------------------------------
-        Dim valor As String
+        Dim valor2 As String
         Try
 
             conexionMysql.Open()
@@ -310,7 +422,7 @@ ADD COLUMN `f_contenido` INT NULL AFTER `f_titulo`
             Dim cmd2 As New MySqlCommand(Sql, conexionMysql)
             reader = cmd2.ExecuteReader()
             reader.Read()
-            valor = reader.GetString(0).ToString()
+            valor2 = reader.GetString(0).ToString()
             conexionMysql.Close()
         Catch ex As Exception
             cerrarconexion()
@@ -318,7 +430,7 @@ ADD COLUMN `f_contenido` INT NULL AFTER `f_titulo`
         End Try
 
 
-        If valor = "" Then
+        If valor2 = "" Then
 
             Try
                 conexionMysql.Open()
@@ -1585,8 +1697,6 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
             ctxtcomprado.Text = consultacompras()
 
-
-
             Button1.BackColor = Color.FromArgb(47, 56, 72)
             Button2.BackColor = Color.FromArgb(47, 56, 72)
             Button3.BackColor = Color.DimGray
@@ -1606,15 +1716,9 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         obtener_chticket_Chcambio_venta()
         Dim tipo As Integer
-
         tipo = tipoingreso()
-
-
         comprobarpermisoventana()
         tipo = p3
-
-
-
         If tipo = 0 Then
 
             TabControl1.SelectedIndex = 1
@@ -1640,6 +1744,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             rbclavep.Checked = True
             cargarproveedor()
             cargartiposervicio()
+            cargarubicacion()
             Button1.BackColor = Color.FromArgb(47, 56, 72)
             Button2.BackColor = Color.FromArgb(47, 56, 72)
             Button3.BackColor = Color.FromArgb(47, 56, 72)
@@ -2952,7 +3057,15 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             MessageBox.Show(ex.Message)
         End Try
     End Function
+    Function cargarubicacionesconfiguracion()
+        ccbubicacion
+
+
+
+    End Function
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+
+
         obtener_chticket_Chcambio_venta()
         cerrarconexion()
         cargarlogoticket()
@@ -3280,7 +3393,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
                 End If
 
-                Dim claveproveedor, clavetipoproducto As Integer
+                Dim claveproveedor, clavetipoproducto, claveubicacion As Integer
 
                 cerrarconexion()
 
@@ -3312,6 +3425,19 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
                 Try
+
+
+                    claveubicacion = reader.GetString(9).ToString()
+
+                Catch ex As Exception
+                    txtpzasmayoreop.Text = 0
+                End Try
+
+
+
+
+
+                Try
                     claveproveedor = reader.GetString(6).ToString()
                     clavetipoproducto = reader.GetString(7).ToString()
 
@@ -3339,7 +3465,27 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
                 End If
 
+                '-------------cargamos la ubicacion del producto.
+                Try
 
+                    Dim valor2 As String
+                    cerrarconexion()
+
+                    conexionMysql.Open()
+                    Dim Sql3u As String
+                    Sql3u = "select * from ubicacion_producto where idubicacion_producto=" & claveubicacion & ";"
+                    Dim cmd3u As New MySqlCommand(Sql3u, conexionMysql)
+                    reader = cmd3u.ExecuteReader()
+                    reader.Read()
+                    valor2 = reader.GetString(1).ToString()
+                    conexionMysql.Close()
+                    pctxtubicacion.Text = valor2
+
+                    '-------------cargamos el tipodeproducto del producto.
+
+                    cerrarconexion()
+                Catch
+                End Try
 
                 '-------------cargamos el proveedor del producto.
                 Try
@@ -3468,6 +3614,58 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
             End Try
         End If
+
+    End Function
+    Function cargarubicacion()
+
+        'limpiar el combo para que no se duplique
+        pctxtubicacion.Items.Clear()
+        ccbubicacion.Items.Add(reader.GetString(1).ToString())
+        Try
+
+
+            Dim cantidadproveedor, i As Integer
+            cerrarconexion()
+
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select count(*)as contador from ubicacion_producto;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            reader = cmd.ExecuteReader()
+            reader.Read()
+            cantidadproveedor = reader.GetString(0).ToString()
+
+            conexionMysql.Close()
+
+
+            cerrarconexion()
+
+            conexionMysql.Open()
+            Dim Sql2 As String
+            Sql2 = "select * from ubicacion_producto;"
+            Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+            reader = cmd2.ExecuteReader()
+
+            For i = 1 To cantidadproveedor
+
+                reader.Read()
+
+                pctxtubicacion.Items.Add(reader.GetString(1).ToString())
+                ccbubicacion.Items.Add(reader.GetString(1).ToString())
+            Next
+
+            reader.Close()
+
+            conexionMysql.Close()
+
+
+            pctxtubicacion.SelectedIndex = 0
+            '            pctxtubicacion.SelectedText = "PREDETERMINADO"
+
+        Catch ex As Exception
+
+        End Try
+
 
     End Function
     Function cargarproveedor()
@@ -5754,7 +5952,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
     Private Sub Button21_Click_1(sender As Object, e As EventArgs) Handles Button21.Click
         Dim res As Integer
         res = 1
-        If txttipoproducto.Text = "" Or txtproveedor.Text = "" Or txtclavep.Text = "" Or txtactividadp.Text = "" Or txtcantidadp.Text = "" Or txtprecioindividualp.Text = "" Or txtpreciomayoreop.Text = "" Or txtpzasmayoreop.Text = "" Then
+        If txttipoproducto.Text = "" Or txtproveedor.Text = "" Or txtclavep.Text = "" Or txtactividadp.Text = "" Or txtcantidadp.Text = "" Or txtprecioindividualp.Text = "" Or txtpreciomayoreop.Text = "" Or txtpzasmayoreop.Text = "" Or pctxtubicacion.Text = "" Then
             MsgBox("Hace falta información", MsgBoxStyle.Exclamation, "Sistema")
         Else
             'Try
@@ -5814,7 +6012,20 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             idtipoproducto = reader.GetString(0).ToString
 
             conexionMysql.Close()
+            '----------------------------------------- obtener id de la ubicacion del producto
+            Dim idubicacion As Integer
+            cerrarconexion()
 
+            conexionMysql.Open()
+            Dim Sql55u As String
+            Sql55u = "select idubicacion_producto from ubicacion_producto where ubicacion='" & pctxtubicacion.Text & "';"
+            Dim cmd55u As New MySqlCommand(Sql55u, conexionMysql)
+            reader = cmd55u.ExecuteReader()
+            reader.Read()
+
+            idubicacion = reader.GetString(0).ToString
+
+            conexionMysql.Close()
 
             If res <> 0 Then
 
@@ -5826,7 +6037,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
                     conexionMysql.Open()
 
                     Dim sql2 As String
-                    sql2 = "INSERT INTO producto (idproducto,descripcion, cantidad, costo, precio, preciom, idproveedor,idtipoproducto,cantidad_mayoreo) VALUES ('" & txtclavep.Text & "', '" & txtactividadp.Text & "', " & txtcantidadp.Text & ", " & txtcostop.Text & ", " & txtprecioindividualp.Text & ", " & txtpreciomayoreop.Text & "," & idproveedor & ", " & idtipoproducto & "," & txtpzasmayoreop.Text & ");"
+                    sql2 = "INSERT INTO producto (idproducto,descripcion, cantidad, costo, precio, preciom, idproveedor,idtipoproducto,cantidad_mayoreo,idubicacion) VALUES ('" & txtclavep.Text & "', '" & txtactividadp.Text & "', " & txtcantidadp.Text & ", " & txtcostop.Text & ", " & txtprecioindividualp.Text & ", " & txtpreciomayoreop.Text & "," & idproveedor & ", " & idtipoproducto & "," & txtpzasmayoreop.Text & "," & idubicacion & ");"
                     Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
                     cmd2.ExecuteNonQuery()
 
@@ -17730,6 +17941,66 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             cerrarconexion()
             'MsgBox(ex.Message, "13")
         End Try
+    End Sub
+
+    Private Sub cbtnubicacion_Click(sender As Object, e As EventArgs) Handles cbtnubicacion.Click
+
+        Try
+
+            If ctxtubicacion.Text = "" Then
+                MsgBox("Ingresa un dato valido", MsgBoxStyle.Information, "Sistema")
+            Else
+
+                cerrarconexion()
+                'consultamos que no exista el servicio
+                Dim TipoUbicacion As String
+                TipoUbicacion = ""
+                Try
+                    conexionMysql.Open()
+                    Dim Sql6 As String
+                    'consultamos cuantos registros se insertaros para posteriormente actualizarlos en su registro original
+                    Sql6 = "select ubicacion from ubicacion_producto where ubicacion='" & ctxtubicacion.Text & "';"
+                    Dim cmd6 As New MySqlCommand(Sql6, conexionMysql)
+                    reader = cmd6.ExecuteReader()
+
+                    reader.Read()
+                    'guardamos los valores en una matriz
+                    TipoUbicacion = reader.GetString(0).ToString()
+                    conexionMysql.Close()
+                Catch ex As Exception
+                End Try
+
+
+
+                If TipoUbicacion <> "" Then
+                    MsgBox("La ubicación ya existe", MsgBoxStyle.Exclamation, "Sistema")
+                Else
+                    'insertamos el nuevo registro
+                    cerrarconexion()
+                    conexionMysql.Open()
+
+                    Dim Sql2 As String
+                    Sql2 = "INSERT INTO ubicacion_producto(ubicacion) VALUES ('" & ctxtubicacion.Text & "');"
+                    Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+                    cmd2.ExecuteNonQuery()
+                    conexionMysql.Close()
+                    MsgBox("Ubicación Guardada", MsgBoxStyle.Information, "Sistema")
+
+                    ctxtubicacion.Text = ""
+
+
+
+
+                End If
+
+
+
+            End If
+
+        Catch ex As Exception
+            MsgBox("Upsss, tenemos un problema al guardar tu registro", MsgBoxStyle.Exclamation, "Sistema")
+        End Try
+
     End Sub
 
     Private Sub stxtcantidad_GotFocus(sender As Object, e As EventArgs) Handles stxtcantidad.GotFocus
