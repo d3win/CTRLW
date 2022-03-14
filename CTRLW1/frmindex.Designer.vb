@@ -204,6 +204,13 @@ Partial Class frmindex
         Me.btnprohistorialventas = New System.Windows.Forms.Button()
         Me.btnprohistorialcompras = New System.Windows.Forms.Button()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.Button92 = New System.Windows.Forms.Button()
+        Me.Label175 = New System.Windows.Forms.Label()
+        Me.Label174 = New System.Windows.Forms.Label()
+        Me.Label173 = New System.Windows.Forms.Label()
+        Me.Label172 = New System.Windows.Forms.Label()
+        Me.pctxtubicacion = New System.Windows.Forms.ComboBox()
+        Me.Label170 = New System.Windows.Forms.Label()
         Me.Label157 = New System.Windows.Forms.Label()
         Me.txtpzasmayoreop = New System.Windows.Forms.TextBox()
         Me.Button46 = New System.Windows.Forms.Button()
@@ -442,6 +449,10 @@ Partial Class frmindex
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
+        Me.GroupBox39 = New System.Windows.Forms.GroupBox()
+        Me.Label171 = New System.Windows.Forms.Label()
+        Me.ctxtubicacion = New System.Windows.Forms.TextBox()
+        Me.cbtnubicacion = New System.Windows.Forms.Button()
         Me.txtrutaimagen = New System.Windows.Forms.TextBox()
         Me.GroupBox38 = New System.Windows.Forms.GroupBox()
         Me.Button76 = New System.Windows.Forms.Button()
@@ -669,6 +680,8 @@ Partial Class frmindex
         Me.Timer5 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer6 = New System.Windows.Forms.Timer(Me.components)
         Me.PrintDocument5CompraGastos = New System.Drawing.Printing.PrintDocument()
+        Me.ccbubicacion = New System.Windows.Forms.ComboBox()
+        Me.Label176 = New System.Windows.Forms.Label()
         CType(Me.cccgrilla, System.ComponentModel.ISupportInitialize).BeginInit
         CType(Me.ccgrilla, System.ComponentModel.ISupportInitialize).BeginInit
         Me.TabPage3.SuspendLayout
@@ -731,6 +744,7 @@ Partial Class frmindex
         Me.GroupBox20.SuspendLayout
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit
         Me.TabPage10.SuspendLayout
+        Me.GroupBox39.SuspendLayout
         Me.GroupBox38.SuspendLayout
         Me.GroupBox34.SuspendLayout
         CType(Me.pblogo, System.ComponentModel.ISupportInitialize).BeginInit
@@ -1811,7 +1825,7 @@ Partial Class frmindex
         Me.txttipoproducto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.txttipoproducto.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txttipoproducto.FormattingEnabled = True
-        Me.txttipoproducto.Location = New System.Drawing.Point(13, 251)
+        Me.txttipoproducto.Location = New System.Drawing.Point(11, 312)
         Me.txttipoproducto.Name = "txttipoproducto"
         Me.txttipoproducto.Size = New System.Drawing.Size(273, 26)
         Me.txttipoproducto.TabIndex = 8
@@ -2264,7 +2278,7 @@ Partial Class frmindex
         Me.Label60.AutoSize = True
         Me.Label60.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label60.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label60.Location = New System.Drawing.Point(11, 229)
+        Me.Label60.Location = New System.Drawing.Point(9, 290)
         Me.Label60.Name = "Label60"
         Me.Label60.Size = New System.Drawing.Size(91, 17)
         Me.Label60.TabIndex = 93
@@ -2804,6 +2818,13 @@ Partial Class frmindex
         '
         Me.GroupBox5.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox5.Controls.Add(Me.Button92)
+        Me.GroupBox5.Controls.Add(Me.Label175)
+        Me.GroupBox5.Controls.Add(Me.Label174)
+        Me.GroupBox5.Controls.Add(Me.Label173)
+        Me.GroupBox5.Controls.Add(Me.Label172)
+        Me.GroupBox5.Controls.Add(Me.pctxtubicacion)
+        Me.GroupBox5.Controls.Add(Me.Label170)
         Me.GroupBox5.Controls.Add(Me.Label157)
         Me.GroupBox5.Controls.Add(Me.txtpzasmayoreop)
         Me.GroupBox5.Controls.Add(Me.txttipoproducto)
@@ -2838,6 +2859,100 @@ Partial Class frmindex
         Me.GroupBox5.TabIndex = 0
         Me.GroupBox5.TabStop = False
         '
+        'Button92
+        '
+        Me.Button92.BackColor = System.Drawing.Color.Transparent
+        Me.Button92.FlatAppearance.BorderSize = 0
+        Me.Button92.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button92.ForeColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.Button92.Image = CType(resources.GetObject("Button92.Image"), System.Drawing.Image)
+        Me.Button92.Location = New System.Drawing.Point(284, 182)
+        Me.Button92.Name = "Button92"
+        Me.Button92.Size = New System.Drawing.Size(31, 29)
+        Me.Button92.TabIndex = 102
+        Me.Button92.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button92.UseVisualStyleBackColor = False
+        '
+        'Label175
+        '
+        Me.Label175.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label175.AutoSize = True
+        Me.Label175.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label175.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label175.Location = New System.Drawing.Point(143, 204)
+        Me.Label175.Name = "Label175"
+        Me.Label175.Size = New System.Drawing.Size(16, 17)
+        Me.Label175.TabIndex = 101
+        Me.Label175.Text = "$"
+        '
+        'Label174
+        '
+        Me.Label174.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label174.AutoSize = True
+        Me.Label174.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label174.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label174.Location = New System.Drawing.Point(8, 204)
+        Me.Label174.Name = "Label174"
+        Me.Label174.Size = New System.Drawing.Size(16, 17)
+        Me.Label174.TabIndex = 100
+        Me.Label174.Text = "$"
+        '
+        'Label173
+        '
+        Me.Label173.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label173.AutoSize = True
+        Me.Label173.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label173.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label173.Location = New System.Drawing.Point(9, 154)
+        Me.Label173.Name = "Label173"
+        Me.Label173.Size = New System.Drawing.Size(16, 17)
+        Me.Label173.TabIndex = 99
+        Me.Label173.Text = "$"
+        '
+        'Label172
+        '
+        Me.Label172.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label172.AutoSize = True
+        Me.Label172.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label172.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label172.Location = New System.Drawing.Point(143, 154)
+        Me.Label172.Name = "Label172"
+        Me.Label172.Size = New System.Drawing.Size(16, 17)
+        Me.Label172.TabIndex = 98
+        Me.Label172.Text = "$"
+        '
+        'pctxtubicacion
+        '
+        Me.pctxtubicacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.pctxtubicacion.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.pctxtubicacion.FormattingEnabled = True
+        Me.pctxtubicacion.Location = New System.Drawing.Point(10, 256)
+        Me.pctxtubicacion.Name = "pctxtubicacion"
+        Me.pctxtubicacion.Size = New System.Drawing.Size(158, 26)
+        Me.pctxtubicacion.TabIndex = 96
+        '
+        'Label170
+        '
+        Me.Label170.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label170.AutoSize = True
+        Me.Label170.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label170.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label170.Location = New System.Drawing.Point(8, 234)
+        Me.Label170.Name = "Label170"
+        Me.Label170.Size = New System.Drawing.Size(72, 17)
+        Me.Label170.TabIndex = 97
+        Me.Label170.Text = "Ubicación"
+        '
         'Label157
         '
         Me.Label157.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -2846,7 +2961,7 @@ Partial Class frmindex
         Me.Label157.AutoSize = True
         Me.Label157.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label157.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label157.Location = New System.Drawing.Point(138, 178)
+        Me.Label157.Location = New System.Drawing.Point(156, 178)
         Me.Label157.Name = "Label157"
         Me.Label157.Size = New System.Drawing.Size(101, 17)
         Me.Label157.TabIndex = 95
@@ -2856,9 +2971,9 @@ Partial Class frmindex
         '
         Me.txtpzasmayoreop.BackColor = System.Drawing.Color.White
         Me.txtpzasmayoreop.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtpzasmayoreop.Location = New System.Drawing.Point(142, 200)
+        Me.txtpzasmayoreop.Location = New System.Drawing.Point(160, 200)
         Me.txtpzasmayoreop.Name = "txtpzasmayoreop"
-        Me.txtpzasmayoreop.Size = New System.Drawing.Size(120, 26)
+        Me.txtpzasmayoreop.Size = New System.Drawing.Size(102, 26)
         Me.txtpzasmayoreop.TabIndex = 7
         Me.ToolTip1.SetToolTip(Me.txtpzasmayoreop, "Indique que cantidad de piezas son necesarias para considerar mayoreo")
         '
@@ -2871,9 +2986,9 @@ Partial Class frmindex
         Me.Button46.ForeColor = System.Drawing.Color.White
         Me.Button46.Image = CType(resources.GetObject("Button46.Image"), System.Drawing.Image)
         Me.Button46.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button46.Location = New System.Drawing.Point(7, 542)
+        Me.Button46.Location = New System.Drawing.Point(7, 562)
         Me.Button46.Name = "Button46"
-        Me.Button46.Size = New System.Drawing.Size(296, 42)
+        Me.Button46.Size = New System.Drawing.Size(296, 22)
         Me.Button46.TabIndex = 91
         Me.Button46.Text = "Impresión productos"
         Me.Button46.UseVisualStyleBackColor = False
@@ -2887,9 +3002,9 @@ Partial Class frmindex
         Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button14.ForeColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.Button14.Image = CType(resources.GetObject("Button14.Image"), System.Drawing.Image)
-        Me.Button14.Location = New System.Drawing.Point(230, 341)
+        Me.Button14.Location = New System.Drawing.Point(265, 403)
         Me.Button14.Name = "Button14"
-        Me.Button14.Size = New System.Drawing.Size(72, 52)
+        Me.Button14.Size = New System.Drawing.Size(37, 52)
         Me.Button14.TabIndex = 83
         Me.Button14.UseVisualStyleBackColor = False
         '
@@ -2904,9 +3019,9 @@ Partial Class frmindex
         Me.Button21.ForeColor = System.Drawing.Color.White
         Me.Button21.Image = CType(resources.GetObject("Button21.Image"), System.Drawing.Image)
         Me.Button21.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button21.Location = New System.Drawing.Point(6, 341)
+        Me.Button21.Location = New System.Drawing.Point(6, 403)
         Me.Button21.Name = "Button21"
-        Me.Button21.Size = New System.Drawing.Size(218, 52)
+        Me.Button21.Size = New System.Drawing.Size(256, 52)
         Me.Button21.TabIndex = 10
         Me.Button21.Text = "Nuevo articulo"
         Me.Button21.UseVisualStyleBackColor = False
@@ -2922,9 +3037,9 @@ Partial Class frmindex
         Me.Button15.ForeColor = System.Drawing.Color.White
         Me.Button15.Image = CType(resources.GetObject("Button15.Image"), System.Drawing.Image)
         Me.Button15.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button15.Location = New System.Drawing.Point(6, 449)
+        Me.Button15.Location = New System.Drawing.Point(6, 498)
         Me.Button15.Name = "Button15"
-        Me.Button15.Size = New System.Drawing.Size(297, 47)
+        Me.Button15.Size = New System.Drawing.Size(297, 26)
         Me.Button15.TabIndex = 77
         Me.Button15.Text = "Actualizar articulo"
         Me.Button15.UseVisualStyleBackColor = False
@@ -2940,9 +3055,9 @@ Partial Class frmindex
         Me.Button23.ForeColor = System.Drawing.Color.White
         Me.Button23.Image = CType(resources.GetObject("Button23.Image"), System.Drawing.Image)
         Me.Button23.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button23.Location = New System.Drawing.Point(6, 498)
+        Me.Button23.Location = New System.Drawing.Point(6, 532)
         Me.Button23.Name = "Button23"
-        Me.Button23.Size = New System.Drawing.Size(297, 41)
+        Me.Button23.Size = New System.Drawing.Size(297, 24)
         Me.Button23.TabIndex = 78
         Me.Button23.Text = "Listar articulos"
         Me.Button23.UseVisualStyleBackColor = False
@@ -2958,9 +3073,9 @@ Partial Class frmindex
         Me.Button24.ForeColor = System.Drawing.Color.White
         Me.Button24.Image = CType(resources.GetObject("Button24.Image"), System.Drawing.Image)
         Me.Button24.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.Button24.Location = New System.Drawing.Point(6, 397)
+        Me.Button24.Location = New System.Drawing.Point(6, 466)
         Me.Button24.Name = "Button24"
-        Me.Button24.Size = New System.Drawing.Size(297, 50)
+        Me.Button24.Size = New System.Drawing.Size(297, 26)
         Me.Button24.TabIndex = 79
         Me.Button24.Text = "Eliminar articulo"
         Me.Button24.UseVisualStyleBackColor = False
@@ -2970,7 +3085,7 @@ Partial Class frmindex
         Me.txtproveedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.txtproveedor.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtproveedor.FormattingEnabled = True
-        Me.txtproveedor.Location = New System.Drawing.Point(13, 303)
+        Me.txtproveedor.Location = New System.Drawing.Point(11, 364)
         Me.txtproveedor.Name = "txtproveedor"
         Me.txtproveedor.Size = New System.Drawing.Size(275, 26)
         Me.txtproveedor.TabIndex = 9
@@ -2995,7 +3110,7 @@ Partial Class frmindex
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label14.Location = New System.Drawing.Point(11, 281)
+        Me.Label14.Location = New System.Drawing.Point(9, 342)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(75, 17)
         Me.Label14.TabIndex = 81
@@ -3050,7 +3165,7 @@ Partial Class frmindex
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label11.Location = New System.Drawing.Point(4, 178)
+        Me.Label11.Location = New System.Drawing.Point(22, 178)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(109, 17)
         Me.Label11.TabIndex = 74
@@ -3063,18 +3178,18 @@ Partial Class frmindex
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtcantidadp.BackColor = System.Drawing.Color.White
         Me.txtcantidadp.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtcantidadp.Location = New System.Drawing.Point(8, 149)
+        Me.txtcantidadp.Location = New System.Drawing.Point(174, 256)
         Me.txtcantidadp.Name = "txtcantidadp"
-        Me.txtcantidadp.Size = New System.Drawing.Size(78, 26)
+        Me.txtcantidadp.Size = New System.Drawing.Size(83, 26)
         Me.txtcantidadp.TabIndex = 3
         '
         'txtpreciomayoreop
         '
         Me.txtpreciomayoreop.BackColor = System.Drawing.Color.White
         Me.txtpreciomayoreop.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtpreciomayoreop.Location = New System.Drawing.Point(8, 200)
+        Me.txtpreciomayoreop.Location = New System.Drawing.Point(26, 200)
         Me.txtpreciomayoreop.Name = "txtpreciomayoreop"
-        Me.txtpreciomayoreop.Size = New System.Drawing.Size(120, 26)
+        Me.txtpreciomayoreop.Size = New System.Drawing.Size(102, 26)
         Me.txtpreciomayoreop.TabIndex = 6
         '
         'Label6
@@ -3085,7 +3200,7 @@ Partial Class frmindex
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label6.Location = New System.Drawing.Point(5, 129)
+        Me.Label6.Location = New System.Drawing.Point(171, 236)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(66, 17)
         Me.Label6.TabIndex = 6
@@ -3099,7 +3214,7 @@ Partial Class frmindex
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label10.Location = New System.Drawing.Point(198, 129)
+        Me.Label10.Location = New System.Drawing.Point(158, 129)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(113, 17)
         Me.Label10.TabIndex = 72
@@ -3112,16 +3227,16 @@ Partial Class frmindex
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtcostop.BackColor = System.Drawing.Color.White
         Me.txtcostop.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtcostop.Location = New System.Drawing.Point(103, 149)
+        Me.txtcostop.Location = New System.Drawing.Point(27, 149)
         Me.txtcostop.Name = "txtcostop"
-        Me.txtcostop.Size = New System.Drawing.Size(76, 26)
+        Me.txtcostop.Size = New System.Drawing.Size(101, 26)
         Me.txtcostop.TabIndex = 4
         '
         'txtprecioindividualp
         '
         Me.txtprecioindividualp.BackColor = System.Drawing.Color.White
         Me.txtprecioindividualp.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtprecioindividualp.Location = New System.Drawing.Point(201, 149)
+        Me.txtprecioindividualp.Location = New System.Drawing.Point(161, 149)
         Me.txtprecioindividualp.Name = "txtprecioindividualp"
         Me.txtprecioindividualp.Size = New System.Drawing.Size(101, 26)
         Me.txtprecioindividualp.TabIndex = 5
@@ -3134,7 +3249,7 @@ Partial Class frmindex
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label5.Location = New System.Drawing.Point(100, 129)
+        Me.Label5.Location = New System.Drawing.Point(24, 129)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(47, 17)
         Me.Label5.TabIndex = 65
@@ -3382,7 +3497,7 @@ Partial Class frmindex
         Me.TabControl1.Controls.Add(Me.TabPage10)
         Me.TabControl1.Controls.Add(Me.TabPage11)
         Me.TabControl1.ItemSize = New System.Drawing.Size(20, 20)
-        Me.TabControl1.Location = New System.Drawing.Point(128, 39)
+        Me.TabControl1.Location = New System.Drawing.Point(128, 55)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
         Me.TabControl1.ShowToolTips = True
@@ -6260,6 +6375,7 @@ Partial Class frmindex
         '
         'TabPage10
         '
+        Me.TabPage10.Controls.Add(Me.GroupBox39)
         Me.TabPage10.Controls.Add(Me.txtrutaimagen)
         Me.TabPage10.Controls.Add(Me.GroupBox38)
         Me.TabPage10.Controls.Add(Me.GroupBox34)
@@ -6274,6 +6390,60 @@ Partial Class frmindex
         Me.TabPage10.TabIndex = 9
         Me.TabPage10.Text = "TabPage10"
         Me.TabPage10.UseVisualStyleBackColor = True
+        '
+        'GroupBox39
+        '
+        Me.GroupBox39.Controls.Add(Me.ccbubicacion)
+        Me.GroupBox39.Controls.Add(Me.Label176)
+        Me.GroupBox39.Controls.Add(Me.Label171)
+        Me.GroupBox39.Controls.Add(Me.ctxtubicacion)
+        Me.GroupBox39.Controls.Add(Me.cbtnubicacion)
+        Me.GroupBox39.Location = New System.Drawing.Point(1019, 6)
+        Me.GroupBox39.Name = "GroupBox39"
+        Me.GroupBox39.Size = New System.Drawing.Size(189, 223)
+        Me.GroupBox39.TabIndex = 90
+        Me.GroupBox39.TabStop = False
+        Me.GroupBox39.Text = "Configuración"
+        '
+        'Label171
+        '
+        Me.Label171.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label171.AutoSize = True
+        Me.Label171.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label171.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label171.Location = New System.Drawing.Point(6, 27)
+        Me.Label171.Name = "Label171"
+        Me.Label171.Size = New System.Drawing.Size(179, 17)
+        Me.Label171.TabIndex = 57
+        Me.Label171.Text = "Ingresa ubicación de prod."
+        '
+        'ctxtubicacion
+        '
+        Me.ctxtubicacion.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ctxtubicacion.BackColor = System.Drawing.Color.White
+        Me.ctxtubicacion.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ctxtubicacion.Location = New System.Drawing.Point(9, 49)
+        Me.ctxtubicacion.Name = "ctxtubicacion"
+        Me.ctxtubicacion.Size = New System.Drawing.Size(170, 35)
+        Me.ctxtubicacion.TabIndex = 56
+        '
+        'cbtnubicacion
+        '
+        Me.cbtnubicacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(104, Byte), Integer))
+        Me.cbtnubicacion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.cbtnubicacion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cbtnubicacion.ForeColor = System.Drawing.Color.White
+        Me.cbtnubicacion.Location = New System.Drawing.Point(9, 89)
+        Me.cbtnubicacion.Name = "cbtnubicacion"
+        Me.cbtnubicacion.Size = New System.Drawing.Size(167, 37)
+        Me.cbtnubicacion.TabIndex = 55
+        Me.cbtnubicacion.Text = "Registrar"
+        Me.cbtnubicacion.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cbtnubicacion.UseVisualStyleBackColor = False
         '
         'txtrutaimagen
         '
@@ -6620,7 +6790,7 @@ Partial Class frmindex
         Me.txtnombre_impresora.Controls.Add(Me.rbusuario)
         Me.txtnombre_impresora.Controls.Add(Me.Label105)
         Me.txtnombre_impresora.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtnombre_impresora.Location = New System.Drawing.Point(1047, 14)
+        Me.txtnombre_impresora.Location = New System.Drawing.Point(1049, 261)
         Me.txtnombre_impresora.Name = "txtnombre_impresora"
         Me.txtnombre_impresora.Size = New System.Drawing.Size(146, 89)
         Me.txtnombre_impresora.TabIndex = 56
@@ -9132,6 +9302,30 @@ Partial Class frmindex
         'PrintDocument5CompraGastos
         '
         '
+        'ccbubicacion
+        '
+        Me.ccbubicacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ccbubicacion.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ccbubicacion.FormattingEnabled = True
+        Me.ccbubicacion.Location = New System.Drawing.Point(9, 153)
+        Me.ccbubicacion.Name = "ccbubicacion"
+        Me.ccbubicacion.Size = New System.Drawing.Size(158, 26)
+        Me.ccbubicacion.TabIndex = 98
+        '
+        'Label176
+        '
+        Me.Label176.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label176.AutoSize = True
+        Me.Label176.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label176.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label176.Location = New System.Drawing.Point(7, 131)
+        Me.Label176.Name = "Label176"
+        Me.Label176.Size = New System.Drawing.Size(142, 17)
+        Me.Label176.TabIndex = 99
+        Me.Label176.Text = "Elije Ubicación Pred."
+        '
         'frmindex
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -9235,6 +9429,8 @@ Partial Class frmindex
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit
         Me.TabPage10.ResumeLayout(False)
         Me.TabPage10.PerformLayout
+        Me.GroupBox39.ResumeLayout(False)
+        Me.GroupBox39.PerformLayout
         Me.GroupBox38.ResumeLayout(False)
         Me.GroupBox34.ResumeLayout(False)
         Me.GroupBox34.PerformLayout
@@ -9882,4 +10078,17 @@ Partial Class frmindex
     Friend WithEvents Label168 As Label
     Friend WithEvents Label169 As Label
     Friend WithEvents ulistaclientes As ListBox
+    Friend WithEvents pctxtubicacion As ComboBox
+    Friend WithEvents Label170 As Label
+    Friend WithEvents GroupBox39 As GroupBox
+    Friend WithEvents Label171 As Label
+    Friend WithEvents ctxtubicacion As TextBox
+    Friend WithEvents cbtnubicacion As Button
+    Friend WithEvents Label175 As Label
+    Friend WithEvents Label174 As Label
+    Friend WithEvents Label173 As Label
+    Friend WithEvents Label172 As Label
+    Friend WithEvents Button92 As Button
+    Friend WithEvents ccbubicacion As ComboBox
+    Friend WithEvents Label176 As Label
 End Class
