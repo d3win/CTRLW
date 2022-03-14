@@ -9,10 +9,12 @@ Public Class FRNOTASERVICIO
 
         'MsgBox(frmindex.slbfolio.Text)
         'MsgBox(frmindex.indexidusuario)
+        '-------------------
+
 
 
         '-------------------
-        'DATOS DEL TIPO DE USUARIO
+        '
         conexionMysql.Open()
         Dim ds As DataSet
         Dim Sql As String

@@ -46,6 +46,68 @@ Public Class frmindex
 
 
 
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "CREATE TABLE `estado_servicio` (
+  `idestado_servicio` INT NOT NULL AUTO_INCREMENT,
+  `estado` VARCHAR(45) NULL,
+  PRIMARY KEY (`idestado_servicio`));"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "INSERT INTO `dwin`.`estado_servicio` (`estado`) VALUES ('Inicio');
+INSERT INTO `dwin`.`estado_servicio` (`estado`) VALUES ('Diseño');
+INSERT INTO `dwin`.`estado_servicio` (`estado`) VALUES ('Producción');
+INSERT INTO `dwin`.`estado_servicio` (`estado`) VALUES ('Revisión');
+INSERT INTO `dwin`.`estado_servicio` (`estado`) VALUES ('Entregado');"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+        '---------------------------------------------------------------------
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "CREATE TABLE `dwin`.`estado_servicio_error` (
+  `idestado_servicio_error` INT NOT NULL AUTO_INCREMENT,
+  `estado_error` VARCHAR(45) NULL,
+  PRIMARY KEY (`idestado_servicio_error`));
+"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "INSERT INTO `dwin`.`estado_servicio_error` (`estado_error`) VALUES ('Pausado');
+INSERT INTO `dwin`.`estado_servicio_error` (`estado_error`) VALUES ('Retrasado');"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+        '-----------------------------------------------------
 
 
         Try
@@ -3058,7 +3120,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         End Try
     End Function
     Function cargarubicacionesconfiguracion()
-        ccbubicacion
+        '  ccbubicacion
 
 
 
@@ -3617,54 +3679,60 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
     End Function
     Function cargarubicacion()
+        ' Try
 
         'limpiar el combo para que no se duplique
         pctxtubicacion.Items.Clear()
-        ccbubicacion.Items.Add(reader.GetString(1).ToString())
+        ccbubicacion.Items.Clear()
+
+        ' ccbubicacion.Items.Add(reader.GetString(1).ToString())
         Try
 
 
-            Dim cantidadproveedor, i As Integer
-            cerrarconexion()
+                Dim cantidadproveedor, i As Integer
+                cerrarconexion()
 
-            conexionMysql.Open()
-            Dim Sql As String
-            Sql = "select count(*)as contador from ubicacion_producto;"
-            Dim cmd As New MySqlCommand(Sql, conexionMysql)
-            reader = cmd.ExecuteReader()
-            reader.Read()
-            cantidadproveedor = reader.GetString(0).ToString()
-
-            conexionMysql.Close()
-
-
-            cerrarconexion()
-
-            conexionMysql.Open()
-            Dim Sql2 As String
-            Sql2 = "select * from ubicacion_producto;"
-            Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
-            reader = cmd2.ExecuteReader()
-
-            For i = 1 To cantidadproveedor
-
+                conexionMysql.Open()
+                Dim Sql As String
+                Sql = "select count(*)as contador from ubicacion_producto;"
+                Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                reader = cmd.ExecuteReader()
                 reader.Read()
+                cantidadproveedor = reader.GetString(0).ToString()
 
-                pctxtubicacion.Items.Add(reader.GetString(1).ToString())
-                ccbubicacion.Items.Add(reader.GetString(1).ToString())
-            Next
-
-            reader.Close()
-
-            conexionMysql.Close()
+                conexionMysql.Close()
 
 
-            pctxtubicacion.SelectedIndex = 0
-            '            pctxtubicacion.SelectedText = "PREDETERMINADO"
+                cerrarconexion()
 
-        Catch ex As Exception
+                conexionMysql.Open()
+                Dim Sql2 As String
+                Sql2 = "select * from ubicacion_producto;"
+                Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+                reader = cmd2.ExecuteReader()
 
-        End Try
+                For i = 1 To cantidadproveedor
+
+                    reader.Read()
+
+                    pctxtubicacion.Items.Add(reader.GetString(1).ToString())
+                    ccbubicacion.Items.Add(reader.GetString(1).ToString())
+                Next
+
+                reader.Close()
+
+                conexionMysql.Close()
+
+
+                pctxtubicacion.SelectedIndex = 0
+                '            pctxtubicacion.SelectedText = "PREDETERMINADO"
+
+            Catch ex As Exception
+
+            End Try
+        'Catch ex As Exception
+
+        'End Try
 
 
     End Function
@@ -6227,8 +6295,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
                 Call limpiarp()
 
-
-                Call llenadogrilla()
+                'SE COMENTA LLENADO GRILLA PARA QUE NO ALENTE AL ACTUALIZAR LA LISTA DESPUES DE ACTUALIZAR. 
+                'Call llenadogrilla()
 
 
             ElseIf tipo = 1 Then
@@ -6251,8 +6319,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
                     Call limpiarp()
 
-
-                    Call llenadogrilla()
+                    'SE COMENTA LLENADO GRILLA PARA QUE NO ALENTE AL ACTUALIZAR LA LISTA DESPUES DE ACTUALIZAR. 
+                    ' Call llenadogrilla()
 
                 Catch ex As Exception
                     cerrarconexion()
@@ -6290,7 +6358,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
                 MsgBox("Producto Eliminado", MsgBoxStyle.Information, "Sistema")
 
-                Call llenadogrilla()
+                ' Call llenadogrilla()
                 Call limpiarp()
             End If
 
@@ -10711,11 +10779,11 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
     End Sub
 
-    Private Sub lbventas_Click(sender As Object, e As EventArgs) Handles lbventas.Click
+    Private Sub lbventas_Click(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub lbventastotal_Click(sender As Object, e As EventArgs) Handles lbventastotal.Click
+    Private Sub lbventastotal_Click(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -11393,14 +11461,14 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         'Chr(10) & " " & "12/12/!2"
         ' Try
         Dim PrintDialog1 As New PrintDialog
-            PrintDialog1.Document = PrintDocument2
-            PrintDialog1.PrinterSettings.PrinterName = impresora
-            If PrintDocument2.PrinterSettings.IsValid Then
-                PrintDocument2.Print() 'Imprime texto 
-            Else
-                MsgBox("Impresora invalida", MsgBoxStyle.Exclamation, "CTRL+y")
-                'MessageBox.Show("La impresora no es valida")
-            End If
+        PrintDialog1.Document = PrintDocument2
+        PrintDialog1.PrinterSettings.PrinterName = impresora
+        If PrintDocument2.PrinterSettings.IsValid Then
+            PrintDocument2.Print() 'Imprime texto 
+        Else
+            MsgBox("Impresora invalida", MsgBoxStyle.Exclamation, "CTRL+y")
+            'MessageBox.Show("La impresora no es valida")
+        End If
         '--------------------------------------------------- 
         ' Catch ex As Exception
         'MsgBox("Hay problemas con la impresion", MsgBoxStyle.Exclamation, "CTRL+y")
@@ -12415,8 +12483,6 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             dt.Rows.Add(row.Cells(0).Value, row.Cells(1).Value, row.Cells(2).Value, row.Cells(3).Value, row.Cells(4).Value, row.Cells(5).Value, row.Cells(6).Value)
 
         Next
-
-
         'FRMRPTnotacompra.ReportViewer1.LocalReport.DataSources.Item(0).Value = dt
 
         'FRMRPTnotacompra.ShowDialog()
@@ -15477,10 +15543,10 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             grupocontrolesclientes.Visible = True
 
             conexionMysql.Open()
-
+            ' MsgBox("buscando")
 
             Dim Sql As String
-            Sql = "select venta.idventa, venta.cantidad, venta.total,venta.fecha,venta.fechaentrega,venta.anticipo,venta.resto, venta.pagacon, venta.cambio, tipoventa.tipoventa from venta,tipoventa where venta.idcliente='" & ctxtidcliente.Text & "' and tipoventa.idtipoventa=venta.tipoventa order by  venta.idventa desc;"
+            Sql = "select venta.idventa, venta.cantidad, venta.total,venta.fecha,venta.fechaentrega,venta.anticipo,venta.resto, venta.pagacon, venta.cambio from venta,tipoventa where venta.idcliente='" & ctxtidcliente.Text & "' order by  venta.idventa desc;"
             Dim cmd As New MySqlCommand(Sql, conexionMysql)
             Dim dt As New DataTable
             Dim da As New MySqlDataAdapter(cmd)
@@ -15497,12 +15563,13 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             'grillaclienteservicios.Columns(5).Width = tamaño
             'grillaclienteservicios.Columns(6).Width = tamaño
             'grillaclienteservicios.Columns(7).Width = tamaño
-            grillaclienteservicios.Columns(9).Width = 120
+            'grillaclienteservicios.Columns(9).Width = 120
+
         End If
 
         'Catch ex As Exception
         cerrarconexion()
-        btninconsistencia.Visible = True
+        'btninconsistencia.Visible = True
         'MsgBox("CONTROLADOR DE ERRORES:" & ex.Message, MsgBoxStyle.Exclamation, "CTRL+y")
         'End Try
 
@@ -16035,7 +16102,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
     End Sub
 
-    Private Sub Ch_CheckedChanged(sender As Object, e As EventArgs) Handles chagenda.CheckedChanged
+    Private Sub Ch_CheckedChanged(sender As Object, e As EventArgs)
         If chagenda.Checked = True Then
             agendacalendario.Visible = True
             agendagrilla.Visible = True
@@ -16530,7 +16597,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         formulario.ShowDialog()
     End Sub
 
-    Private Sub Agendacalendario_DateChanged(sender As Object, e As DateRangeEventArgs) Handles agendacalendario.DateChanged
+    Private Sub Agendacalendario_DateChanged(sender As Object, e As DateRangeEventArgs)
         cargaragenda()
     End Sub
 
@@ -16737,7 +16804,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     End Sub
 
-    Private Sub Button66_Click_1(sender As Object, e As EventArgs) Handles Button66.Click
+    Private Sub Button66_Click_1(sender As Object, e As EventArgs)
         Dim valores As String
         valores = My.Computer.Name.ToString
         MsgBox(valores)
@@ -17526,34 +17593,34 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     End Sub
 
-    Private Sub AGBtnAgendar_Click(sender As Object, e As EventArgs) Handles AGBtnAgendar.Click
+    Private Sub AGBtnAgendar_Click(sender As Object, e As EventArgs)
         'insertamos el registro en la tabla agenda
         cerrarconexion()
         'Try
 
         If AGtxtTotal.Text = "" Then
-                AGtxtTotal.Text = "0"
-            End If
+            AGtxtTotal.Text = "0"
+        End If
 
-            If AGtxtDescripcion.Text = "" Then
-                MsgBox("No hay una descripción", MsgBoxStyle.Information, "CTRL+y")
-            Else
-                Dim fecha As String
-                fecha = AGDate.Value.ToString("yyyy/MM/dd")
-                conexionMysql.Open()
-                Dim sql2 As String
-                sql2 = "INSERT INTO agenda (`descripcion`, `total`, `fecha`) VALUES ('" & AGtxtDescripcion.Text & "', '" & AGtxtTotal.Text & "', '" & fecha & "');"
-                Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
-                cmd2.ExecuteNonQuery()
-                conexionMysql.Close()
-                Dim formulario As New FrmAceptarTrans
-                formulario.ShowDialog()
+        If AGtxtDescripcion.Text = "" Then
+            MsgBox("No hay una descripción", MsgBoxStyle.Information, "CTRL+y")
+        Else
+            Dim fecha As String
+            fecha = AGDate.Value.ToString("yyyy/MM/dd")
+            conexionMysql.Open()
+            Dim sql2 As String
+            sql2 = "INSERT INTO agenda (`descripcion`, `total`, `fecha`) VALUES ('" & AGtxtDescripcion.Text & "', '" & AGtxtTotal.Text & "', '" & fecha & "');"
+            Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
+            cmd2.ExecuteNonQuery()
+            conexionMysql.Close()
+            Dim formulario As New FrmAceptarTrans
+            formulario.ShowDialog()
 
-                AGtxtDescripcion.Text = ""
-                AGtxtTotal.Text = ""
+            AGtxtDescripcion.Text = ""
+            AGtxtTotal.Text = ""
 
-                cargaragenda()
-            End If
+            cargaragenda()
+        End If
 
 
 
@@ -17564,7 +17631,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     End Sub
 
-    Private Sub agendagrilla_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles agendagrilla.CellContentClick
+    Private Sub agendagrilla_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
 
     End Sub
 
@@ -17859,7 +17926,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     End Sub
 
-    Private Sub agtxtid_TextChanged(sender As Object, e As EventArgs) Handles agtxtid.TextChanged
+    Private Sub agtxtid_TextChanged(sender As Object, e As EventArgs)
         If agtxtid.Text = "" Then
         Else
             Try
@@ -17883,7 +17950,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         End If
     End Sub
 
-    Private Sub Button91_Click(sender As Object, e As EventArgs) Handles Button91.Click
+    Private Sub Button91_Click(sender As Object, e As EventArgs)
         'boton para limpiar los elementos de la agenda
         agtxtid.Text = ""
         AGtxtDescripcion.Text = ""
@@ -17891,7 +17958,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     End Sub
 
-    Private Sub Button90_Click(sender As Object, e As EventArgs) Handles Button90.Click
+    Private Sub Button90_Click(sender As Object, e As EventArgs)
 
         'boton para transferir la agenda a una venta.
         stxtdescripcion.Text = AGtxtDescripcion.Text
@@ -18003,6 +18070,78 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     End Sub
 
+    Private Sub Button93_Click(sender As Object, e As EventArgs) Handles Button93.Click
+        txtclientefolioservicio.Text = ""
+        txtclientetotalpagar.Text = ""
+        txtclienteadeudo.Text = ""
+        txtclientetiposervicio.Text = ""
+
+        cargarhistorialadeudocliente()
+    End Sub
+    Function cargarhistorialadeudocliente()
+        grillaclienteservicios.DefaultCellStyle.Font = New Font("Arial", 12)
+        grillaclienteservicios.RowHeadersVisible = False
+        'ampliar columna 
+        'grillap.Columns(2).Width = 120
+
+
+        grillaclienteservicios.AlternatingRowsDefaultCellStyle.BackColor = Color.SkyBlue
+
+
+
+
+
+
+
+        'Try
+
+
+
+        If ctxtidcliente.Text = "" Then
+            MsgBox("Primero selecciona un cliente de la lista", MsgBoxStyle.Information, "CTRL+y")
+            'hacemos que se muestren y ocultan algunas grillas y controles
+            grillaclienteservicios.Visible = False
+            grillacliente.Visible = True
+            grupocontrolesclientes.Visible = False
+
+        Else
+            'hacemos que se muestren y ocultan algunas grillas y controles
+            grillaclienteservicios.Visible = True
+            grillacliente.Visible = False
+            grupocontrolesclientes.Visible = True
+
+            conexionMysql.Open()
+            ' MsgBox("buscando")
+
+            Dim Sql As String
+            Sql = "select venta.idventa, venta.cantidad, venta.total,venta.fecha,venta.fechaentrega,venta.anticipo,venta.resto, venta.pagacon, venta.cambio from venta,tipoventa where venta.idcliente='" & ctxtidcliente.Text & "' and venta.resto >0.1  order by  venta.idventa desc;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            'cargamos el formulario  resumen
+            da.Fill(dt)
+            grillaclienteservicios.DataSource = dt
+            conexionMysql.Close()
+            'Dim tamaño As Integer
+            'tamaño = 50
+            ''le asignamos nuevos tamaños a ciertas columnas
+            'grillaclienteservicios.Columns(0).Width = tamaño
+            'grillaclienteservicios.Columns(1).Width = tamaño
+            'grillaclienteservicios.Columns(2).Width = tamaño
+            'grillaclienteservicios.Columns(5).Width = tamaño
+            'grillaclienteservicios.Columns(6).Width = tamaño
+            'grillaclienteservicios.Columns(7).Width = tamaño
+            'grillaclienteservicios.Columns(9).Width = 120
+
+        End If
+
+        'Catch ex As Exception
+        cerrarconexion()
+        'btninconsistencia.Visible = True
+        'MsgBox("CONTROLADOR DE ERRORES:" & ex.Message, MsgBoxStyle.Exclamation, "CTRL+y")
+        'End Try
+
+    End Function
     Private Sub stxtcantidad_GotFocus(sender As Object, e As EventArgs) Handles stxtcantidad.GotFocus
 
     End Sub
@@ -18206,7 +18345,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     End Sub
 
-    Private Sub agendagrilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles agendagrilla.CellDoubleClick
+    Private Sub agendagrilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs)
 
         Dim Variable As String = agendagrilla.Item(0, agendagrilla.CurrentRow.Index).Value
         agtxtid.Text = Variable
