@@ -3058,7 +3058,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         End Try
     End Function
     Function cargarubicacionesconfiguracion()
-        ccbubicacion
+        '  ccbubicacion
 
 
 

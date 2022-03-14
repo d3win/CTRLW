@@ -1,6 +1,11 @@
 ﻿
 
 Partial Public Class dwinDataSet
+    Partial Public Class dsusuarioDataTable
+
+
+    End Class
+
     Partial Public Class DTCOMPRAMERCANCIADataTable
 
 

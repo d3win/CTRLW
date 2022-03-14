@@ -8,7 +8,36 @@ Public Class FRMNotaServicio
         '----------------------------------------------
         'id = FRcerrarcaja.txtid.Text
 
+        'DATOS DEL TIPO DE USUARIO
+        Dim idusuario As Integer
+        Try
 
+
+            conexionMysql.Open()
+            Dim Sqlu1 As String
+            Sqlu1 = "select idusuario from venta where idventa=" & frmindex.slbfolio.Text & ";"
+            Dim cmd1u1 As New MySqlCommand(Sqlu1, conexionMysql)
+            reader = cmd1u1.ExecuteReader()
+            reader.Read()
+            idusuario = reader.GetString(0).ToString()
+            conexionMysql.Close()
+        Catch ex As Exception
+            MsgBox("error1")
+        End Try
+
+        '------------------
+        ' MsgBox(idusuario)
+        Dim ds26 As DataSet
+        conexionMysql.Open()
+        Dim Sqlu26 As String
+        Sqlu26 = "select idusuario,usuario, nombre,ap,am from usuario where idusuario=" & idusuario & ";"
+        Dim cmd26 As New MySqlCommand(Sqlu26, conexionMysql)
+        Dim dt26 As New DataTable
+        Dim da26 As New MySqlDataAdapter(cmd26)
+        ds26 = New DataSet()
+        da26.Fill(ds26)
+        conexionMysql.Close()
+        '------------------
         '-------------------
         'DATOS DEL TIPO DE USUARIO
         conexionMysql.Open()
@@ -114,6 +143,7 @@ Public Class FRMNotaServicio
         Dim rds3 As New ReportDataSource("dslogo", ds23.Tables(0))
         Dim rds4 As New ReportDataSource("dscliente", ds24.Tables(0))
         Dim rds5 As New ReportDataSource("dstipo_pago", ds25.Tables(0))
+        Dim rds6 As New ReportDataSource("dsusuario", ds26.Tables(0))
 
         ReportViewer1.LocalReport.DataSources.Clear()              'limpio la fuente de datos
         ReportViewer1.LocalReport.DataSources.Add(rds)
@@ -121,6 +151,7 @@ Public Class FRMNotaServicio
         ReportViewer1.LocalReport.DataSources.Add(rds3)
         ReportViewer1.LocalReport.DataSources.Add(rds4)
         ReportViewer1.LocalReport.DataSources.Add(rds5)
+        ReportViewer1.LocalReport.DataSources.Add(rds6)
 
         ' Me.ReportViewer1.RefreshReport()
         ' MsgBox("intentando imprimir directo")

@@ -450,6 +450,8 @@ Partial Class frmindex
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.TabPage10 = New System.Windows.Forms.TabPage()
         Me.GroupBox39 = New System.Windows.Forms.GroupBox()
+        Me.ccbubicacion = New System.Windows.Forms.ComboBox()
+        Me.Label176 = New System.Windows.Forms.Label()
         Me.Label171 = New System.Windows.Forms.Label()
         Me.ctxtubicacion = New System.Windows.Forms.TextBox()
         Me.cbtnubicacion = New System.Windows.Forms.Button()
@@ -680,8 +682,6 @@ Partial Class frmindex
         Me.Timer5 = New System.Windows.Forms.Timer(Me.components)
         Me.Timer6 = New System.Windows.Forms.Timer(Me.components)
         Me.PrintDocument5CompraGastos = New System.Drawing.Printing.PrintDocument()
-        Me.ccbubicacion = New System.Windows.Forms.ComboBox()
-        Me.Label176 = New System.Windows.Forms.Label()
         CType(Me.cccgrilla, System.ComponentModel.ISupportInitialize).BeginInit
         CType(Me.ccgrilla, System.ComponentModel.ISupportInitialize).BeginInit
         Me.TabPage3.SuspendLayout
@@ -2866,7 +2866,7 @@ Partial Class frmindex
         Me.Button92.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button92.ForeColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.Button92.Image = CType(resources.GetObject("Button92.Image"), System.Drawing.Image)
-        Me.Button92.Location = New System.Drawing.Point(284, 182)
+        Me.Button92.Location = New System.Drawing.Point(263, 255)
         Me.Button92.Name = "Button92"
         Me.Button92.Size = New System.Drawing.Size(31, 29)
         Me.Button92.TabIndex = 102
@@ -6405,6 +6405,30 @@ Partial Class frmindex
         Me.GroupBox39.TabStop = False
         Me.GroupBox39.Text = "Configuración"
         '
+        'ccbubicacion
+        '
+        Me.ccbubicacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ccbubicacion.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ccbubicacion.FormattingEnabled = True
+        Me.ccbubicacion.Location = New System.Drawing.Point(9, 153)
+        Me.ccbubicacion.Name = "ccbubicacion"
+        Me.ccbubicacion.Size = New System.Drawing.Size(158, 26)
+        Me.ccbubicacion.TabIndex = 98
+        '
+        'Label176
+        '
+        Me.Label176.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label176.AutoSize = True
+        Me.Label176.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label176.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label176.Location = New System.Drawing.Point(7, 131)
+        Me.Label176.Name = "Label176"
+        Me.Label176.Size = New System.Drawing.Size(142, 17)
+        Me.Label176.TabIndex = 99
+        Me.Label176.Text = "Elije Ubicación Pred."
+        '
         'Label171
         '
         Me.Label171.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -9301,30 +9325,6 @@ Partial Class frmindex
         '
         'PrintDocument5CompraGastos
         '
-        '
-        'ccbubicacion
-        '
-        Me.ccbubicacion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ccbubicacion.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ccbubicacion.FormattingEnabled = True
-        Me.ccbubicacion.Location = New System.Drawing.Point(9, 153)
-        Me.ccbubicacion.Name = "ccbubicacion"
-        Me.ccbubicacion.Size = New System.Drawing.Size(158, 26)
-        Me.ccbubicacion.TabIndex = 98
-        '
-        'Label176
-        '
-        Me.Label176.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label176.AutoSize = True
-        Me.Label176.Font = New System.Drawing.Font("Arial", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label176.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label176.Location = New System.Drawing.Point(7, 131)
-        Me.Label176.Name = "Label176"
-        Me.Label176.Size = New System.Drawing.Size(142, 17)
-        Me.Label176.TabIndex = 99
-        Me.Label176.Text = "Elije Ubicación Pred."
         '
         'frmindex
         '
