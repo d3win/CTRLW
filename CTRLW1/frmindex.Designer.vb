@@ -2878,7 +2878,7 @@ Partial Class frmindex
         Me.Button92.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button92.ForeColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.Button92.Image = CType(resources.GetObject("Button92.Image"), System.Drawing.Image)
-        Me.Button92.Location = New System.Drawing.Point(262, 255)
+        Me.Button92.Location = New System.Drawing.Point(284, 182)
         Me.Button92.Name = "Button92"
         Me.Button92.Size = New System.Drawing.Size(31, 29)
         Me.Button92.TabIndex = 102
