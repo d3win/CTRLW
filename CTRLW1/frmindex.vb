@@ -836,20 +836,20 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         bloquear_botones_proceso()
         'carga los estado del proceso de un servicio, inicio, diseño,etc...
         'ocultamos la parte de los elelemtnos de la agenda.
-        chagenda.CheckState = False
-        agendagrilla.Visible = False
-        agendacalendario.Visible = False
-        Label165.Visible = False
-        Label163.Visible = False
-        Label164.Visible = False
-        AGDate.Visible = False
-        AGBtnAgendar.Visible = False
-        AGtxtTotal.Visible = False
-        AGtxtDescripcion.Visible = False
-        Label166.Visible = False
-        agtxtid.Visible = False
-        Button90.Visible = False
-        Button91.Visible = False
+        ' chagenda.CheckState = False
+        'agendagrilla.Visible = False
+        'agendacalendario.Visible = False
+        'Label165.Visible = False
+        'Label163.Visible = False
+        'Label164.Visible = False
+        'AGDate.Visible = False
+        'AGBtnAgendar.Visible = False
+        'AGtxtTotal.Visible = False
+        'AGtxtDescripcion.Visible = False
+        'Label166.Visible = False
+        'agtxtid.Visible = False
+        'Button90.Visible = False
+        'Button91.Visible = False
 
 
 
@@ -15207,50 +15207,54 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
 
         If res = 1 Then
-
-            ' Try
-            MsgBox("Ya existe una imagen en el sistema, será remplazada", MsgBoxStyle.Information, "CTRL+y")
-            cerrarconexion()
-            conexionMysql.Open()
-
-            Dim sql2 As String
-            sql2 = "delete from  logo_empresa"
-            Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
-            cmd2.ExecuteNonQuery()
-
-            conexionMysql.Close()
-
-            conexionMysql.Open()
-            Dim sql As String = "insert into logo_empresa(idlogo_empresa,logo)values(1,?imagen)"
-            'conexionMysql = New MySqlConnection(StrConexion)
-            Dim Comando As New MySqlCommand(sql, conexionMysql)
-
-            Dim Imag As Byte()
-            Imag = Imagen_Bytes(Me.pblogo.Image)
-
-            Comando.Parameters.AddWithValue("?imagen", Imag)
-
-            'conexionMysql.Open()
-            'If conexionMysql.State = ConnectionState.Open Then
-            Comando.ExecuteNonQuery()
-            'End If
-            conexionMysql.Close()
-
-
-
             Dim nuevaruta As String
-            nuevaruta = Replace(txtrutaimagen.Text, "\", "\\")
-            'MsgBox("nuevaruta" & nuevaruta)
+            Try
+                MsgBox("Ya existe una imagen en el sistema, será remplazada", MsgBoxStyle.Information, "CTRL+y")
+                cerrarconexion()
+                conexionMysql.Open()
 
-            cerrarconexion()
-            conexionMysql.Open()
-            'Try
+                Dim sql2 As String
+                sql2 = "delete from  logo_empresa"
+                Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
+                cmd2.ExecuteNonQuery()
 
-            Dim Sql36 As String
-            Sql36 = "UPDATE `dwin`.`datos_empresa` SET `ruta_logo` = '" & nuevaruta & "' WHERE (`iddatos_empresa` = '1');"
-            Dim cmd36 As New MySqlCommand(Sql36, conexionMysql)
-            cmd36.ExecuteNonQuery()
-            conexionMysql.Close()
+                conexionMysql.Close()
+
+                conexionMysql.Open()
+                Dim sql As String = "insert into logo_empresa(idlogo_empresa,logo)values(1,?imagen)"
+                'conexionMysql = New MySqlConnection(StrConexion)
+                Dim Comando As New MySqlCommand(sql, conexionMysql)
+
+                Dim Imag As Byte()
+                Imag = Imagen_Bytes(Me.pblogo.Image)
+
+                Comando.Parameters.AddWithValue("?imagen", Imag)
+
+                'conexionMysql.Open()
+                'If conexionMysql.State = ConnectionState.Open Then
+                Comando.ExecuteNonQuery()
+                'End If
+                conexionMysql.Close()
+
+
+
+
+                nuevaruta = Replace(txtrutaimagen.Text, "\", "\\")
+                'MsgBox("nuevaruta" & nuevaruta)
+
+                cerrarconexion()
+                conexionMysql.Open()
+                'Try
+
+                Dim Sql36 As String
+                Sql36 = "UPDATE `dwin`.`datos_empresa` SET `ruta_logo` = '" & nuevaruta & "' WHERE (`iddatos_empresa` = '1');"
+                Dim cmd36 As New MySqlCommand(Sql36, conexionMysql)
+                cmd36.ExecuteNonQuery()
+                conexionMysql.Close()
+            Catch ex As Exception
+                'MessageBox.Show(ex.Message)
+                MsgBox("Error al intentar registrar la imagen", MsgBoxStyle.Information, "CTRL+y")
+            End Try
 
             'MsgBox(txtrutaimagen.Text)
             '-------------------------------------------------------------------------------------------------------
@@ -15300,10 +15304,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
         End If
 
-        ' Catch ex As Exception
-        'MessageBox.Show(ex.Message)
-        ' MsgBox("Ya existe un logotipo en el sistema", MsgBoxStyle.Information, "CTRL+y")
-        'End Try
+
         '-------------------------
         'Catch ex As Exception
         'MsgBox("error")
@@ -16249,44 +16250,44 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
     End Sub
 
     Private Sub Ch_CheckedChanged(sender As Object, e As EventArgs)
-        If chagenda.Checked = True Then
-            agendacalendario.Visible = True
-            agendagrilla.Visible = True
-            agendagrilla.DefaultCellStyle.Font = New Font("Arial", 12)
-            agendagrilla.RowHeadersVisible = False
-            agendagrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
-            AGtxtDescripcion.Visible = True
-            Label165.Visible = True
-            Label163.Visible = True
-            Label164.Visible = True
-            AGDate.Visible = True
-            AGBtnAgendar.Visible = True
-            AGtxtTotal.Visible = True
-            Label166.Visible = True
-            agtxtid.Visible = True
-            Button90.Visible = True
-            Button91.Visible = True
+        'If chagenda.Checked = True Then
+        '    agendacalendario.Visible = True
+        '    agendagrilla.Visible = True
+        '    agendagrilla.DefaultCellStyle.Font = New Font("Arial", 12)
+        '    agendagrilla.RowHeadersVisible = False
+        '    agendagrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
+        '    AGtxtDescripcion.Visible = True
+        '    Label165.Visible = True
+        '    Label163.Visible = True
+        '    Label164.Visible = True
+        '    AGDate.Visible = True
+        '    AGBtnAgendar.Visible = True
+        '    AGtxtTotal.Visible = True
+        '    Label166.Visible = True
+        '    agtxtid.Visible = True
+        '    Button90.Visible = True
+        '    Button91.Visible = True
 
 
 
-            cargaragenda()
-        Else
+        '    cargaragenda()
+        'Else
 
-            agendacalendario.Visible = False
-            agendagrilla.Visible = False
-            Label165.Visible = False
-            Label163.Visible = False
-            Label164.Visible = False
-            AGDate.Visible = False
-            AGBtnAgendar.Visible = False
-            AGtxtTotal.Visible = False
-            AGtxtDescripcion.Visible = False
-            Label166.Visible = False
-            agtxtid.Visible = False
-            Button90.Visible = False
-            Button91.Visible = False
+        '    agendacalendario.Visible = False
+        '    agendagrilla.Visible = False
+        '    Label165.Visible = False
+        '    Label163.Visible = False
+        '    Label164.Visible = False
+        '    AGDate.Visible = False
+        '    AGBtnAgendar.Visible = False
+        '    AGtxtTotal.Visible = False
+        '    AGtxtDescripcion.Visible = False
+        '    Label166.Visible = False
+        '    agtxtid.Visible = False
+        '    Button90.Visible = False
+        '    Button91.Visible = False
 
-        End If
+        'End If
     End Sub
     Function cargaragenda()
         cerrarconexion()
@@ -18921,51 +18922,55 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             Button98.BackColor = Color.DimGray
             Button99.BackColor = Color.FromArgb(47, 56, 72)
 
-
+            'cargamos los valoes de la grilla para tamaño de fuente y color.
+            cargaragenda()
+            agendagrilla.DefaultCellStyle.Font = New Font("Arial", 12)
+            agendagrilla.RowHeadersVisible = False
+            agendagrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
 
 
         End If
     End Sub
 
     Private Sub chagenda_CheckedChanged(sender As Object, e As EventArgs) Handles chagenda.CheckedChanged
-        If chagenda.Checked = True Then
-            agendacalendario.Visible = True
-            agendagrilla.Visible = True
-            agendagrilla.DefaultCellStyle.Font = New Font("Arial", 12)
-            agendagrilla.RowHeadersVisible = False
-            agendagrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
-            AGtxtDescripcion.Visible = True
-            Label165.Visible = True
-            Label163.Visible = True
-            Label164.Visible = True
-            AGDate.Visible = True
-            AGBtnAgendar.Visible = True
-            AGtxtTotal.Visible = True
-            Label166.Visible = True
-            agtxtid.Visible = True
-            Button90.Visible = True
-            Button91.Visible = True
+        'If chagenda.Checked = True Then
+        '    agendacalendario.Visible = True
+        '    agendagrilla.Visible = True
+        '    agendagrilla.DefaultCellStyle.Font = New Font("Arial", 12)
+        '    agendagrilla.RowHeadersVisible = False
+        '    agendagrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
+        '    AGtxtDescripcion.Visible = True
+        '    Label165.Visible = True
+        '    Label163.Visible = True
+        '    Label164.Visible = True
+        '    AGDate.Visible = True
+        '    AGBtnAgendar.Visible = True
+        '    AGtxtTotal.Visible = True
+        '    Label166.Visible = True
+        '    agtxtid.Visible = True
+        '    Button90.Visible = True
+        '    Button91.Visible = True
 
 
 
-            cargaragenda()
-        Else
+        '    cargaragenda()
+        'Else
 
-            agendacalendario.Visible = False
-            agendagrilla.Visible = False
-            Label165.Visible = False
-            Label163.Visible = False
-            Label164.Visible = False
-            AGDate.Visible = False
-            AGBtnAgendar.Visible = False
-            AGtxtTotal.Visible = False
-            AGtxtDescripcion.Visible = False
-            Label166.Visible = False
-            agtxtid.Visible = False
-            Button90.Visible = False
-            Button91.Visible = False
+        '    agendacalendario.Visible = False
+        '    agendagrilla.Visible = False
+        '    Label165.Visible = False
+        '    Label163.Visible = False
+        '    Label164.Visible = False
+        '    AGDate.Visible = False
+        '    AGBtnAgendar.Visible = False
+        '    AGtxtTotal.Visible = False
+        '    AGtxtDescripcion.Visible = False
+        '    Label166.Visible = False
+        '    agtxtid.Visible = False
+        '    Button90.Visible = False
+        '    Button91.Visible = False
 
-        End If
+        'End If
     End Sub
 
     Private Sub AGBtnAgendar_Click_1(sender As Object, e As EventArgs) Handles AGBtnAgendar.Click
@@ -19036,6 +19041,10 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         Button13.BackColor = Color.FromArgb(47, 56, 72)
         Button67.BackColor = Color.FromArgb(47, 56, 72)
         Button98.BackColor = Color.FromArgb(47, 56, 72)
+
+    End Sub
+
+    Private Sub agendagrilla_CellContentClick_1(sender As Object, e As DataGridViewCellEventArgs) Handles agendagrilla.CellContentClick
 
     End Sub
 
@@ -19364,5 +19373,10 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         Else
             e.Handled = True
         End If
+    End Sub
+
+    Private Sub agendagrilla_DoubleClick(sender As Object, e As EventArgs) Handles agendagrilla.DoubleClick
+        Dim Variable As String = agendagrilla.Item(0, agendagrilla.CurrentRow.Index).Value
+        agtxtid.Text = Variable
     End Sub
 End Class

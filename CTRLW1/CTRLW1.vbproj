@@ -11,7 +11,7 @@
     <AssemblyName>CTRL+y</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -153,11 +153,6 @@
     </Compile>
     <Compile Include="ds1.vb">
       <DependentUpon>ds1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="dwinDataSet.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dwinDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="dwinDataSet.vb">
       <DependentUpon>dwinDataSet.xsd</DependentUpon>
@@ -467,6 +462,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\FRMNOTASERVICIOREIMPRESION.Designer.vb">
       <DependentUpon>FRMNOTASERVICIOREIMPRESION.vb</DependentUpon>
@@ -778,7 +774,6 @@
     <None Include="dwinDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>dwinDataSet.Designer.vb</LastGenOutput>
     </None>
     <None Include="dwinDataSet.xss">
       <DependentUpon>dwinDataSet.xsd</DependentUpon>

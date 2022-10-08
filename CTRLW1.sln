@@ -19,6 +19,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup150722", "Setup150722\
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup2", "Setup2\Setup2.vdproj", "{468E993D-F419-413C-9B97-C44219A05954}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CTRL+Y071022", "CTRL+Y071022\CTRL+Y071022.vdproj", "{7E76CB75-5634-4A4A-9552-E22C494694FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -55,6 +57,9 @@ Global
 		{468E993D-F419-413C-9B97-C44219A05954}.All|Any CPU.ActiveCfg = Debug
 		{468E993D-F419-413C-9B97-C44219A05954}.Debug|Any CPU.ActiveCfg = Debug
 		{468E993D-F419-413C-9B97-C44219A05954}.Release|Any CPU.ActiveCfg = Release
+		{7E76CB75-5634-4A4A-9552-E22C494694FB}.All|Any CPU.ActiveCfg = Debug
+		{7E76CB75-5634-4A4A-9552-E22C494694FB}.Debug|Any CPU.ActiveCfg = Debug
+		{7E76CB75-5634-4A4A-9552-E22C494694FB}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

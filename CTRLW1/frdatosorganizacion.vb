@@ -160,11 +160,11 @@ Public Class frdatosorganizacion
 
         cerrarconexion()
 
-        ' Try
+        Try
 
 
-        'If respuesta = vbYes Then
-        conexionMysql.Open()
+            'If respuesta = vbYes Then
+            conexionMysql.Open()
 
             Dim Sql5 As String
             Sql5 = "UPDATE datos_empresa SET nombre='" & ctxtnombre.Text & "', calle_numero='" & ctxtcallenumero.Text & "', colonia_ciudad='" & ctxtcoloniaciudad.Text & "', cp='" & ctxtcp.Text & "', estado='" & ctxtestado.Text & "', telefono='" & ctxttelefono.Text & "', whatsapp='" & ctxtwhatsapp.Text & "', correo='" & ctxtcorreo.Text & "', fanpage='" & ctxtfacebook.Text & "', sitio_web='" & ctxtsitio.Text & "', director='" & ctxtencargado.Text & "', horario='" & ctxthorario.Text & "', giro='" & ctxtgiro.Text & "', saludo_nota='" & txtsaludo.Text & "', rfc='" & ctxtrfc.Text & "', saludo_ticket='" & txtsaludoticket.Text & "';"
@@ -173,16 +173,16 @@ Public Class frdatosorganizacion
             conexionMysql.Close()
 
 
-        Dim formulario As New FrmAceptarTrans
+            Dim formulario As New FrmAceptarTrans
 
-        formulario.ShowDialog()
-        'MsgBox("Datos actualizados correctamente", MsgBoxStyle.Information, "Ctrl+y")
-        frmindex.cargardatos_empresa()
+            formulario.ShowDialog()
+            'MsgBox("Datos actualizados correctamente", MsgBoxStyle.Information, "Ctrl+y")
+            frmindex.cargardatos_empresa()
             Me.Close()
-        'Catch ex As Exception
-        MsgBox("Al parecer hay datos demasiado largos, revisa nuevamente", MsgBoxStyle.Exclamation, "CTRL+y")
+        Catch ex As Exception
+            MsgBox("Al parecer hay datos demasiado largos, revisa nuevamente", MsgBoxStyle.Exclamation, "CTRL+y")
             cerrarconexion()
-        'End Try
+        End Try
 
         'End If
 
