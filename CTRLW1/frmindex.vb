@@ -45,6 +45,76 @@ Public Class frmindex
 
 
 
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `dwin`.`venta` 
+ADD COLUMN `observacion` TEXT(100) NULL AFTER `estado_proceso`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+
+
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "ALTER TABLE `venta` 
+ADD COLUMN `estado_proceso` INT NULL AFTER `horaentrega`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "CREATE TABLE `estado_proceso` (
+  `idestado_proceso` INT NOT NULL,
+  `estado` VARCHAR(45) NULL,
+  PRIMARY KEY (`idestado_proceso`));"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "INSERT INTO `estado_proceso` (`idestado_proceso`, `estado`) VALUES ('1', 'inicio');
+INSERT INTO `estado_proceso` (`idestado_proceso`, `estado`) VALUES ('2', 'diseño');
+INSERT INTO `estado_proceso` (`idestado_proceso`, `estado`) VALUES ('3', 'produccion');
+INSERT INTO `estado_proceso` (`idestado_proceso`, `estado`) VALUES ('4', 'revision');
+INSERT INTO `estado_proceso` (`idestado_proceso`, `estado`) VALUES ('5', 'entregado');
+"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
 
         Try
             conexionMysql.Open()
@@ -746,24 +816,40 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
     End Function
+    Function bloquear_botones_proceso()
+        pb1.Visible = False
+        pb1n.Visible = True
+        pb2.Visible = False
+        pb2n.Visible = True
+        pb3.Visible = False
+        pb3n.Visible = True
+        pb4.Visible = False
+        pb4n.Visible = True
+        pb5.Visible = False
+        pb5n.Visible = True
+
+
+    End Function
     Private Sub frmindex_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         actualizarbd2021()
-
+        cargar_estado_proceso()
+        bloquear_botones_proceso()
+        'carga los estado del proceso de un servicio, inicio, diseño,etc...
         'ocultamos la parte de los elelemtnos de la agenda.
-        chagenda.CheckState = False
-        agendagrilla.Visible = False
-        agendacalendario.Visible = False
-        Label165.Visible = False
-        Label163.Visible = False
-        Label164.Visible = False
-        AGDate.Visible = False
-        AGBtnAgendar.Visible = False
-        AGtxtTotal.Visible = False
-        AGtxtDescripcion.Visible = False
-        Label166.Visible = False
-        agtxtid.Visible = False
-        Button90.Visible = False
-        Button91.Visible = False
+        ' chagenda.CheckState = False
+        'agendagrilla.Visible = False
+        'agendacalendario.Visible = False
+        'Label165.Visible = False
+        'Label163.Visible = False
+        'Label164.Visible = False
+        'AGDate.Visible = False
+        'AGBtnAgendar.Visible = False
+        'AGtxtTotal.Visible = False
+        'AGtxtDescripcion.Visible = False
+        'Label166.Visible = False
+        'agtxtid.Visible = False
+        'Button90.Visible = False
+        'Button91.Visible = False
 
 
 
@@ -827,9 +913,14 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
         cargarlogoticket()
+        '------------------ASIGNAMOS VALORES A LA GRILLA PARA CARGAR LOS PROCESOS DE LOS ESTADOS
+        grillaplan.DefaultCellStyle.Font = New Font("Arial", 20)
+        grillaplan.RowHeadersVisible = False
 
 
 
+
+        '---------------------------------------------------------------
         'Me.ReportViewer1.RefreshReport()
     End Sub
     Function cargarlogoticket()
@@ -1553,6 +1644,9 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         Button12.BackColor = Color.FromArgb(47, 56, 72)
         Button13.BackColor = Color.FromArgb(47, 56, 72)
         Button67.BackColor = Color.FromArgb(47, 56, 72)
+        Button98.BackColor = Color.FromArgb(47, 56, 72)
+        Button99.BackColor = Color.FromArgb(47, 56, 72)
+
 
 
 
@@ -1617,6 +1711,27 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
     End Function
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        'TabControl1.SelectedIndex = 13
+        'MsgBox("13")
+
+
+
+
+
+        'Button1.BackColor = Color.DimGray
+        'Button2.BackColor = Color.FromArgb(47, 56, 72)
+        'Button3.BackColor = Color.FromArgb(47, 56, 72)
+        'Button4.BackColor = Color.FromArgb(47, 56, 72)
+        'Button5.BackColor = Color.FromArgb(47, 56, 72)
+        'Button6.BackColor = Color.FromArgb(47, 56, 72)
+        'Button8.BackColor = Color.FromArgb(47, 56, 72)
+        'Button10.BackColor = Color.FromArgb(47, 56, 72)
+        'Button12.BackColor = Color.FromArgb(47, 56, 72)
+        'Button13.BackColor = Color.FromArgb(47, 56, 72)
+        'Button67.BackColor = Color.FromArgb(47, 56, 72)
+        'Button98.BackColor = Color.FromArgb(47, 56, 72)
+
+        ' estadistica()
         TabControl1.SelectedIndex = 0
 
         Button1.BackColor = Color.DimGray
@@ -1630,9 +1745,7 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
         Button12.BackColor = Color.FromArgb(47, 56, 72)
         Button13.BackColor = Color.FromArgb(47, 56, 72)
         Button67.BackColor = Color.FromArgb(47, 56, 72)
-
-        ' estadistica()
-
+        Button98.BackColor = Color.FromArgb(47, 56, 72)
     End Sub
     Function cargarproveedorcompras()
 
@@ -1718,7 +1831,9 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
 
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
             comprobartipoingreso()
         Else
@@ -1770,6 +1885,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
         End If
 
@@ -1795,6 +1912,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
 
             comprobartipoingreso()
@@ -1818,6 +1937,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
             ' llenadogrilla()
 
@@ -2417,6 +2538,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
 
             comprobartipoingreso()
@@ -2480,6 +2603,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
 
             cargarDatosCorte()
@@ -2895,6 +3020,9 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
+
             comprobartipoingreso()
         Else
 
@@ -2914,6 +3042,9 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
+
 
 
         End If
@@ -2993,6 +3124,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
 
             comprobartipoingreso()
@@ -3012,6 +3145,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
 
         End If
@@ -3044,7 +3179,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
-
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
             comprobartipoingreso()
         Else
@@ -3060,6 +3196,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
 
         End If
@@ -3157,7 +3295,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
-
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
             comprobartipoingreso()
         Else
@@ -3175,7 +3314,8 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             Button12.BackColor = Color.DimGray
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
-
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
 
 
@@ -7855,6 +7995,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.FromArgb(47, 56, 72)
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
 
             comprobartipoingreso()
@@ -7874,6 +8016,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             Button12.BackColor = Color.FromArgb(47, 56, 72)
             Button13.BackColor = Color.DimGray
             Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
 
             'llamamos a la funcion llenar proveedor para que siempre llene los proveedores que  existan en la B.
             llenadoproveedor()
@@ -12627,6 +12771,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         Button12.BackColor = Color.FromArgb(47, 56, 72)
         Button13.BackColor = Color.FromArgb(47, 56, 72)
         Button67.BackColor = Color.DimGray
+        Button98.BackColor = Color.FromArgb(47, 56, 72)
+        Button99.BackColor = Color.FromArgb(47, 56, 72)
 
 
 
@@ -13004,7 +13150,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             'MsgBox(fechaentrega)
             conexionMysql.Open()
             Dim Sql As String
-            Sql = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario, fechaentrega, anticipo, resto, tipoventa,idsecotizacion,idtipo_pago,horaentrega) VALUES (" & slbfolio.Text & "," & stxttotalproductos.Text & ", " & CDbl(stxttotal.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'" & fechaentrega & "'," & stxtanticipo.Text & "," & stxtresto.Text & ",'2'," & setxtfoliocotizador.Text & "," & tipopago & ",'" & txthoraentrega.Text & "');"
+            Sql = "INSERT INTO venta (idventa, cantidad, total, fecha, hora, idcliente, idusuario, fechaentrega, anticipo, resto, tipoventa,idsecotizacion,idtipo_pago,horaentrega,estado_proceso) VALUES (" & slbfolio.Text & "," & stxttotalproductos.Text & ", " & CDbl(stxttotal.Text) & ", '" & fecha & "','" & hora & "', " & idcliente & ", " & idusuario & ",'" & fechaentrega & "'," & stxtanticipo.Text & "," & stxtresto.Text & ",'2'," & setxtfoliocotizador.Text & "," & tipopago & ",'" & txthoraentrega.Text & "','1');"
             Dim cmd As New MySqlCommand(Sql, conexionMysql)
             cmd.ExecuteNonQuery()
             conexionMysql.Close()
@@ -15061,50 +15207,54 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
 
         If res = 1 Then
-
-            ' Try
-            MsgBox("Ya existe una imagen en el sistema, será remplazada", MsgBoxStyle.Information, "CTRL+y")
-            cerrarconexion()
-            conexionMysql.Open()
-
-            Dim sql2 As String
-            sql2 = "delete from  logo_empresa"
-            Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
-            cmd2.ExecuteNonQuery()
-
-            conexionMysql.Close()
-
-            conexionMysql.Open()
-            Dim sql As String = "insert into logo_empresa(idlogo_empresa,logo)values(1,?imagen)"
-            'conexionMysql = New MySqlConnection(StrConexion)
-            Dim Comando As New MySqlCommand(sql, conexionMysql)
-
-            Dim Imag As Byte()
-            Imag = Imagen_Bytes(Me.pblogo.Image)
-
-            Comando.Parameters.AddWithValue("?imagen", Imag)
-
-            'conexionMysql.Open()
-            'If conexionMysql.State = ConnectionState.Open Then
-            Comando.ExecuteNonQuery()
-            'End If
-            conexionMysql.Close()
-
-
-
             Dim nuevaruta As String
-            nuevaruta = Replace(txtrutaimagen.Text, "\", "\\")
-            'MsgBox("nuevaruta" & nuevaruta)
+            Try
+                MsgBox("Ya existe una imagen en el sistema, será remplazada", MsgBoxStyle.Information, "CTRL+y")
+                cerrarconexion()
+                conexionMysql.Open()
 
-            cerrarconexion()
-            conexionMysql.Open()
-            'Try
+                Dim sql2 As String
+                sql2 = "delete from  logo_empresa"
+                Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
+                cmd2.ExecuteNonQuery()
 
-            Dim Sql36 As String
-            Sql36 = "UPDATE `dwin`.`datos_empresa` SET `ruta_logo` = '" & nuevaruta & "' WHERE (`iddatos_empresa` = '1');"
-            Dim cmd36 As New MySqlCommand(Sql36, conexionMysql)
-            cmd36.ExecuteNonQuery()
-            conexionMysql.Close()
+                conexionMysql.Close()
+
+                conexionMysql.Open()
+                Dim sql As String = "insert into logo_empresa(idlogo_empresa,logo)values(1,?imagen)"
+                'conexionMysql = New MySqlConnection(StrConexion)
+                Dim Comando As New MySqlCommand(sql, conexionMysql)
+
+                Dim Imag As Byte()
+                Imag = Imagen_Bytes(Me.pblogo.Image)
+
+                Comando.Parameters.AddWithValue("?imagen", Imag)
+
+                'conexionMysql.Open()
+                'If conexionMysql.State = ConnectionState.Open Then
+                Comando.ExecuteNonQuery()
+                'End If
+                conexionMysql.Close()
+
+
+
+
+                nuevaruta = Replace(txtrutaimagen.Text, "\", "\\")
+                'MsgBox("nuevaruta" & nuevaruta)
+
+                cerrarconexion()
+                conexionMysql.Open()
+                'Try
+
+                Dim Sql36 As String
+                Sql36 = "UPDATE `dwin`.`datos_empresa` SET `ruta_logo` = '" & nuevaruta & "' WHERE (`iddatos_empresa` = '1');"
+                Dim cmd36 As New MySqlCommand(Sql36, conexionMysql)
+                cmd36.ExecuteNonQuery()
+                conexionMysql.Close()
+            Catch ex As Exception
+                'MessageBox.Show(ex.Message)
+                MsgBox("Error al intentar registrar la imagen", MsgBoxStyle.Information, "CTRL+y")
+            End Try
 
             'MsgBox(txtrutaimagen.Text)
             '-------------------------------------------------------------------------------------------------------
@@ -15154,10 +15304,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
         End If
 
-        ' Catch ex As Exception
-        'MessageBox.Show(ex.Message)
-        ' MsgBox("Ya existe un logotipo en el sistema", MsgBoxStyle.Information, "CTRL+y")
-        'End Try
+
         '-------------------------
         'Catch ex As Exception
         'MsgBox("error")
@@ -16103,44 +16250,44 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
     End Sub
 
     Private Sub Ch_CheckedChanged(sender As Object, e As EventArgs)
-        If chagenda.Checked = True Then
-            agendacalendario.Visible = True
-            agendagrilla.Visible = True
-            agendagrilla.DefaultCellStyle.Font = New Font("Arial", 12)
-            agendagrilla.RowHeadersVisible = False
-            agendagrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
-            AGtxtDescripcion.Visible = True
-            Label165.Visible = True
-            Label163.Visible = True
-            Label164.Visible = True
-            AGDate.Visible = True
-            AGBtnAgendar.Visible = True
-            AGtxtTotal.Visible = True
-            Label166.Visible = True
-            agtxtid.Visible = True
-            Button90.Visible = True
-            Button91.Visible = True
+        'If chagenda.Checked = True Then
+        '    agendacalendario.Visible = True
+        '    agendagrilla.Visible = True
+        '    agendagrilla.DefaultCellStyle.Font = New Font("Arial", 12)
+        '    agendagrilla.RowHeadersVisible = False
+        '    agendagrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
+        '    AGtxtDescripcion.Visible = True
+        '    Label165.Visible = True
+        '    Label163.Visible = True
+        '    Label164.Visible = True
+        '    AGDate.Visible = True
+        '    AGBtnAgendar.Visible = True
+        '    AGtxtTotal.Visible = True
+        '    Label166.Visible = True
+        '    agtxtid.Visible = True
+        '    Button90.Visible = True
+        '    Button91.Visible = True
 
 
 
-            cargaragenda()
-        Else
+        '    cargaragenda()
+        'Else
 
-            agendacalendario.Visible = False
-            agendagrilla.Visible = False
-            Label165.Visible = False
-            Label163.Visible = False
-            Label164.Visible = False
-            AGDate.Visible = False
-            AGBtnAgendar.Visible = False
-            AGtxtTotal.Visible = False
-            AGtxtDescripcion.Visible = False
-            Label166.Visible = False
-            agtxtid.Visible = False
-            Button90.Visible = False
-            Button91.Visible = False
+        '    agendacalendario.Visible = False
+        '    agendagrilla.Visible = False
+        '    Label165.Visible = False
+        '    Label163.Visible = False
+        '    Label164.Visible = False
+        '    AGDate.Visible = False
+        '    AGBtnAgendar.Visible = False
+        '    AGtxtTotal.Visible = False
+        '    AGtxtDescripcion.Visible = False
+        '    Label166.Visible = False
+        '    agtxtid.Visible = False
+        '    Button90.Visible = False
+        '    Button91.Visible = False
 
-        End If
+        'End If
     End Sub
     Function cargaragenda()
         cerrarconexion()
@@ -17594,34 +17741,6 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
     End Sub
 
     Private Sub AGBtnAgendar_Click(sender As Object, e As EventArgs)
-        'insertamos el registro en la tabla agenda
-        cerrarconexion()
-        'Try
-
-        If AGtxtTotal.Text = "" Then
-            AGtxtTotal.Text = "0"
-        End If
-
-        If AGtxtDescripcion.Text = "" Then
-            MsgBox("No hay una descripción", MsgBoxStyle.Information, "CTRL+y")
-        Else
-            Dim fecha As String
-            fecha = AGDate.Value.ToString("yyyy/MM/dd")
-            conexionMysql.Open()
-            Dim sql2 As String
-            sql2 = "INSERT INTO agenda (`descripcion`, `total`, `fecha`) VALUES ('" & AGtxtDescripcion.Text & "', '" & AGtxtTotal.Text & "', '" & fecha & "');"
-            Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
-            cmd2.ExecuteNonQuery()
-            conexionMysql.Close()
-            Dim formulario As New FrmAceptarTrans
-            formulario.ShowDialog()
-
-            AGtxtDescripcion.Text = ""
-            AGtxtTotal.Text = ""
-
-            cargaragenda()
-        End If
-
 
 
 
@@ -17951,20 +18070,11 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
     End Sub
 
     Private Sub Button91_Click(sender As Object, e As EventArgs)
-        'boton para limpiar los elementos de la agenda
-        agtxtid.Text = ""
-        AGtxtDescripcion.Text = ""
-        AGtxtTotal.Text = ""
+
 
     End Sub
 
-    Private Sub Button90_Click(sender As Object, e As EventArgs)
 
-        'boton para transferir la agenda a una venta.
-        stxtdescripcion.Text = AGtxtDescripcion.Text
-        cargarDatosVentaServicio()
-        'TabControl1.SelectedIndex = 10
-    End Sub
 
     Private Sub Button82_Click_2(sender As Object, e As EventArgs) Handles Button82.Click
         comprobarpermisoscasillas()
@@ -18078,6 +18188,532 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
         cargarhistorialadeudocliente()
     End Sub
+    Function cambio_pb_estado_proceso()
+
+        If lbidfolio_proceso.Text = 0 Then
+            bloquear_botones_proceso()
+        ElseIf lbidfolio_proceso.Text = 1 Then
+
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = False
+            pb2n.Visible = True
+            pb3.Visible = False
+            pb3n.Visible = True
+            pb4.Visible = False
+            pb4n.Visible = True
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf lbidfolio_proceso.Text = 2 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = False
+            pb3n.Visible = True
+            pb4.Visible = False
+            pb4n.Visible = True
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf lbidfolio_proceso.Text = 3 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = True
+            pb3n.Visible = False
+            pb4.Visible = False
+            pb4n.Visible = True
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf lbidfolio_proceso.Text = 4 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = True
+            pb3n.Visible = False
+            pb4.Visible = True
+            pb4n.Visible = False
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf lbidfolio_proceso.Text = 5 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = True
+            pb3n.Visible = False
+            pb4.Visible = True
+            pb4n.Visible = False
+            pb5.Visible = True
+            pb5n.Visible = False
+        End If
+
+
+    End Function
+
+    Private Sub DataGridView2_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
+        Try
+
+            Dim Variable As String = grillaplan.Item(0, grillaplan.CurrentRow.Index).Value
+            lbfolio_proceso.Text = Variable
+            Try
+
+                conexionMysql.Open()
+                Dim Sql2 As String
+                Sql2 = "select concat(cliente.nombre,' ',cliente.ap,' ',cliente.am)as nombre, venta.observacion, venta.estado_proceso from cliente, venta where venta.idventa=" & Variable & " and venta.idcliente=cliente.idcliente;"
+                Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+                reader = cmd2.ExecuteReader()
+                reader.Read()
+                txtcliente_proceso.Text = reader.GetString(0).ToString()
+                Try
+
+                    txtobservacion_proceso.Text = reader.GetString(1).ToString()
+                Catch ex As Exception
+
+                End Try
+
+                lbidfolio_proceso.Text = reader.GetString(2).ToString()
+                'MsgBox(Variable)
+
+                cambio_pb_estado_proceso()
+                conexionMysql.Close()
+            Catch ex As Exception
+                cerrarconexion()
+            End Try
+        Catch ex As Exception
+            cerrarconexion()
+        End Try
+
+    End Sub
+
+    Private Sub cbrol_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbrol.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Label179_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
+        ' Try
+
+        cargargrilla_estado_proceso()
+        ' Catch ex As Exception
+        txtcliente_proceso.Text = ""
+        txtobservacion_proceso.Text = ""
+        'lbidfolio_proceso.Text = ""
+        lbfolio_proceso.Text = ""
+        ' End Try
+
+        If cbestado_proceso.SelectedIndex = 0 Then
+
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = False
+            pb2n.Visible = True
+            pb3.Visible = False
+            pb3n.Visible = True
+            pb4.Visible = False
+            pb4n.Visible = True
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf cbestado_proceso.SelectedIndex = 1 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = False
+            pb3n.Visible = True
+            pb4.Visible = False
+            pb4n.Visible = True
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf cbestado_proceso.SelectedIndex = 2 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = True
+            pb3n.Visible = False
+            pb4.Visible = False
+            pb4n.Visible = True
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf cbestado_proceso.SelectedIndex = 3 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = True
+            pb3n.Visible = False
+            pb4.Visible = True
+            pb4n.Visible = False
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf cbestado_proceso.SelectedIndex = 4 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = True
+            pb3n.Visible = False
+            pb4.Visible = True
+            pb4n.Visible = False
+            pb5.Visible = True
+            pb5n.Visible = False
+        End If
+
+
+
+
+    End Sub
+    Function cargargrilla_estado_proceso()
+        ' Try
+        Dim estado As String
+        estado = 0
+        grillaplan.DefaultCellStyle.Font = New Font("Arial", 20)
+        grillaplan.RowHeadersVisible = False
+
+        'formato para grilla 2
+
+        'seleccionamos el estado del proceso, del combobox.
+        Try
+
+            conexionMysql.Open()
+            Dim Sql2 As String
+            Sql2 = "select idestado_proceso from estado_proceso where estado='" & cbestado_proceso.Text & "';"
+            Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+            reader = cmd2.ExecuteReader()
+            reader.Read()
+            estado = reader.GetString(0).ToString()
+
+            conexionMysql.Close()
+        Catch ex As Exception
+            cerrarconexion()
+        End Try
+
+        lbidfolio_proceso.Text = estado
+
+        cerrarconexion()
+        'grilla.Columns(0).Width = 0
+        grillaplan.AlternatingRowsDefaultCellStyle.BackColor = Color.SkyBlue
+        conexionMysql.Open()
+        Dim Sql As String
+        Sql = "select idventa, fecha, hora, fechaentrega from venta where estado_proceso  = " & estado & ";"
+        Dim cmd As New MySqlCommand(Sql, conexionMysql)
+        Dim dt As New DataTable
+        Dim da As New MySqlDataAdapter(cmd)
+        'cargamos el formulario  resumen
+        da.Fill(dt)
+        grillaplan.DataSource = dt
+
+
+        grillaplan.Columns(0).Width = 120
+        grillaplan.Columns(1).Width = 180
+        grillaplan.Columns(2).Width = 130
+        grillaplan.Columns(3).Width = 180
+        conexionMysql.Close()
+        ' Catch ex As Exception
+
+        ' End Try
+
+
+    End Function
+    Function cargar_estado_proceso()
+
+        'limpiar el combo para que no se duplique
+        cbestado_proceso.Items.Clear()
+
+        Try
+
+
+            Dim cantidadproveedor, i As Integer
+            cerrarconexion()
+
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select count(*)as contador from estado_proceso;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            reader = cmd.ExecuteReader()
+            reader.Read()
+            cantidadproveedor = reader.GetString(0).ToString()
+
+            conexionMysql.Close()
+
+
+            cerrarconexion()
+
+            conexionMysql.Open()
+            Dim Sql2 As String
+            Sql2 = "select * from estado_proceso;"
+            Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+            reader = cmd2.ExecuteReader()
+
+            For i = 1 To cantidadproveedor
+
+                reader.Read()
+
+                cbestado_proceso.Items.Add(reader.GetString(1).ToString())
+            Next
+
+            reader.Close()
+
+            conexionMysql.Close()
+
+
+        Catch ex As Exception
+
+        End Try
+
+
+    End Function
+
+    Private Sub Button95_Click(sender As Object, e As EventArgs)
+        If lbfolio_proceso.Text = "" Then
+            MsgBox("elige un folio", MsgBoxStyle.Information, "CTRL+y")
+        Else
+            Dim estado, respuesta As Integer
+            estado = CInt(lbidfolio_proceso.Text) + 1
+            If estado = 6 Then
+                respuesta = MsgBox("El servicio ya esta entregado,¿desea desaparecerso de la lista?", MsgBoxStyle.YesNo, "CTRL+y")
+            ElseIf estado < 6 Then
+                respuesta = vbYes
+            End If
+            If respuesta = vbYes Then
+                Try
+                    ' MsgBox(estado)
+                    conexionMysql.Open()
+                    Dim Sql As String
+                    Sql = "UPDATE venta SET estado_proceso = '" & estado & "' WHERE idventa='" & lbfolio_proceso.Text & "'"
+                    Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                    cmd.ExecuteNonQuery()
+                    conexionMysql.Close()
+                    cargargrilla_estado_proceso()
+                    MsgBox("Transferido al siguiente proceso", MsgBoxStyle.Information, "CTRL+y")
+
+                Catch
+                    'MsgBox
+                    cerrarconexion()
+                End Try
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Button94_Click(sender As Object, e As EventArgs)
+
+        Try
+
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select idventa, fecha, hora, fechaentrega from venta where idventa  = " & txtfolio_concentrado.Text & ";"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            'cargamos el formulario  resumen
+            da.Fill(dt)
+            grillaplan.DataSource = dt
+
+
+            grillaplan.Columns(0).Width = 120
+            grillaplan.Columns(1).Width = 180
+            grillaplan.Columns(2).Width = 130
+            grillaplan.Columns(3).Width = 180
+            conexionMysql.Close()
+            ' Catch ex As Exception
+        Catch ex As Exception
+            MsgBox("folio no encontrado", MsgBoxStyle.Information, "ctrl+y")
+            cerrarconexion()
+        End Try
+
+    End Sub
+
+    Private Sub Button96_Click(sender As Object, e As EventArgs)
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "UPDATE venta SET observacion = '" & txtobservacion_proceso.Text & "' WHERE idventa='" & lbfolio_proceso.Text & "';"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+            MsgBox("Información actualizada", MsgBoxStyle.Information, "CTRL+y")
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+    End Sub
+
+    Private Sub cbproximos_vencer_proceso_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+        cargarPRoximos_vencer()
+
+    End Sub
+    Function cargarPRoximos_vencer()
+        bloquear_botones_proceso()
+        ' cargargrilla_proximos_vencer()
+        Dim valorCombo As Integer
+        Dim dias5, diaactual As String
+        Dim fecha, fecha2, dia, mes, año As String
+        dia = Date.Now.Day
+        mes = Date.Now.Month
+        año = Date.Now.Year
+        fecha = año & "-" & mes & "-" & dia
+
+        fecha2 = fecha & " 00:00:00"
+        valorCombo = cbproximos_vencer_proceso.SelectedIndex
+        If valorCombo = 0 Then
+            'filtra la información para hoy
+            grillaplan.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select idventa, fecha, hora, fechaentrega from venta where fechaentrega ='" & fecha & "' and estado_proceso<=4;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            'cargamos el formulario  resumen
+            da.Fill(dt)
+            grillaplan.DataSource = dt
+
+            'MsgBox("valor 0")
+
+
+        ElseIf valorCombo = 1 Then
+            'SumarDias = 0
+            'filtra la información para 5 dias
+            grillaplan.AlternatingRowsDefaultCellStyle.BackColor = Color.Yellow
+
+            Try
+
+                conexionMysql.Open()
+                Dim sqlx2 As String
+                sqlx2 = "select date_format(DATE_ADD('" & fecha & "',INTERVAL 5 DAY),'%Y-%m-%d');"
+                Dim cmdx2 As New MySqlCommand(sqlx2, conexionMysql)
+                reader = cmdx2.ExecuteReader
+                reader.Read()
+                diaactual = reader.GetString(0).ToString()
+
+
+                conexionMysql.Close()
+
+            Catch ex As Exception
+                cerrarconexion()
+                btninconsistencia.Visible = True
+
+
+            End Try
+            'MsgBox(fecha)
+            ' MsgBox(diaactual)
+            'grilla.Columns(0).Width = 0
+            'grillaplan.AlternatingRowsDefaultCellStyle.BackColor = Color.SkyBlue
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select idventa, fecha, hora, fechaentrega from venta where fechaentrega between '" & fecha & "' and '" & diaactual & "' and estado_proceso<=4;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            'cargamos el formulario  resumen
+            da.Fill(dt)
+            grillaplan.DataSource = dt
+            ' MsgBox("valor 1")
+        ElseIf valorCombo = 2 Then
+            'SumarDias = 5
+            'filtra la información para vencidos
+
+            grillaplan.AlternatingRowsDefaultCellStyle.BackColor = Color.Red
+            'en caso de ser 1, serian los pedidos vencidos
+            Dim Sql As String
+            Sql = "select idventa, fecha, hora, fechaentrega from venta where fechaentrega<= '" & fecha & "' and estado_proceso<=4;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            'cargamos el formulario  resumen
+            da.Fill(dt)
+            grillaplan.DataSource = dt
+            'MsgBox("valor 2")
+
+
+
+        End If
+
+
+
+        ' Try
+        Dim estado As String
+        estado = 0
+        grillaplan.DefaultCellStyle.Font = New Font("Arial", 20)
+        grillaplan.RowHeadersVisible = False
+
+        'formato para grilla 2
+
+        'seleccionamos el estado del proceso, del combobox.
+        'Try
+
+        '    conexionMysql.Open()
+        '    Dim Sql2 As String
+        '    Sql2 = "select idestado_proceso from estado_proceso where estado='" & cbestado_proceso.Text & "';"
+        '    Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+        '    reader = cmd2.ExecuteReader()
+        '    reader.Read()
+        '    estado = reader.GetString(0).ToString()
+
+        '    conexionMysql.Close()
+        'Catch ex As Exception
+        '    cerrarconexion()
+        'End Try
+
+        'lbidfolio_proceso.Text = estado
+
+        'cerrarconexion()
+
+
+
+
+
+        grillaplan.Columns(0).Width = 120
+        grillaplan.Columns(1).Width = 180
+        grillaplan.Columns(2).Width = 130
+        grillaplan.Columns(3).Width = 180
+        conexionMysql.Close()
+        ' Catch ex As Exception
+        ' End Try
+    End Function
+
+    Function cargargrilla_proximos_vencer()
+
+
+
+    End Function
+
+    Private Sub GroupBox44_Enter(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub PictureBox2_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub PictureBox3_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub GroupBox42_Enter(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub lbidfolio_proceso_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Label182_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
     Function cargarhistorialadeudocliente()
         grillaclienteservicios.DefaultCellStyle.Font = New Font("Arial", 12)
         grillaclienteservicios.RowHeadersVisible = False
@@ -18142,9 +18778,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         'End Try
 
     End Function
-    Private Sub stxtcantidad_GotFocus(sender As Object, e As EventArgs) Handles stxtcantidad.GotFocus
 
-    End Sub
 
     Private Sub grilla2p_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles grilla2p.CellContentDoubleClick
         Try
@@ -18162,6 +18796,34 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
     End Sub
 
     Private Sub listaservicios_KeyPress(sender As Object, e As KeyPressEventArgs) Handles listaservicios.KeyPress
+
+    End Sub
+
+    Private Sub Button97_Click(sender As Object, e As EventArgs)
+        'se descarta el folio que se ha seleccionado
+        'para que ya no aparezca nuevamente 
+        Dim estado As String
+
+        estado = 7
+
+        Try
+            ' MsgBox(estado)
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "UPDATE venta SET estado_proceso = '" & estado & "' WHERE idventa='" & lbfolio_proceso.Text & "'"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+            'cargamos nuevamente los folios vencidos dependiendo de lo seleccionado
+            cargarPRoximos_vencer()
+            MsgBox("Folio descartado", MsgBoxStyle.Information, "CTRL+y")
+
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
 
     End Sub
 
@@ -18207,6 +18869,182 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         'MsgBox()
         'cerrarconexion()
         'End Try
+
+    End Sub
+
+    Private Sub Button98_Click(sender As Object, e As EventArgs) Handles Button98.Click
+        'TabControl1.SelectedIndex = 11
+
+        Dim tipo As Integer
+
+
+
+        tipo = tipoingreso()
+        comprobarpermisoventana()
+        tipo = p8
+
+
+        If tipo = 0 Then
+
+            TabControl1.SelectedIndex = 1
+            Button1.BackColor = Color.DimGray
+            Button2.BackColor = Color.FromArgb(47, 56, 72)
+            Button3.BackColor = Color.FromArgb(47, 56, 72)
+            Button4.BackColor = Color.FromArgb(47, 56, 72)
+            Button5.BackColor = Color.FromArgb(47, 56, 72)
+            Button6.BackColor = Color.FromArgb(47, 56, 72)
+            Button8.BackColor = Color.FromArgb(47, 56, 72)
+            Button10.BackColor = Color.FromArgb(47, 56, 72)
+            Button12.BackColor = Color.FromArgb(47, 56, 72)
+            Button13.BackColor = Color.FromArgb(47, 56, 72)
+            Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.FromArgb(47, 56, 72)
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
+
+
+
+            comprobartipoingreso()
+        Else
+
+            TabControl1.SelectedIndex = 11
+
+            Button1.BackColor = Color.FromArgb(47, 56, 72)
+            Button2.BackColor = Color.FromArgb(47, 56, 72)
+            Button3.BackColor = Color.FromArgb(47, 56, 72)
+            Button4.BackColor = Color.FromArgb(47, 56, 72)
+            Button5.BackColor = Color.FromArgb(47, 56, 72)
+            Button6.BackColor = Color.FromArgb(47, 56, 72)
+            Button8.BackColor = Color.FromArgb(47, 56, 72)
+            Button10.BackColor = Color.FromArgb(47, 56, 72)
+            Button12.BackColor = Color.FromArgb(47, 56, 72)
+            Button13.BackColor = Color.FromArgb(47, 56, 72)
+            Button67.BackColor = Color.FromArgb(47, 56, 72)
+            Button98.BackColor = Color.DimGray
+            Button99.BackColor = Color.FromArgb(47, 56, 72)
+
+            'cargamos los valoes de la grilla para tamaño de fuente y color.
+            cargaragenda()
+            agendagrilla.DefaultCellStyle.Font = New Font("Arial", 12)
+            agendagrilla.RowHeadersVisible = False
+            agendagrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
+
+
+        End If
+    End Sub
+
+    Private Sub chagenda_CheckedChanged(sender As Object, e As EventArgs) Handles chagenda.CheckedChanged
+        'If chagenda.Checked = True Then
+        '    agendacalendario.Visible = True
+        '    agendagrilla.Visible = True
+        '    agendagrilla.DefaultCellStyle.Font = New Font("Arial", 12)
+        '    agendagrilla.RowHeadersVisible = False
+        '    agendagrilla.AlternatingRowsDefaultCellStyle.BackColor = Color.Coral
+        '    AGtxtDescripcion.Visible = True
+        '    Label165.Visible = True
+        '    Label163.Visible = True
+        '    Label164.Visible = True
+        '    AGDate.Visible = True
+        '    AGBtnAgendar.Visible = True
+        '    AGtxtTotal.Visible = True
+        '    Label166.Visible = True
+        '    agtxtid.Visible = True
+        '    Button90.Visible = True
+        '    Button91.Visible = True
+
+
+
+        '    cargaragenda()
+        'Else
+
+        '    agendacalendario.Visible = False
+        '    agendagrilla.Visible = False
+        '    Label165.Visible = False
+        '    Label163.Visible = False
+        '    Label164.Visible = False
+        '    AGDate.Visible = False
+        '    AGBtnAgendar.Visible = False
+        '    AGtxtTotal.Visible = False
+        '    AGtxtDescripcion.Visible = False
+        '    Label166.Visible = False
+        '    agtxtid.Visible = False
+        '    Button90.Visible = False
+        '    Button91.Visible = False
+
+        'End If
+    End Sub
+
+    Private Sub AGBtnAgendar_Click_1(sender As Object, e As EventArgs) Handles AGBtnAgendar.Click
+        'insertamos el registro en la tabla agenda
+        cerrarconexion()
+        'Try
+
+        If AGtxtTotal.Text = "" Then
+            AGtxtTotal.Text = "0"
+        End If
+
+        If AGtxtDescripcion.Text = "" Then
+            MsgBox("No hay una descripción", MsgBoxStyle.Information, "CTRL+y")
+        Else
+            Dim fecha As String
+            fecha = AGDate.Value.ToString("yyyy/MM/dd")
+            conexionMysql.Open()
+            Dim sql2 As String
+            sql2 = "INSERT INTO agenda (`descripcion`, `total`, `fecha`) VALUES ('" & AGtxtDescripcion.Text & "', '" & AGtxtTotal.Text & "', '" & fecha & "');"
+            Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
+            cmd2.ExecuteNonQuery()
+            conexionMysql.Close()
+            Dim formulario As New FrmAceptarTrans
+            formulario.ShowDialog()
+
+            AGtxtDescripcion.Text = ""
+            AGtxtTotal.Text = ""
+
+            cargaragenda()
+        End If
+
+
+    End Sub
+
+    Private Sub agendacalendario_DateChanged_1(sender As Object, e As DateRangeEventArgs) Handles agendacalendario.DateChanged
+        cargaragenda()
+    End Sub
+
+    Private Sub Button90_Click_1(sender As Object, e As EventArgs) Handles Button90.Click
+        'boton para transferir la agenda a una venta.
+        stxtdescripcion.Text = AGtxtDescripcion.Text
+        cargarDatosVentaServicio()
+        'TabControl1.SelectedIndex = 10
+    End Sub
+
+    Private Sub Button91_Click_1(sender As Object, e As EventArgs) Handles Button91.Click
+        'boton para limpiar los elementos de la agenda
+        agtxtid.Text = ""
+        AGtxtDescripcion.Text = ""
+        AGtxtTotal.Text = ""
+    End Sub
+
+    Private Sub Button99_Click(sender As Object, e As EventArgs) Handles Button99.Click
+        TabControl1.SelectedIndex = 12
+
+
+
+        Button99.BackColor = Color.DimGray
+        Button1.BackColor = Color.FromArgb(47, 56, 72)
+        Button2.BackColor = Color.FromArgb(47, 56, 72)
+        Button3.BackColor = Color.FromArgb(47, 56, 72)
+        Button4.BackColor = Color.FromArgb(47, 56, 72)
+        Button5.BackColor = Color.FromArgb(47, 56, 72)
+        Button6.BackColor = Color.FromArgb(47, 56, 72)
+        Button8.BackColor = Color.FromArgb(47, 56, 72)
+        Button10.BackColor = Color.FromArgb(47, 56, 72)
+        Button12.BackColor = Color.FromArgb(47, 56, 72)
+        Button13.BackColor = Color.FromArgb(47, 56, 72)
+        Button67.BackColor = Color.FromArgb(47, 56, 72)
+        Button98.BackColor = Color.FromArgb(47, 56, 72)
+
+    End Sub
+
+    Private Sub agendagrilla_CellContentClick_1(sender As Object, e As DataGridViewCellEventArgs) Handles agendagrilla.CellContentClick
 
     End Sub
 
@@ -18380,16 +19218,16 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
         'MsgBox(nombreCompleto)
         conexionMysql.Open()
-            Dim sql As String
+        Dim sql As String
         sql = "select idcliente from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & nombreCompleto & "%';"
         'sql = "select concat(nombre, ' ', ap, ' ', am) as nombre from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & ctxtnombre.Text & "%';"
         Dim cmd As New MySqlCommand(sql, conexionMysql)
-            reader = cmd.ExecuteReader
-            reader.Read()
-            idCliente = reader.GetString(0).ToString()
+        reader = cmd.ExecuteReader
+        reader.Read()
+        idCliente = reader.GetString(0).ToString()
 
-            conexionMysql.Close()
-            ulistaclientes.Visible = False
+        conexionMysql.Close()
+        ulistaclientes.Visible = False
 
 
         ' MsgBox(idCliente)
@@ -18399,11 +19237,11 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
 
         conexionMysql.Open()
-                Dim sql2 As String
-                sql2 = "select * from cliente where idcliente =" & idCliente & ";"
-                Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
-                reader = cmd2.ExecuteReader
-                reader.Read()
+        Dim sql2 As String
+        sql2 = "select * from cliente where idcliente =" & idCliente & ";"
+        Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
+        reader = cmd2.ExecuteReader
+        reader.Read()
         Try
 
             ctxtidcliente.Text = reader.GetString(0).ToString()
@@ -18419,10 +19257,10 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         End Try
         Try
 
-                ctxtap.Text = reader.GetString(2).ToString()
-            Catch ex As Exception
+            ctxtap.Text = reader.GetString(2).ToString()
+        Catch ex As Exception
 
-            End Try
+        End Try
         Try
 
             ctxtam.Text = reader.GetString(3).ToString()
@@ -18457,20 +19295,88 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
         conexionMysql.Close()
 
-            'Catch ex As Exception
-            cerrarconexion()
-                btninconsistencia.Visible = True
+        'Catch ex As Exception
+        cerrarconexion()
+        btninconsistencia.Visible = True
 
 
-            'End Try
+        'End Try
 
-            ' Catch ex As Exception
-            cerrarconexion()
-            'btninconsistencia.Visible = True
+        ' Catch ex As Exception
+        cerrarconexion()
+        'btninconsistencia.Visible = True
         'End Try
         'Catch ex As Exception
 
         ' End Try
 
+    End Sub
+    Function proceso_ActualizarFecha()
+        Dim value As String = Convert.ToString(grillaplan.CurrentRow.Cells("fechaentrega").Value)
+        Dim idvalue As String = Convert.ToString(grillaplan.CurrentRow.Cells("idventa").Value)
+        'MsgBox(value)
+        'MsgBox(idvalue)
+        'obtener fecha y hora
+        Dim fechaformato As String
+        fechaformato = Format(CDate(value), "yyyy/MM/dd")
+        'fechaformato = Format(value, "yyyy/mm/dd")
+        ' MsgBox(fechaformato)
+
+
+        'Dim dia, mes, año, fecha, fechaclave As String
+        'hora2 = Now.Hour()
+        'minuto = Now.Minute()
+        'segundo = Now.Second()
+
+        'hora = hora2 & ":" & minuto & ":" & segundo
+
+        'dia = Date.Now.Day
+        'mes = Date.Now.Month
+        'año = Date.Now.Year
+        'fecha = año & "-" & mes & "-" & dia
+
+        'fechaclave = año & mes & dia & hora2 & minuto & segundo
+
+        ''despues de obtener los valores, los actualizamos.
+
+        'cerrarconexion()
+        conexionMysql.Open()
+        'Try
+        Dim Sql36 As String
+        Sql36 = "update venta set fechaentrega='" & fechaformato & "' where idventa=" & idvalue & ";"
+        Dim cmd36 As New MySqlCommand(Sql36, conexionMysql)
+        cmd36.ExecuteNonQuery()
+        conexionMysql.Close()
+        MsgBox("Fecha actualizada", MsgBoxStyle.Information, "MOBI")
+        ' Catch ex As Exception
+        cerrarconexion()
+        'End Try
+        cerrarconexion()
+
+
+    End Function
+
+
+    Private Sub grillaplan_CellEnter(sender As Object, e As DataGridViewCellEventArgs)
+
+    End Sub
+
+    Private Sub grillaplan_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs)
+        proceso_ActualizarFecha()
+    End Sub
+
+    Private Sub stxtfoliobusquedaventa_KeyPress(sender As Object, e As KeyPressEventArgs) Handles stxtfoliobusquedaventa.KeyPress
+        If Char.IsDigit(e.KeyChar) Then
+            e.Handled = False
+        ElseIf Char.IsControl(e.KeyChar) Then
+            e.Handled = False
+        Else
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub agendagrilla_DoubleClick(sender As Object, e As EventArgs) Handles agendagrilla.DoubleClick
+        Dim Variable As String = agendagrilla.Item(0, agendagrilla.CurrentRow.Index).Value
+        agtxtid.Text = Variable
     End Sub
 End Class

@@ -40,11 +40,8 @@ Module caconexion
             puerto = port
             'MsgBox(contenido) 'pego segunda linea
 
-
             user = login.txtusuario.Text
             pass = login.txtpass.Text
-
-
 
             'freader.Close()
             '-------------------------------------------------------------------------
