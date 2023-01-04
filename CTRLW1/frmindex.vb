@@ -16754,19 +16754,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
     Private Sub Btnconactualizararticulosminimos_Click(sender As Object, e As EventArgs)
 
-        Try
 
-            conexionMysql.Open()
-            'actualizo el dato
-            Dim Sql5 As String
-            Sql5 = "UPDATE `dwin`.`datos_empresa` SET `minimoproductos` = '" & ctxtminimoarticulos.Text & "' WHERE (`iddatos_empresa` = '1');"
-            Dim cmd5 As New MySqlCommand(Sql5, conexionMysql)
-            cmd5.ExecuteNonQuery()
-            MsgBox("Registro actualizado", MsgBoxStyle.Information, "CTRL+y")
-            conexionMysql.Close()
-        Catch ex As Exception
-            cerrarconexion()
-        End Try
 
     End Sub
 
@@ -19089,6 +19077,22 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
         End Try
 
+    End Sub
+
+    Private Sub btnconactualizararticulosminimos_Click_1(sender As Object, e As EventArgs) Handles btnconactualizararticulosminimos.Click
+        Try
+
+            conexionMysql.Open()
+            'actualizo el dato
+            Dim Sql5 As String
+            Sql5 = "UPDATE `dwin`.`datos_empresa` SET `minimoproductos` = '" & ctxtminimoarticulos.Text & "' WHERE (`iddatos_empresa` = '1');"
+            Dim cmd5 As New MySqlCommand(Sql5, conexionMysql)
+            cmd5.ExecuteNonQuery()
+            MsgBox("Registro actualizado", MsgBoxStyle.Information, "CTRL+y")
+            conexionMysql.Close()
+        Catch ex As Exception
+            cerrarconexion()
+        End Try
     End Sub
 
     Private Sub btninconsistencia_GotFocus(sender As Object, e As EventArgs) Handles btninconsistencia.GotFocus

@@ -66,8 +66,8 @@ Public Class login
 
             Dim IP, port As String
 
-            IP = InputBox("Ingresa la ip del servidor de la BD")
-            port = InputBox("Ingresa la ip del servidor de la BD")
+            IP = InputBox("Ingresa la ip del servidor")
+            port = InputBox("Ingresa el puerto del servidor")
 
 
             Dim lines() As String = {IP, port}

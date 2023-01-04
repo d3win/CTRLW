@@ -45,7 +45,7 @@ Partial Class login
         Me.Button3.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Button3.Location = New System.Drawing.Point(25, 530)
+        Me.Button3.Location = New System.Drawing.Point(25, 536)
         Me.Button3.Margin = New System.Windows.Forms.Padding(5)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(40, 39)
@@ -62,7 +62,7 @@ Partial Class login
         Me.Button2.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.ImageAlign = System.Drawing.ContentAlignment.BottomLeft
-        Me.Button2.Location = New System.Drawing.Point(260, 566)
+        Me.Button2.Location = New System.Drawing.Point(58, 571)
         Me.Button2.Margin = New System.Windows.Forms.Padding(5)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(28, 25)
