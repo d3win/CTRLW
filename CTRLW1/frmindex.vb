@@ -19026,7 +19026,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
     Private Sub Button99_Click(sender As Object, e As EventArgs) Handles Button99.Click
         TabControl1.SelectedIndex = 12
 
-
+        cargar_estado_proceso()
 
         Button99.BackColor = Color.DimGray
         Button1.BackColor = Color.FromArgb(47, 56, 72)
@@ -19089,6 +19089,216 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
         End Try
 
+    End Sub
+
+    Private Sub cbestado_proceso_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbestado_proceso.SelectedIndexChanged
+        ' Try
+
+        cargargrilla_estado_proceso()
+        ' Catch ex As Exception
+        txtcliente_proceso.Text = ""
+        txtobservacion_proceso.Text = ""
+        'lbidfolio_proceso.Text = ""
+        lbfolio_proceso.Text = ""
+        ' End Try
+
+        If cbestado_proceso.SelectedIndex = 0 Then
+
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = False
+            pb2n.Visible = True
+            pb3.Visible = False
+            pb3n.Visible = True
+            pb4.Visible = False
+            pb4n.Visible = True
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf cbestado_proceso.SelectedIndex = 1 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = False
+            pb3n.Visible = True
+            pb4.Visible = False
+            pb4n.Visible = True
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf cbestado_proceso.SelectedIndex = 2 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = True
+            pb3n.Visible = False
+            pb4.Visible = False
+            pb4n.Visible = True
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf cbestado_proceso.SelectedIndex = 3 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = True
+            pb3n.Visible = False
+            pb4.Visible = True
+            pb4n.Visible = False
+            pb5.Visible = False
+            pb5n.Visible = True
+        ElseIf cbestado_proceso.SelectedIndex = 4 Then
+            pb1.Visible = True
+            pb1n.Visible = False
+            pb2.Visible = True
+            pb2n.Visible = False
+            pb3.Visible = True
+            pb3n.Visible = False
+            pb4.Visible = True
+            pb4n.Visible = False
+            pb5.Visible = True
+            pb5n.Visible = False
+        End If
+
+
+
+    End Sub
+
+    Private Sub cbproximos_vencer_proceso_SelectedIndexChanged_1(sender As Object, e As EventArgs) Handles cbproximos_vencer_proceso.SelectedIndexChanged
+        cargarPRoximos_vencer()
+    End Sub
+
+    Private Sub grillaplan_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles grillaplan.CellContentClick
+        Try
+
+            Dim Variable As String = grillaplan.Item(0, grillaplan.CurrentRow.Index).Value
+            lbfolio_proceso.Text = Variable
+            Try
+
+                conexionMysql.Open()
+                Dim Sql2 As String
+                Sql2 = "select concat(cliente.nombre,' ',cliente.ap,' ',cliente.am)as nombre, venta.observacion, venta.estado_proceso from cliente, venta where venta.idventa=" & Variable & " and venta.idcliente=cliente.idcliente;"
+                Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+                reader = cmd2.ExecuteReader()
+                reader.Read()
+                txtcliente_proceso.Text = reader.GetString(0).ToString()
+                Try
+
+                    txtobservacion_proceso.Text = reader.GetString(1).ToString()
+                Catch ex As Exception
+
+                End Try
+
+                lbidfolio_proceso.Text = reader.GetString(2).ToString()
+                'MsgBox(Variable)
+
+                cambio_pb_estado_proceso()
+                conexionMysql.Close()
+            Catch ex As Exception
+                cerrarconexion()
+            End Try
+        Catch ex As Exception
+            cerrarconexion()
+        End Try
+    End Sub
+
+    Private Sub Button95_Click_1(sender As Object, e As EventArgs) Handles Button95.Click
+        If lbfolio_proceso.Text = "" Then
+            MsgBox("elige un folio", MsgBoxStyle.Information, "CTRL+y")
+        Else
+            Dim estado, respuesta As Integer
+            estado = CInt(lbidfolio_proceso.Text) + 1
+            If estado = 6 Then
+                respuesta = MsgBox("El servicio ya esta entregado,¿desea desaparecerso de la lista?", MsgBoxStyle.YesNo, "CTRL+y")
+            ElseIf estado < 6 Then
+                respuesta = vbYes
+            End If
+            If respuesta = vbYes Then
+                Try
+                    ' MsgBox(estado)
+                    conexionMysql.Open()
+                    Dim Sql As String
+                    Sql = "UPDATE venta SET estado_proceso = '" & estado & "' WHERE idventa='" & lbfolio_proceso.Text & "'"
+                    Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                    cmd.ExecuteNonQuery()
+                    conexionMysql.Close()
+                    cargargrilla_estado_proceso()
+                    MsgBox("Transferido al siguiente proceso", MsgBoxStyle.Information, "CTRL+y")
+
+                Catch
+                    'MsgBox
+                    cerrarconexion()
+                End Try
+            End If
+        End If
+    End Sub
+
+    Private Sub Button96_Click_1(sender As Object, e As EventArgs) Handles Button96.Click
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "UPDATE venta SET observacion = '" & txtobservacion_proceso.Text & "' WHERE idventa='" & lbfolio_proceso.Text & "';"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+            MsgBox("Información actualizada", MsgBoxStyle.Information, "CTRL+y")
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+    End Sub
+
+    Private Sub Button97_Click_1(sender As Object, e As EventArgs) Handles Button97.Click
+        'se descarta el folio que se ha seleccionado
+        'para que ya no aparezca nuevamente 
+        Dim estado As String
+
+        estado = 7
+
+        Try
+            ' MsgBox(estado)
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "UPDATE venta SET estado_proceso = '" & estado & "' WHERE idventa='" & lbfolio_proceso.Text & "'"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+            'cargamos nuevamente los folios vencidos dependiendo de lo seleccionado
+            cargarPRoximos_vencer()
+            MsgBox("Folio descartado", MsgBoxStyle.Information, "CTRL+y")
+            cargargrilla_estado_proceso()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+    End Sub
+
+    Private Sub Button94_Click_1(sender As Object, e As EventArgs) Handles Button94.Click
+        Try
+
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select idventa, fecha, hora, fechaentrega from venta where idventa  = " & txtfolio_concentrado.Text & ";"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            Dim dt As New DataTable
+            Dim da As New MySqlDataAdapter(cmd)
+            'cargamos el formulario  resumen
+            da.Fill(dt)
+            grillaplan.DataSource = dt
+
+
+            grillaplan.Columns(0).Width = 120
+            grillaplan.Columns(1).Width = 180
+            grillaplan.Columns(2).Width = 130
+            grillaplan.Columns(3).Width = 180
+            conexionMysql.Close()
+            ' Catch ex As Exception
+        Catch ex As Exception
+            MsgBox("folio no encontrado", MsgBoxStyle.Information, "ctrl+y")
+            cerrarconexion()
+        End Try
     End Sub
 
     Private Sub btninconsistencia_GotFocus(sender As Object, e As EventArgs) Handles btninconsistencia.GotFocus
