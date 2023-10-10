@@ -23,6 +23,7 @@ Partial Class FRMNotaVenta
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.ReportViewer1 = New Microsoft.Reporting.WinForms.ReportViewer()
+        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
         Me.SuspendLayout()
         '
         'ReportViewer1
@@ -49,4 +50,5 @@ Partial Class FRMNotaVenta
     End Sub
 
     Friend WithEvents ReportViewer1 As Microsoft.Reporting.WinForms.ReportViewer
+    Friend WithEvents PrintDocument1 As Printing.PrintDocument
 End Class

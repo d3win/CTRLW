@@ -30,19 +30,23 @@ Partial Class FRagregaranticipo
         Me.txtcantidad = New System.Windows.Forms.TextBox()
         Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
         Me.PrintDocument5TICKETSERVICIO = New System.Drawing.Printing.PrintDocument()
+        Me.Label74 = New System.Windows.Forms.Label()
+        Me.cbformadepagoservicios = New System.Windows.Forms.ComboBox()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.Color.White
+        Me.GroupBox1.Controls.Add(Me.Label74)
+        Me.GroupBox1.Controls.Add(Me.cbformadepagoservicios)
         Me.GroupBox1.Controls.Add(Me.ch1)
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.Button17)
         Me.GroupBox1.Controls.Add(Me.txtcantidad)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 10)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(380, 226)
+        Me.GroupBox1.Size = New System.Drawing.Size(380, 310)
         Me.GroupBox1.TabIndex = 1
         Me.GroupBox1.TabStop = False
         '
@@ -77,7 +81,7 @@ Partial Class FRagregaranticipo
         Me.Button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button17.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button17.ForeColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.Button17.Location = New System.Drawing.Point(14, 157)
+        Me.Button17.Location = New System.Drawing.Point(14, 231)
         Me.Button17.Name = "Button17"
         Me.Button17.Size = New System.Drawing.Size(360, 63)
         Me.Button17.TabIndex = 20
@@ -102,12 +106,37 @@ Partial Class FRagregaranticipo
         'PrintDocument5TICKETSERVICIO
         '
         '
+        'Label74
+        '
+        Me.Label74.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label74.AutoSize = True
+        Me.Label74.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label74.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Label74.Location = New System.Drawing.Point(26, 164)
+        Me.Label74.Name = "Label74"
+        Me.Label74.Size = New System.Drawing.Size(104, 16)
+        Me.Label74.TabIndex = 125
+        Me.Label74.Text = "Forma de pago"
+        '
+        'cbformadepagoservicios
+        '
+        Me.cbformadepagoservicios.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbformadepagoservicios.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbformadepagoservicios.FormattingEnabled = True
+        Me.cbformadepagoservicios.Items.AddRange(New Object() {"EFECTIVO", "TRANSFERENCIAS", "TARJETA DEBITO/CREDITO", "VALES"})
+        Me.cbformadepagoservicios.Location = New System.Drawing.Point(29, 187)
+        Me.cbformadepagoservicios.Name = "cbformadepagoservicios"
+        Me.cbformadepagoservicios.Size = New System.Drawing.Size(329, 24)
+        Me.cbformadepagoservicios.TabIndex = 124
+        '
         'FRagregaranticipo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(185, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(404, 250)
+        Me.ClientSize = New System.Drawing.Size(404, 332)
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -127,4 +156,6 @@ Partial Class FRagregaranticipo
     Friend WithEvents PrintDocument1 As Printing.PrintDocument
     Friend WithEvents ch1 As CheckBox
     Friend WithEvents PrintDocument5TICKETSERVICIO As Printing.PrintDocument
+    Friend WithEvents Label74 As Label
+    Friend WithEvents cbformadepagoservicios As ComboBox
 End Class

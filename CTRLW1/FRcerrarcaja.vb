@@ -877,53 +877,117 @@ Public Class FRcerrarcaja
         End Try
 
 
+
+
+
         '-------------------------------------------------------------------
         'SUMA De ventas por transferencias
+        '---------------------------------------------------------------------------
+        Dim trans1, trans2 As Integer
+        'Try
+
+        '    cerrarconexion()
+        '    Dim Sqla13 As String
+        '    'Dim totalcorteventa As String
+        '    conexionMysql.Open()
+        '    'Sql = "select sum(total), fecha from venta where fecha='" & fecha & "';"
+        '    Sqla13 = "select sum(anticipo)as suma from venta where fecha between '" & fechainicial & "' and '" & fechafinal & "' and idtipo_pago=2"
+        '    'Sqla1 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where idventa between '" & min & "' and '" & max & "';"
+        '    Dim cmda13 As New MySqlCommand(Sqla13, conexionMysql)
+        '    reader = cmda13.ExecuteReader()
+        '    reader.Read()
+        '    'Try
+        '    trans1 = reader.GetString(0).ToString
+        '    'txttotalproductos.Text = reader.GetString(1).ToString
+        'Catch ex As Exception
+        '    cerrarconexion()
+        '    trans1 = 0
+        'End Try
+
+
+
+        '-------------------------------------------------------------------
+        'SUMA De ventas por transferencias de anticipos
         '---------------------------------------------------------------------------
 
         Try
 
             cerrarconexion()
-            Dim Sqla13 As String
+            Dim Sqla13x As String
             'Dim totalcorteventa As String
             conexionMysql.Open()
             'Sql = "select sum(total), fecha from venta where fecha='" & fecha & "';"
-            Sqla13 = "select sum(anticipo)as suma from venta where fecha between '" & fechainicial & "' and '" & fechafinal & "' and idtipo_pago=2"
+            'Sqla13x = "select sum(anticipo)as suma from servicios_Ventas where fecha between '" & fechainicial & "' and '" & fechafinal & "' and tipo_venta=2"
+            Sqla13x = "select sum(anticipo)as suma from servicios_Ventas where fecha between '" & fechainicial & "' and '" & fechafinal & "' and tipo_venta=2;"
+
             'Sqla1 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where idventa between '" & min & "' and '" & max & "';"
-            Dim cmda13 As New MySqlCommand(Sqla13, conexionMysql)
-            reader = cmda13.ExecuteReader()
+            Dim cmda13x As New MySqlCommand(Sqla13x, conexionMysql)
+            reader = cmda13x.ExecuteReader()
             reader.Read()
             'Try
-            txtventastransferencias.Text = reader.GetString(0).ToString
+            trans2 = reader.GetString(0).ToString
             'txttotalproductos.Text = reader.GetString(1).ToString
         Catch ex As Exception
             cerrarconexion()
-            txtventastransferencias.Text = 0
+            trans2 = 0
         End Try
+
+        ' MsgBox(trans1)
+        ' MsgBox(trans2)
+        txtventastransferencias.Text = trans2 ' + trans2
+
+
 
         '-------------------------------------------------------------------
         'SUMA De ventas por tarjeta
         '---------------------------------------------------------------------------
 
+        'Try
+
+        '    cerrarconexion()
+        '    Dim Sqla14 As String
+        '    'Dim totalcorteventa As String
+        '    conexionMysql.Open()
+        '    'Sql = "select sum(total), fecha from venta where fecha='" & fecha & "';"
+        '    Sqla14 = "select sum(total)as suma from venta where fecha between '" & fechainicial & "' and '" & fechafinal & "' and idtipo_pago=3;"
+        '    'Sqla1 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where idventa between '" & min & "' and '" & max & "';"
+        '    Dim cmda14 As New MySqlCommand(Sqla14, conexionMysql)
+        '    reader = cmda14.ExecuteReader()
+        '    reader.Read()
+        '    'Try
+        '    txtventastarjeta.Text = reader.GetString(0).ToString
+        '    'txttotalproductos.Text = reader.GetString(1).ToString
+        'Catch ex As Exception
+        '    cerrarconexion()
+        '    txtventastarjeta.Text = 0
+        'End Try
         Try
 
             cerrarconexion()
-            Dim Sqla14 As String
+            Dim Sqla13x As String
             'Dim totalcorteventa As String
             conexionMysql.Open()
             'Sql = "select sum(total), fecha from venta where fecha='" & fecha & "';"
-            Sqla14 = "select sum(total)as suma from venta where fecha between '" & fechainicial & "' and '" & fechafinal & "' and idtipo_pago=3;"
+            'Sqla13x = "select sum(anticipo)as suma from servicios_Ventas where fecha between '" & fechainicial & "' and '" & fechafinal & "' and tipo_venta=2"
+            Sqla13x = "select sum(anticipo)as suma from servicios_Ventas where fecha between '" & fechainicial & "' and '" & fechafinal & "' and tipo_venta=3;"
+
             'Sqla1 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where idventa between '" & min & "' and '" & max & "';"
-            Dim cmda14 As New MySqlCommand(Sqla14, conexionMysql)
-            reader = cmda14.ExecuteReader()
+            Dim cmda13x As New MySqlCommand(Sqla13x, conexionMysql)
+            reader = cmda13x.ExecuteReader()
             reader.Read()
             'Try
             txtventastarjeta.Text = reader.GetString(0).ToString
             'txttotalproductos.Text = reader.GetString(1).ToString
         Catch ex As Exception
             cerrarconexion()
-            txtventastarjeta.Text = 0
+            ' trans2 = 0
         End Try
+
+        'MsgBox(trans1)
+        '' MsgBox(trans2)
+        'txtventastransferencias.Text = trans2 ' + trans2
+
+
 
 
 
@@ -931,25 +995,49 @@ Public Class FRcerrarcaja
         'SUMA De ventas por vales
         '---------------------------------------------------------------------------
 
+        'Try
+
+        '    cerrarconexion()
+        '    Dim Sqla15 As String
+        '    ' Dim totalcorteventa As String
+        '    conexionMysql.Open()
+        '    'Sql = "select sum(total), fecha from venta where fecha='" & fecha & "';"
+        '    Sqla15 = "select sum(total)as suma from venta where fecha between '" & fechainicial & "' and '" & fechafinal & "' and idtipo_pago=4;"
+        '    'Sqla1 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where idventa between '" & min & "' and '" & max & "';"
+        '    Dim cmda15 As New MySqlCommand(Sqla15, conexionMysql)
+        '    reader = cmda15.ExecuteReader()
+        '    reader.Read()
+        '    'Try
+        '    txtventavales.Text = reader.GetString(0).ToString
+        '    'txttotalproductos.Text = reader.GetString(1).ToString
+        'Catch ex As Exception
+        '    cerrarconexion()
+        '    txtventavales.Text = 0
+        'End Try
+
         Try
 
             cerrarconexion()
-            Dim Sqla15 As String
-            ' Dim totalcorteventa As String
+            Dim Sqla13x As String
+            'Dim totalcorteventa As String
             conexionMysql.Open()
             'Sql = "select sum(total), fecha from venta where fecha='" & fecha & "';"
-            Sqla15 = "select sum(total)as suma from venta where fecha between '" & fechainicial & "' and '" & fechafinal & "' and idtipo_pago=4;"
+            'Sqla13x = "select sum(anticipo)as suma from servicios_Ventas where fecha between '" & fechainicial & "' and '" & fechafinal & "' and tipo_venta=2"
+            Sqla13x = "select sum(anticipo)as suma from servicios_Ventas where fecha between '" & fechainicial & "' and '" & fechafinal & "' and tipo_venta=4;"
+
             'Sqla1 = "select sum(total)as suma, sum(cantidad)as cantidad  from venta where idventa between '" & min & "' and '" & max & "';"
-            Dim cmda15 As New MySqlCommand(Sqla15, conexionMysql)
-            reader = cmda15.ExecuteReader()
+            Dim cmda13x As New MySqlCommand(Sqla13x, conexionMysql)
+            reader = cmda13x.ExecuteReader()
             reader.Read()
             'Try
             txtventavales.Text = reader.GetString(0).ToString
             'txttotalproductos.Text = reader.GetString(1).ToString
         Catch ex As Exception
             cerrarconexion()
-            txtventavales.Text = 0
+            ' trans2 = 0
         End Try
+
+
         '-------------------------------------------------------------------
         'SUMA DE LOS ANTICIPOS DADOS POR LOS SERVICIOS
         '---------------------------------------------------------------------------
@@ -1740,6 +1828,10 @@ Public Class FRcerrarcaja
     End Sub
 
     Private Sub GroupBox8_Enter(sender As Object, e As EventArgs) Handles GroupBox8.Enter
+
+    End Sub
+
+    Private Sub FlowLayoutPanel3_Paint(sender As Object, e As PaintEventArgs) Handles FlowLayoutPanel3.Paint
 
     End Sub
 End Class

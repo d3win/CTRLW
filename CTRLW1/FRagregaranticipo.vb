@@ -1,7 +1,7 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class FRagregaranticipo
     Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
-
+        cerrarconexion()
         Dim estadocaja As Integer
 
 
@@ -70,6 +70,37 @@ Public Class FRagregaranticipo
                 año = Date.Now.Year
                 fecha = año & "-" & mes & "-" & dia
                 cerrarconexion()
+
+                Dim tipopago As Integer
+
+
+
+                '---------------------------------------------
+                Try
+
+                    '---------------------------------
+                    '--------OBTENEMOS EL ID DEL TIPO DE PAGO DE LA VENTA
+                    conexionMysql.Open()
+                    Dim Sql322 As String
+                    'consultamos el id del cliente para obtener un registro de quien es al que se le esta vendiendo
+                    Sql322 = "SELECT idtipo_pago from tipo_pago where tipo='" & cbformadepagoservicios.Text & "';"
+                    Dim cmd322 As New MySqlCommand(Sql322, conexionMysql)
+                    reader = cmd322.ExecuteReader()
+                    reader.Read()
+                    tipopago = reader.GetString(0).ToString()
+                    '-------------------------------------------------
+                    '----------datos que se van al reporte
+
+                    conexionMysql.Close()
+
+
+                Catch ex As Exception
+                    cerrarconexion()
+                End Try
+                '----------------------------------------------
+
+
+
                 conexionMysql.Open()
 
                 'Dim fechainicial As String
@@ -78,13 +109,16 @@ Public Class FRagregaranticipo
 
 
 
+
+
+
                 Dim Sql2X As String
-                Sql2X = "insert into servicios_ventas (idventa,fecha, hora, idcliente,anticipo,total,resto) values('" & frmindex.stxtfoliobusquedaventa.Text & "', '" & fecha & "', '" & hora & "','" & frmindex.indexidusuario & "'," & txtcantidad.Text & "," & total & "," & resto & " )"
+                Sql2X = "insert into servicios_ventas (idventa,fecha, hora, idcliente,anticipo,total,resto,tipo_venta) values('" & frmindex.stxtfoliobusquedaventa.Text & "', '" & fecha & "', '" & hora & "','" & frmindex.indexidusuario & "'," & txtcantidad.Text & "," & total & "," & resto & ",'" & tipopago & "' )"
                 Dim cmd2X As New MySqlCommand(Sql2X, conexionMysql)
                 cmd2X.ExecuteNonQuery()
                 conexionMysql.Close()
 
-
+                cerrarconexion()
                 '--------------------------------------------------
 
                 conexionMysql.Open()
@@ -104,7 +138,7 @@ Public Class FRagregaranticipo
 
                 ABRIRCAJATICKET()
 
-
+                cerrarconexion()
                 frmindex.picturepagado.Visible = False
 
                 frmindex.stxtresto.Text = resto
@@ -117,6 +151,59 @@ Public Class FRagregaranticipo
                 If total = anticipo Then
                     MsgBox("El servicio ha sido pagado completamente", MsgBoxStyle.Information, "CTRL+y")
                     frmindex.picturepagado.Visible = True
+
+
+                    'mandar mensaje de que si desea hacer la entrega del pedido al cliente 
+                    'para actualizar el estatus
+
+                    Dim estado_folio_Actual As Integer
+                    Try
+
+                        conexionMysql.Open()
+                        Dim Sql1 As String
+                        Sql1 = "select estado_folio from procesos_diseño where id_folio_servicio='" & frmindex.stxtfoliobusquedaventa.Text & "';"
+                        Dim cmd1 As New MySqlCommand(Sql1, conexionMysql)
+                        reader = cmd1.ExecuteReader()
+                        reader.Read()
+                        estado_folio_Actual = reader.GetString(0).ToString()
+                        conexionMysql.Close()
+
+
+                    Catch ex As Exception
+
+                    End Try
+
+                    If estado_folio_Actual <= 6 Then
+                        MsgBox("Folio aun se encuentra en proceso, no se puede hacer la entrega", MsgBoxStyle.Exclamation, "ctrl+y")
+                        cerrarconexion()
+                    Else
+
+
+
+
+                        Dim respuesta As String
+                        respuesta = MsgBox("¿Se hace la entrega del Servicio al cliente?", MsgBoxStyle.YesNo & MsgBoxStyle.Information, "ctrl+y")
+
+                        If respuesta = vbYes Then
+                            'en caso de que diga que si se actualizar el estatus
+
+
+
+                            cerrarconexion()
+                            conexionMysql.Open()
+                            Dim Sqld As String
+                            Sqld = "UPDATE procesos_diseño SET estado_folio = '7' WHERE id_folio_servicio='" & frmindex.stxtfoliobusquedaventa.Text & "';"
+                            Dim cmdd As New MySqlCommand(Sqld, conexionMysql)
+                            cmdd.ExecuteNonQuery()
+                            conexionMysql.Close()
+                            MsgBox("Información Actualizada, Servicio Entregado a cliente", MsgBoxStyle.Information, "CTRL+y")
+
+                            cerrarconexion()
+
+                        End If
+
+                    End If
+
 
                 End If
 
@@ -234,7 +321,7 @@ Public Class FRagregaranticipo
     End Sub
     Private Sub FRagregaranticipo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-
+        cbformadepagoservicios.SelectedIndex = 0
 
     End Sub
 

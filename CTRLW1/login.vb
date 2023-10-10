@@ -414,20 +414,21 @@ Public Class login
     Function obtenertipo_usuario()
         cerrarconexion()
         conexionMysql.Open()
-        Dim tipo_usuario As String
+        Dim tipo_usuario, rol_usuario As String
         Try
             Dim Sql As String
-            Sql = "select tipo_usuario.tipo from tipo_usuario, usuario where usuario.usuario='" & txtusuario.Text & "' and usuario.tipo_usuario=tipo_usuario.tipo_usuario;"
+            Sql = "select tipo_usuario.tipo, usuario.rol from tipo_usuario, usuario where usuario.usuario='" & txtusuario.Text & "' and usuario.tipo_usuario=tipo_usuario.tipo_usuario;"
             Dim cmd As New MySqlCommand(Sql, conexionMysql)
             reader = cmd.ExecuteReader()
             reader.Read()
             tipo_usuario = reader.GetString(0).ToString
+            rol_usuario = reader.GetString(1).ToString
         Catch ex As Exception
             tipo_usuario = "NO DEFINIDO"
         End Try
         'MsgBox("tu nombre es:" + nombre)
         'pass.Text = nombre
-        frmindex.lbusuario.Text = txtusuario.Text & "/" & tipo_usuario
+        frmindex.lbusuario.Text = txtusuario.Text & "/" & tipo_usuario & "/" & rol_usuario
 
         frmindex.usuarioactual = txtusuario.Text
         conexionMysql.Close()

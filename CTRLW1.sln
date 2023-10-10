@@ -9,6 +9,8 @@ Project("{E729F059-12D4-455F-A2A4-FDA8DD25E08A}") = "My Project Name-1", "..\..\
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Ctrl+Disink", "Ctrl+Disink\Ctrl+Disink.vdproj", "{3D1B9AB0-5374-4E1E-97D6-D533AE2F0695}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Ctrl+Disin", "Ctrl+Disin\Ctrl+Disin.vdproj", "{89754D4C-7CF1-4DC8-B0C9-478F16B5E83F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -30,6 +32,9 @@ Global
 		{3D1B9AB0-5374-4E1E-97D6-D533AE2F0695}.All|Any CPU.ActiveCfg = Debug
 		{3D1B9AB0-5374-4E1E-97D6-D533AE2F0695}.Debug|Any CPU.ActiveCfg = Debug
 		{3D1B9AB0-5374-4E1E-97D6-D533AE2F0695}.Release|Any CPU.ActiveCfg = Release
+		{89754D4C-7CF1-4DC8-B0C9-478F16B5E83F}.All|Any CPU.ActiveCfg = Debug
+		{89754D4C-7CF1-4DC8-B0C9-478F16B5E83F}.Debug|Any CPU.ActiveCfg = Debug
+		{89754D4C-7CF1-4DC8-B0C9-478F16B5E83F}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
