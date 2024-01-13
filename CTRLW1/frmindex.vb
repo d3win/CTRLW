@@ -7584,6 +7584,102 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
                     cmd.ExecuteNonQuery()
                     conexionMysql.Close()
 
+
+                    cerrarconexion()
+
+
+                    '----------------- se actualiza la información de los permisos....
+
+                    Dim p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13 As Integer
+                    If uchclientes.Checked = True Then
+
+                        p1 = 1
+                    Else
+                        p1 = 0
+                    End If
+
+
+                    If uchcompras.Checked = True Then
+
+                        p2 = 1
+                    Else
+                        p2 = 0
+                    End If
+
+                    If uchproductos.Checked = True Then
+
+                        p3 = 1
+                    Else
+                        p3 = 0
+                    End If
+                    If uchcorte.Checked = True Then
+
+                        p4 = 1
+                    Else
+                        p4 = 0
+                    End If
+
+                    If uchusuarios.Checked = True Then
+
+                        p5 = 1
+                    Else
+                        p5 = 0
+                    End If
+                    If uchproveedores.Checked = True Then
+
+                        p6 = 1
+                    Else
+                        p6 = 0
+                    End If
+                    If uchreportes.Checked = True Then
+
+                        p7 = 1
+                    Else
+                        p7 = 0
+                    End If
+                    If uchconfiguracion.Checked = True Then
+
+                        p8 = 1
+                    Else
+                        p8 = 0
+                    End If
+
+                    If uchagenda.Checked = True Then
+
+                        p9 = 1
+                    Else
+                        p9 = 0
+                    End If
+                    If uchcontrol.Checked = True Then
+
+                        p10 = 1
+                    Else
+                        p10 = 0
+                    End If
+                    If uchventas.Checked = True Then
+
+                        p11 = 1
+                    Else
+                        p11 = 0
+                    End If
+                    If uchventasrapidas.Checked = True Then
+
+                        p12 = 1
+                    Else
+                        p12 = 0
+                    End If
+
+
+                    ' Try
+
+                    conexionMysql.Open()
+                    Dim Sqlp1 As String
+                    Sqlp1 = "update usuario set pagenda='" & p9 & "',pcontrol='" & p10 & "',pventasrapidas='" & p12 & "',pventas='" & p11 & "' , pclientes='" & p1 & "',  pcompras ='" & p2 & "', pproductos='" & p3 & "', pcorte='" & p4 & "', pusuarios='" & p5 & "',pproveedores='" & p6 & "', preportes='" & p7 & "', pconfiguracion='" & p8 & "'       where usuario='" & usuarioexiste & "';"
+                    Dim cmdp1 As New MySqlCommand(Sqlp1, conexionMysql)
+                    cmdp1.ExecuteNonQuery()
+                    conexionMysql.Close()
+
+
                     MsgBox("Registro actualizado", MsgBoxStyle.Information, "Sistema")
                     ullenadogrilla()
                     ulimpiarusuario()
@@ -7642,7 +7738,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
     Private Sub ugrilla_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles ugrilla.CellContentClick
         Dim Variable As Integer = ugrilla.Item(0, ugrilla.CurrentRow.Index).Value
         'MsgBox(Variable)
-        Dim utipo_usuario, c1, c2, c3, c4, c5, c6, c7, c8 As Integer
+        Dim utipo_usuario, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12 As Integer
 
         'cerrar conexion en caso de que este abierta
         cerrarconexion()
@@ -7662,6 +7758,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         utxtcorreo.Text = reader.GetString(6).ToString
         utxtdireccion.Text = reader.GetString(7).ToString
         'variable para obtener el tipo de usuario
+        cbrol.Text = reader.GetString(17).ToString
+        MsgBox(reader.GetString(17).ToString)
         utipo_usuario = reader.GetString(8).ToString
         c1 = reader.GetString(9).ToString
         c2 = reader.GetString(10).ToString
@@ -7671,6 +7769,13 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         c6 = reader.GetString(14).ToString
         c7 = reader.GetString(15).ToString
         c8 = reader.GetString(16).ToString
+
+
+        c9 = reader.GetString(18).ToString
+        c10 = reader.GetString(19).ToString
+        c11 = reader.GetString(20).ToString
+        c12 = reader.GetString(21).ToString
+
 
         If c1 = 1 Then
             uchclientes.Checked = True
@@ -7736,6 +7841,40 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
         End If
 
+
+
+        If c9 = 1 Then
+            uchagenda.Checked = True
+        Else
+            uchagenda.Checked = False
+
+        End If
+
+
+        If c10 = 1 Then
+            uchcontrol.Checked = True
+        Else
+            uchcontrol.Checked = False
+
+        End If
+
+
+        If c11 = 1 Then
+            uchventasrapidas.Checked = True
+        Else
+            uchventasrapidas.Checked = False
+
+        End If
+        If c12 = 1 Then
+            uchventas.Checked = True
+        Else
+            uchventas.Checked = False
+
+        End If
+
+
+
+        '------------------------------------------------
 
 
 
