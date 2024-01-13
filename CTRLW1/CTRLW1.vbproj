@@ -237,6 +237,12 @@
     <Compile Include="FRinventario.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frlonavinil.Designer.vb">
+      <DependentUpon>frlonavinil.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frlonavinil.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FrmAceptarTrans.Designer.vb">
       <DependentUpon>FrmAceptarTrans.vb</DependentUpon>
     </Compile>
@@ -584,6 +590,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FRinventario.resx">
       <DependentUpon>FRinventario.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frlonavinil.resx">
+      <DependentUpon>frlonavinil.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmAceptarTrans.resx">
       <DependentUpon>FrmAceptarTrans.vb</DependentUpon>

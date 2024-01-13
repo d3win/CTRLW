@@ -72,4 +72,9 @@
         End Try
 
     End Sub
+
+    Private Sub Button94_Click(sender As Object, e As EventArgs) Handles Button94.Click
+        Me.Close()
+
+    End Sub
 End Class

@@ -18,7 +18,7 @@ Public Class frmindex
     Public idproveedorfiltro As Integer
     Dim respuesta As String
     Dim idsumado As Integer
-    Dim existe As Boolean
+    Dim existe, folcancel As Boolean
     Public txtpagar, ventamaxima As Double
     Public fpagacon, fcambio As String
     Public indexidusuario, indexidventa As String
@@ -46,7 +46,25 @@ Public Class frmindex
     Function actualizarbd2021()
 
 
-         Try
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "        ALTER TABLE `dwin`.`venta` 
+ADD COLUMN `status` VARCHAR(5) NULL AFTER `observacion`;"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
+
+
+
+
+
+
+        Try
             conexionMysql.Open()
             Dim Sql As String
             Sql = " ALTER TABLE `dwin`.`servicios_ventas` 
@@ -7584,6 +7602,102 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
                     cmd.ExecuteNonQuery()
                     conexionMysql.Close()
 
+
+                    cerrarconexion()
+
+
+                    '----------------- se actualiza la información de los permisos....
+
+                    Dim p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13 As Integer
+                    If uchclientes.Checked = True Then
+
+                        p1 = 1
+                    Else
+                        p1 = 0
+                    End If
+
+
+                    If uchcompras.Checked = True Then
+
+                        p2 = 1
+                    Else
+                        p2 = 0
+                    End If
+
+                    If uchproductos.Checked = True Then
+
+                        p3 = 1
+                    Else
+                        p3 = 0
+                    End If
+                    If uchcorte.Checked = True Then
+
+                        p4 = 1
+                    Else
+                        p4 = 0
+                    End If
+
+                    If uchusuarios.Checked = True Then
+
+                        p5 = 1
+                    Else
+                        p5 = 0
+                    End If
+                    If uchproveedores.Checked = True Then
+
+                        p6 = 1
+                    Else
+                        p6 = 0
+                    End If
+                    If uchreportes.Checked = True Then
+
+                        p7 = 1
+                    Else
+                        p7 = 0
+                    End If
+                    If uchconfiguracion.Checked = True Then
+
+                        p8 = 1
+                    Else
+                        p8 = 0
+                    End If
+
+                    If uchagenda.Checked = True Then
+
+                        p9 = 1
+                    Else
+                        p9 = 0
+                    End If
+                    If uchcontrol.Checked = True Then
+
+                        p10 = 1
+                    Else
+                        p10 = 0
+                    End If
+                    If uchventas.Checked = True Then
+
+                        p11 = 1
+                    Else
+                        p11 = 0
+                    End If
+                    If uchventasrapidas.Checked = True Then
+
+                        p12 = 1
+                    Else
+                        p12 = 0
+                    End If
+
+
+                    ' Try
+
+                    conexionMysql.Open()
+                    Dim Sqlp1 As String
+                    Sqlp1 = "update usuario set pagenda='" & p9 & "',pcontrol='" & p10 & "',pventasrapidas='" & p12 & "',pventas='" & p11 & "' , pclientes='" & p1 & "',  pcompras ='" & p2 & "', pproductos='" & p3 & "', pcorte='" & p4 & "', pusuarios='" & p5 & "',pproveedores='" & p6 & "', preportes='" & p7 & "', pconfiguracion='" & p8 & "'       where usuario='" & usuarioexiste & "';"
+                    Dim cmdp1 As New MySqlCommand(Sqlp1, conexionMysql)
+                    cmdp1.ExecuteNonQuery()
+                    conexionMysql.Close()
+
+
                     MsgBox("Registro actualizado", MsgBoxStyle.Information, "Sistema")
                     ullenadogrilla()
                     ulimpiarusuario()
@@ -7642,7 +7756,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
     Private Sub ugrilla_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles ugrilla.CellContentClick
         Dim Variable As Integer = ugrilla.Item(0, ugrilla.CurrentRow.Index).Value
         'MsgBox(Variable)
-        Dim utipo_usuario, c1, c2, c3, c4, c5, c6, c7, c8 As Integer
+        Dim utipo_usuario, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12 As Integer
 
         'cerrar conexion en caso de que este abierta
         cerrarconexion()
@@ -7662,6 +7776,8 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         utxtcorreo.Text = reader.GetString(6).ToString
         utxtdireccion.Text = reader.GetString(7).ToString
         'variable para obtener el tipo de usuario
+        cbrol.Text = reader.GetString(17).ToString
+        MsgBox(reader.GetString(17).ToString)
         utipo_usuario = reader.GetString(8).ToString
         c1 = reader.GetString(9).ToString
         c2 = reader.GetString(10).ToString
@@ -7671,6 +7787,13 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         c6 = reader.GetString(14).ToString
         c7 = reader.GetString(15).ToString
         c8 = reader.GetString(16).ToString
+
+
+        c9 = reader.GetString(18).ToString
+        c10 = reader.GetString(19).ToString
+        c11 = reader.GetString(20).ToString
+        c12 = reader.GetString(21).ToString
+
 
         If c1 = 1 Then
             uchclientes.Checked = True
@@ -7736,6 +7859,40 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
         End If
 
+
+
+        If c9 = 1 Then
+            uchagenda.Checked = True
+        Else
+            uchagenda.Checked = False
+
+        End If
+
+
+        If c10 = 1 Then
+            uchcontrol.Checked = True
+        Else
+            uchcontrol.Checked = False
+
+        End If
+
+
+        If c11 = 1 Then
+            uchventasrapidas.Checked = True
+        Else
+            uchventasrapidas.Checked = False
+
+        End If
+        If c12 = 1 Then
+            uchventas.Checked = True
+        Else
+            uchventas.Checked = False
+
+        End If
+
+
+
+        '------------------------------------------------
 
 
 
@@ -13098,6 +13255,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         'Else
 
         picturepagado.Visible = False
+        picturecancelado.Visible = False
 
         TabControl1.SelectedIndex = 10
         Button1.BackColor = Color.FromArgb(47, 56, 72)
@@ -13139,6 +13297,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
     Function buscarfolioservicio()
         Dim tipoventa, idventaservicioextra As Integer
+        Dim status As String
         Try
             cerrarconexion()
             conexionMysql.Open()
@@ -13149,6 +13308,12 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             reader.Read()
             idventaservicioextra = reader.GetString(0).ToString()
             tipoventa = reader.GetString(10).ToString()
+            Try
+                status = reader.GetString(18).ToString()
+
+            Catch ex As Exception
+                status = "a"
+            End Try
             conexionMysql.Close()
 
             If tipoventa = 1 Or tipoventa = 3 Then
@@ -13159,8 +13324,21 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
                 sgrilla2.Visible = False
                 'sgrilla.Visible = False
                 ' nuevoservicio()
+                btncancelarfolio.Enabled = False
+                folcancel = False
+
+            ElseIf status = "c" Then
+
+                picturecancelado.Visible = True
+
+
 
             ElseIf tipoventa = 2 Then
+
+
+
+                picturecancelado.Visible = False
+
                 'en caso de que el tipo de venta sea de 2 entonces significa que si es un servicio y lo buscamos y cargamos
                 '----cargamos el folio a la ventana de servicios de la ventana de servicios
                 lbmensaje.Visible = False
@@ -13177,6 +13355,14 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
 
                 'bloqueamos la caja de txtanticipo
                 stxtanticipo.Enabled = False
+                btncancelarfolio.Enabled = True
+
+                'declaramos una variable booleana para saber si es posible cancelar o no.
+
+                folcancel = True
+
+
+
 
 
 
@@ -13188,6 +13374,13 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             sborrartodo()
             sgrilla2.DataSource = ""
             cerrarconexion()
+            btncancelarfolio.Enabled = False
+            folcancel = False
+
+
+
+
+
         End Try
 
     End Function
@@ -13771,9 +13964,14 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
     Private Sub Button71_Click(sender As Object, e As EventArgs) Handles Button71.Click
         Try
 
+            'deshabilitamoas el boton de cancelar folio
+            btncancelarfolio.Enabled = False
+
             buscarfolioservicio()
             sgrilla2.Visible = True
             sgrilla.Visible = False
+
+
         Catch ex As Exception
 
         End Try
@@ -15061,6 +15259,7 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
         stxtpagarsin.Text = ""
         stxtfoliobusquedaventa.Text = ""
         picturepagado.Visible = False
+        picturecancelado.Visible = False
 
 
 
@@ -21762,7 +21961,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             res = MsgBox("¿Estas seguro que desear resetear el Folio?, se volvera a asignar desde diseñador", MsgBoxStyle.YesNo, "Ctrl+y")
 
             If res = vbYes Then
-                MsgBox("si")
+                ' MsgBox("si")
                 cerrarconexion()
                 ' Try
                 conexionMysql.Open()
@@ -21789,6 +21988,66 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
 
 
+    End Sub
+
+    Private Sub Button86_Click(sender As Object, e As EventArgs) Handles Button86.Click
+
+    End Sub
+
+    Private Sub picturecancelado_Click(sender As Object, e As EventArgs) Handles picturecancelado.Click
+        picturecancelado.Visible = False
+    End Sub
+
+    Private Sub btncancelarfolio_Click(sender As Object, e As EventArgs) Handles btncancelarfolio.Click
+        ' stxtfoliobusquedaventa
+
+        Dim res As String
+
+        If folcancel = True Then
+            res = MsgBox("¿Estas seguro de cancelar el folio?", MsgBoxStyle.YesNo & MsgBoxStyle.Information, "Ctrl+y")
+
+            If res = vbOK Then
+                conexionMysql.Open()
+
+                'Try
+                Dim Sql36 As String
+                Sql36 = "update venta set status='c' where idventa=" & stxtfoliobusquedaventa.Text & ";"
+                Dim cmd36 As New MySqlCommand(Sql36, conexionMysql)
+                cmd36.ExecuteNonQuery()
+                conexionMysql.Close()
+                MsgBox("folio cancelado", MsgBoxStyle.Information, "CTRL+y")
+
+
+                picturecancelado.Visible = True
+
+                ' Catch ex As Exception
+                cerrarconexion()
+                'End Try
+
+
+            End If
+
+
+        Else
+
+
+
+        End If
+
+
+
+        'conexionMysql.Open()
+        'Dim sql2 As String
+        'sql2 = "select * from cliente where idcliente =" & idCliente & ";"
+        'Dim cmd2 As New MySqlCommand(sql2, conexionMysql)
+        'reader = cmd2.ExecuteReader
+        'reader.Read()
+        'Try
+
+        '    ctxtidcliente.Text = reader.GetString(0).ToString()
+        'Catch ex As Exception
+
+        'End Try
     End Sub
 
     Private Sub ccgrilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles ccgrilla.CellDoubleClick

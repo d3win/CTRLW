@@ -1,11 +1,11 @@
 ﻿Public Class frmCOTIZARLONA
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
         Dim formulario As New frmnuevovinil
         'FRagregaranticipo.ShowDialog()
         formulario.ShowDialog()
     End Sub
 
-    Private Sub Vtxtnombreproducto_TextChanged(sender As Object, e As EventArgs) Handles vtxtnombreproducto.TextChanged
+    Private Sub Vtxtnombreproducto_TextChanged(sender As Object, e As EventArgs)
         'grilla2.Visible = False
 
         'lblistaproductos.Visible = True
@@ -60,5 +60,9 @@
         '        cerrarconexion()
         '    End Try
         'End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+
     End Sub
 End Class

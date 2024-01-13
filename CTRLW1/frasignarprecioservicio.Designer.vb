@@ -27,18 +27,20 @@ Partial Class frasignarprecioservicio
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button17 = New System.Windows.Forms.Button()
         Me.txtprecioservicio = New System.Windows.Forms.TextBox()
+        Me.Button94 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.Color.White
+        Me.GroupBox1.Controls.Add(Me.Button94)
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.Button17)
         Me.GroupBox1.Controls.Add(Me.txtprecioservicio)
-        Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
+        Me.GroupBox1.Location = New System.Drawing.Point(7, 12)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(380, 226)
+        Me.GroupBox1.Size = New System.Drawing.Size(380, 290)
         Me.GroupBox1.TabIndex = 2
         Me.GroupBox1.TabStop = False
         '
@@ -50,7 +52,7 @@ Partial Class frasignarprecioservicio
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label1.Location = New System.Drawing.Point(22, 16)
+        Me.Label1.Location = New System.Drawing.Point(22, 23)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(328, 37)
         Me.Label1.TabIndex = 17
@@ -63,7 +65,7 @@ Partial Class frasignarprecioservicio
         Me.Button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button17.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button17.ForeColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.Button17.Location = New System.Drawing.Point(14, 157)
+        Me.Button17.Location = New System.Drawing.Point(14, 164)
         Me.Button17.Name = "Button17"
         Me.Button17.Size = New System.Drawing.Size(360, 63)
         Me.Button17.TabIndex = 20
@@ -77,17 +79,32 @@ Partial Class frasignarprecioservicio
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtprecioservicio.BackColor = System.Drawing.Color.White
         Me.txtprecioservicio.Font = New System.Drawing.Font("Microsoft Sans Serif", 54.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtprecioservicio.Location = New System.Drawing.Point(29, 60)
+        Me.txtprecioservicio.Location = New System.Drawing.Point(29, 67)
         Me.txtprecioservicio.Name = "txtprecioservicio"
         Me.txtprecioservicio.Size = New System.Drawing.Size(330, 89)
         Me.txtprecioservicio.TabIndex = 18
+        '
+        'Button94
+        '
+        Me.Button94.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(104, Byte), Integer))
+        Me.Button94.FlatAppearance.BorderSize = 0
+        Me.Button94.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button94.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button94.ForeColor = System.Drawing.Color.White
+        Me.Button94.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button94.Location = New System.Drawing.Point(14, 233)
+        Me.Button94.Name = "Button94"
+        Me.Button94.Size = New System.Drawing.Size(360, 36)
+        Me.Button94.TabIndex = 109
+        Me.Button94.Text = "Cancelar"
+        Me.Button94.UseVisualStyleBackColor = False
         '
         'frasignarprecioservicio
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(185, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(403, 248)
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ClientSize = New System.Drawing.Size(399, 316)
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -104,4 +121,5 @@ Partial Class frasignarprecioservicio
     Friend WithEvents Label1 As Label
     Friend WithEvents Button17 As Button
     Friend WithEvents txtprecioservicio As TextBox
+    Friend WithEvents Button94 As Button
 End Class

@@ -29,16 +29,13 @@ Partial Class frmCOTIZARLONA
         Me.Button8 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.lblistaproductos = New System.Windows.Forms.ListBox()
         Me.vtxtcostocm = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.vtxtclaveproducto = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.vtxtcmexistentes = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.vtxtnombreproducto = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.FlowLayoutPanel3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -119,46 +116,20 @@ Partial Class frmCOTIZARLONA
         '
         'GroupBox4
         '
-        Me.GroupBox4.Controls.Add(Me.Button1)
-        Me.GroupBox4.Controls.Add(Me.lblistaproductos)
+        Me.GroupBox4.Controls.Add(Me.ComboBox1)
         Me.GroupBox4.Controls.Add(Me.vtxtcostocm)
         Me.GroupBox4.Controls.Add(Me.Label8)
         Me.GroupBox4.Controls.Add(Me.vtxtclaveproducto)
         Me.GroupBox4.Controls.Add(Me.Label7)
         Me.GroupBox4.Controls.Add(Me.vtxtcmexistentes)
         Me.GroupBox4.Controls.Add(Me.Label5)
-        Me.GroupBox4.Controls.Add(Me.vtxtnombreproducto)
-        Me.GroupBox4.Controls.Add(Me.Label6)
         Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox4.Location = New System.Drawing.Point(6, 19)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(322, 245)
+        Me.GroupBox4.Size = New System.Drawing.Size(362, 521)
         Me.GroupBox4.TabIndex = 1
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Producto"
-        '
-        'Button1
-        '
-        Me.Button1.BackColor = System.Drawing.Color.Transparent
-        Me.Button1.FlatAppearance.BorderSize = 0
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(246, 50)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(37, 34)
-        Me.Button1.TabIndex = 149
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.Button1.UseVisualStyleBackColor = False
-        '
-        'lblistaproductos
-        '
-        Me.lblistaproductos.FormattingEnabled = True
-        Me.lblistaproductos.ItemHeight = 20
-        Me.lblistaproductos.Location = New System.Drawing.Point(19, 147)
-        Me.lblistaproductos.Name = "lblistaproductos"
-        Me.lblistaproductos.Size = New System.Drawing.Size(264, 84)
-        Me.lblistaproductos.TabIndex = 165
         '
         'vtxtcostocm
         '
@@ -176,7 +147,7 @@ Partial Class frmCOTIZARLONA
         Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Label8.Location = New System.Drawing.Point(186, 157)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(85, 16)
+        Me.Label8.Size = New System.Drawing.Size(84, 16)
         Me.Label8.TabIndex = 145
         Me.Label8.Text = "Precio m ($)"
         '
@@ -184,7 +155,7 @@ Partial Class frmCOTIZARLONA
         '
         Me.vtxtclaveproducto.BackColor = System.Drawing.Color.White
         Me.vtxtclaveproducto.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.vtxtclaveproducto.Location = New System.Drawing.Point(19, 49)
+        Me.vtxtclaveproducto.Location = New System.Drawing.Point(19, 352)
         Me.vtxtclaveproducto.Name = "vtxtclaveproducto"
         Me.vtxtclaveproducto.Size = New System.Drawing.Size(221, 35)
         Me.vtxtclaveproducto.TabIndex = 144
@@ -196,7 +167,7 @@ Partial Class frmCOTIZARLONA
         Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Label7.Location = New System.Drawing.Point(16, 30)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(127, 16)
+        Me.Label7.Size = New System.Drawing.Size(126, 16)
         Me.Label7.TabIndex = 143
         Me.Label7.Text = "Clave del producto"
         '
@@ -216,29 +187,18 @@ Partial Class frmCOTIZARLONA
         Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Label5.Location = New System.Drawing.Point(16, 158)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(169, 16)
+        Me.Label5.Size = New System.Drawing.Size(168, 16)
         Me.Label5.TabIndex = 141
         Me.Label5.Text = "Cantidad de m2 Existente"
         '
-        'vtxtnombreproducto
+        'ComboBox1
         '
-        Me.vtxtnombreproducto.BackColor = System.Drawing.Color.White
-        Me.vtxtnombreproducto.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.vtxtnombreproducto.Location = New System.Drawing.Point(19, 113)
-        Me.vtxtnombreproducto.Name = "vtxtnombreproducto"
-        Me.vtxtnombreproducto.Size = New System.Drawing.Size(264, 35)
-        Me.vtxtnombreproducto.TabIndex = 0
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Arial", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Label6.Location = New System.Drawing.Point(16, 94)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(140, 16)
-        Me.Label6.TabIndex = 139
-        Me.Label6.Text = "Nombre del producto"
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Items.AddRange(New Object() {"Lona", "Vinil"})
+        Me.ComboBox1.Location = New System.Drawing.Point(19, 54)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(221, 28)
+        Me.ComboBox1.TabIndex = 150
         '
         'frmCOTIZARLONA
         '
@@ -266,14 +226,11 @@ Partial Class frmCOTIZARLONA
     Friend WithEvents Button8 As Button
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents GroupBox4 As GroupBox
-    Friend WithEvents Button1 As Button
-    Friend WithEvents lblistaproductos As ListBox
     Friend WithEvents vtxtcostocm As TextBox
     Friend WithEvents Label8 As Label
     Friend WithEvents vtxtclaveproducto As TextBox
     Friend WithEvents Label7 As Label
     Friend WithEvents vtxtcmexistentes As TextBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents vtxtnombreproducto As TextBox
-    Friend WithEvents Label6 As Label
+    Friend WithEvents ComboBox1 As ComboBox
 End Class
