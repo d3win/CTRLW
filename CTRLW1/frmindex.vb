@@ -5,6 +5,8 @@ Imports System.IO.StreamWriter
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Net.Configuration
+Imports System.Data.SqlTypes
+Imports Microsoft.ReportingServices.ReportProcessing.OnDemandReportObjectModel
 
 Public Class frmindex
     Dim p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12 As Integer
@@ -44,6 +46,25 @@ Public Class frmindex
 
     End Sub
     Function actualizarbd2021()
+
+        Try
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "CREATE TABLE `dwin`.`variableproducto` (
+  `idvaloreproducto` INT NOT NULL AUTO_INCREMENT,
+  `idproducto` VARCHAR(45) NULL,
+  `variable` VARCHAR(45) NULL,
+  PRIMARY KEY (`idvaloreproducto`))
+COMMENT = '	';
+"
+
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            cmd.ExecuteNonQuery()
+            conexionMysql.Close()
+        Catch
+            'MsgBox
+            cerrarconexion()
+        End Try
 
 
         Try
@@ -1745,15 +1766,10 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
             reader = cmd2.ExecuteReader()
 
             For i = 1 To cantidadproveedor
-
                 reader.Read()
-
                 cbformadepago.Items.Add(reader.GetString(1).ToString())
                 cbformadepagoservicios.Items.Add(reader.GetString(1).ToString())
             Next
-
-
-
             cbformadepago.SelectedIndex = 0
             cbformadepagoservicios.SelectedIndex = 0
 
@@ -3963,6 +3979,10 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
                 '----------------------------------------------
 
+                'cargamos los valores de variables 
+
+                cargartipovariable()
+
                 '  obtenemos los dos precios de venta
                 'conexionMysql.Open()
                 'Dim Sql2 As String
@@ -4180,6 +4200,9 @@ CHANGE COLUMN `fecha` `fecha` DATETIME NULL DEFAULT NULL ;"
 
 
     End Function
+
+
+
     Function buscarid()
         If txtclave.Text = "" Or txtclave.Text = "0" Then
         Else
@@ -13330,7 +13353,20 @@ INSERT INTO `tipo_pago` (`idtipo_pago`, `tipo`) VALUES ('3', 'TRANSFERENCIA');
             ElseIf status = "c" Then
 
                 picturecancelado.Visible = True
+                cargarfolioventa()
+                'agregargrillaventa()
+                sgrilla2.Visible = True
+                stxtclave.Text = ""
+                'ASIGNO EL FOLIO A SLBFOLIO PARA QUE LE INDIQUEMOS QUE ESTAMOS TRABAJANDO CON LA BUSQUEDA DE UN FOLIO
 
+
+
+                llenadogrillaventafolio()
+
+
+                'bloqueamos la caja de txtanticipo
+                stxtanticipo.Enabled = False
+                btncancelarfolio.Enabled = True
 
 
             ElseIf tipoventa = 2 Then
@@ -19731,78 +19767,78 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
             '---------------------------------------------------------------------------------
             ccbasignacion23.Items.Clear()
-                ccbasignacion2.Items.Clear()
-                lbpuesto.Text = "Usuarios"
-                Try
+            ccbasignacion2.Items.Clear()
+            lbpuesto.Text = "Usuarios"
+            Try
 
 
-                    Dim cantidadDiseñador, i As Integer
-                    cerrarconexion()
+                Dim cantidadDiseñador, i As Integer
+                cerrarconexion()
 
-                    conexionMysql.Open()
-                    Dim Sqlx As String
-                    Sqlx = "select count(*) from usuario"
-                    Dim cmdx As New MySqlCommand(Sqlx, conexionMysql)
-                    reader = cmdx.ExecuteReader()
+                conexionMysql.Open()
+                Dim Sqlx As String
+                Sqlx = "select count(*) from usuario"
+                Dim cmdx As New MySqlCommand(Sqlx, conexionMysql)
+                reader = cmdx.ExecuteReader()
+                reader.Read()
+                cantidadDiseñador = reader.GetString(0).ToString()
+
+                conexionMysql.Close()
+
+
+                cerrarconexion()
+
+                conexionMysql.Open()
+                Dim Sql2x As String
+                Sql2x = "select usuario from usuario "
+                Dim cmd2x As New MySqlCommand(Sql2x, conexionMysql)
+                reader = cmd2x.ExecuteReader()
+
+                For i = 1 To cantidadDiseñador
+
                     reader.Read()
-                    cantidadDiseñador = reader.GetString(0).ToString()
-
-                    conexionMysql.Close()
-
-
-                    cerrarconexion()
-
-                    conexionMysql.Open()
-                    Dim Sql2x As String
-                    Sql2x = "select usuario from usuario "
-                    Dim cmd2x As New MySqlCommand(Sql2x, conexionMysql)
-                    reader = cmd2x.ExecuteReader()
-
-                    For i = 1 To cantidadDiseñador
-
-                        reader.Read()
 
                     ccbasignacion2.Items.Add(reader.GetString(0).ToString())
                     ccbasignacion23.Items.Add(reader.GetString(0).ToString())
-                        'ccbasignacionConsulta.Items.Add(reader.GetString(0).ToString())
+                    'ccbasignacionConsulta.Items.Add(reader.GetString(0).ToString())
 
-                    Next
+                Next
 
-                    reader.Close()
+                reader.Close()
 
-                    conexionMysql.Close()
+                conexionMysql.Close()
 
-                    '---------------------------------------------------------------------------------
-                Catch ex As Exception
+                '---------------------------------------------------------------------------------
+            Catch ex As Exception
 
-                End Try
-
-
+            End Try
 
 
-                actualizar_grilla_diseñador()
 
 
-            ElseIf rol_tipo = "REVISION" Then
-
-                ' MsgBox("ES REVISION")
-                'SOLO CARGAMOS LOS DATOS
+            actualizar_grilla_diseñador()
 
 
-                GroupBox45.Enabled = False
-                GroupBox45.Visible = False
-                GroupBox42.Enabled = False
-                GroupBox42.Visible = False
-                cgrillaplanadministrador.Visible = False
-                'el boton es para entregar o preparar para entregar
-                Button103.Visible = False
+        ElseIf rol_tipo = "REVISION" Then
+
+            ' MsgBox("ES REVISION")
+            'SOLO CARGAMOS LOS DATOS
+
+
+            GroupBox45.Enabled = False
+            GroupBox45.Visible = False
+            GroupBox42.Enabled = False
+            GroupBox42.Visible = False
+            cgrillaplanadministrador.Visible = False
+            'el boton es para entregar o preparar para entregar
+            Button103.Visible = False
             ' Button106.Visible = True
 
 
             grillaplan.Visible = True
-                grillaplanproceso.Visible = True
-                grillaplanfin.Visible = True
-                GroupBox43.Enabled = True
+            grillaplanproceso.Visible = True
+            grillaplanfin.Visible = True
+            GroupBox43.Enabled = True
             GroupBox43.Visible = True
             ' ccbasignacion23.Enabled = False
 
@@ -19810,9 +19846,9 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
 
             actualizar_grilla_diseñador()
-            ElseIf rol_tipo = "ADMINISTRADOR" Then
+        ElseIf rol_tipo = "ADMINISTRADOR" Then
 
-                GroupBox45.Enabled = True
+            GroupBox45.Enabled = True
             GroupBox45.Enabled = True
             GroupBox42.Enabled = True
             GroupBox42.Visible = True
@@ -20859,70 +20895,70 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             '---------------------------------
             'MsgBox("aqui voy")
             Dim i, comprobacion_insercion As Integer
-                    'comprobar_insercion: verifica si hay un valor insert, en caso de que lo halla se hace la actualizacion del estatus actual del folio
-                    comprobacion_insercion = 0
-                    Dim usuariolista As String
-                    Dim cantidad_activados As Integer
-                    cantidad_activados = 0
-                    For i = 0 To ccbasignacion23.Items.Count - 1
+            'comprobar_insercion: verifica si hay un valor insert, en caso de que lo halla se hace la actualizacion del estatus actual del folio
+            comprobacion_insercion = 0
+            Dim usuariolista As String
+            Dim cantidad_activados As Integer
+            cantidad_activados = 0
+            For i = 0 To ccbasignacion23.Items.Count - 1
 
 
-                        ' MsgBox(i)
-                        If (ccbasignacion23.GetItemChecked(i)) Then
-                            ' MessageBox.Show(ccbasignacion23.GetItemText(i))
-                            usuariolista = (ccbasignacion23.Items(i))
-                            '  MsgBox(ccbasignacion23.Items(i))
+                ' MsgBox(i)
+                If (ccbasignacion23.GetItemChecked(i)) Then
+                    ' MessageBox.Show(ccbasignacion23.GetItemText(i))
+                    usuariolista = (ccbasignacion23.Items(i))
+                    '  MsgBox(ccbasignacion23.Items(i))
 
-                            Dim rolactuallista As String
+                    Dim rolactuallista As String
 
-                            cerrarconexion()
-                            'OBTENER EL ESTADO DEL FOLIO PARA SABER QUE HACER
+                    cerrarconexion()
+                    'OBTENER EL ESTADO DEL FOLIO PARA SABER QUE HACER
+                    conexionMysql.Open()
+                    Dim Sql267 As String
+                    Sql267 = "select rol from usuario where usuario ='" & usuariolista & "';"
+                    Dim cmd267 As New MySqlCommand(Sql267, conexionMysql)
+                    reader = cmd267.ExecuteReader()
+                    reader.Read()
+                    rolactuallista = reader.GetString(0).ToString()
+
+                    'usuario lista: corresponde al usuario que se va eligiendo de la lista
+                    'usuario actual: el usuario que inicio en el sistema
+
+
+                    cerrarconexion()
+
+
+                    If usuariolista = usuarioactual Then
+                        MsgBox("intentas asignarte nuevamente el folio, esto no será permitido", MsgBoxStyle.Exclamation, "Ctrl+y")
+                    Else
+                        ' if ccbasignacion23.
+
+
+                        If rolactual = rolactuallista Then
+                            MsgBox("intentas asignar nuevamente el mismo rol, esto no será permitido", MsgBoxStyle.Exclamation, "Ctrl+y")
+
+                        Else
+
+
                             conexionMysql.Open()
-                            Dim Sql267 As String
-                            Sql267 = "select rol from usuario where usuario ='" & usuariolista & "';"
-                            Dim cmd267 As New MySqlCommand(Sql267, conexionMysql)
-                            reader = cmd267.ExecuteReader()
-                            reader.Read()
-                            rolactuallista = reader.GetString(0).ToString()
-
-                            'usuario lista: corresponde al usuario que se va eligiendo de la lista
-                            'usuario actual: el usuario que inicio en el sistema
-
-
-                            cerrarconexion()
-
-
-                            If usuariolista = usuarioactual Then
-                                MsgBox("intentas asignarte nuevamente el folio, esto no será permitido", MsgBoxStyle.Exclamation, "Ctrl+y")
-                            Else
-                                ' if ccbasignacion23.
-
-
-                                If rolactual = rolactuallista Then
-                                    MsgBox("intentas asignar nuevamente el mismo rol, esto no será permitido", MsgBoxStyle.Exclamation, "Ctrl+y")
-
-                                Else
-
-
-                                    conexionMysql.Open()
-                                    Dim Sqli As String
-                                    Sqli = "INSERT INTO `dwin`.`procesos_diseño` (`usuario`, `fecha_asignacion`,`id_folio_servicio`,`estado_folio`,`observacion`) VALUES ('" & usuariolista & "', '" & fecha_completa_inicio & "','" & ctxtfolio_diseñador.Text & "'," & estado_folio & ",'" & ctxtobservacion.Text & "');"
-                                    Dim cmdi As New MySqlCommand(Sqli, conexionMysql)
-                                    cmdi.ExecuteNonQuery()
-                                    conexionMysql.Close()
+                            Dim Sqli As String
+                            Sqli = "INSERT INTO `dwin`.`procesos_diseño` (`usuario`, `fecha_asignacion`,`id_folio_servicio`,`estado_folio`,`observacion`) VALUES ('" & usuariolista & "', '" & fecha_completa_inicio & "','" & ctxtfolio_diseñador.Text & "'," & estado_folio & ",'" & ctxtobservacion.Text & "');"
+                            Dim cmdi As New MySqlCommand(Sqli, conexionMysql)
+                            cmdi.ExecuteNonQuery()
+                            conexionMysql.Close()
                             ' MsgBox("folio asignado a " & lbasignacion2.Text, MsgBoxStyle.Information, "ctrl+y")
                             'limpiar_cajas_proceso()
                             ''''actualizar_grilla_diseñador()
                             comprobacion_insercion = 1
-                                    cantidad_activados = cantidad_activados + 1
+                            cantidad_activados = cantidad_activados + 1
 
-                                End If
-
-
-                            End If
                         End If
-                    Next
-                    cerrarconexion()
+
+
+                    End If
+                End If
+            Next
+            cerrarconexion()
             'codigo de inserción para saber cuantos usuarios elijio en producción
             'Dim cantidadusuarios As Integer
             ' cantidadusuarios = ccbasignacion23.Items.Count
@@ -20942,25 +20978,25 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             If rolactual = "DISEÑADOR" Then
 
 
-                    'MsgBox("cantidad de selecionados:" + cantidad_activados)
-                    conexionMysql.Open()
-                    Dim Sql As String
-                    Sql = "INSERT INTO `dwin`.`proceso_diseño_entregar` (`folio`, `cantidad`) VALUES ('" & ctxtfolio_diseñador.Text & "','" & cantidad_activados & "');"
-                    Dim cmd As New MySqlCommand(Sql, conexionMysql)
-                    cmd.ExecuteNonQuery()
-                    conexionMysql.Close()
-                    'MsgBox("folio asignado a " & lbasignacion2.Text, MsgBoxStyle.Information, "ctrl+y")
-                    'limpiar_cajas_proceso()
-                    ''''actualizar_grilla_diseñador()
-                    'comprobacion_insercion = 1
-                    cerrarconexion()
-                    'en caso de que halla u
-                    'na inserción con exito, actualizamos
-                    'MsgBox(estado_folio)
-                Else
+                'MsgBox("cantidad de selecionados:" + cantidad_activados)
+                conexionMysql.Open()
+                Dim Sql As String
+                Sql = "INSERT INTO `dwin`.`proceso_diseño_entregar` (`folio`, `cantidad`) VALUES ('" & ctxtfolio_diseñador.Text & "','" & cantidad_activados & "');"
+                Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                cmd.ExecuteNonQuery()
+                conexionMysql.Close()
+                'MsgBox("folio asignado a " & lbasignacion2.Text, MsgBoxStyle.Information, "ctrl+y")
+                'limpiar_cajas_proceso()
+                ''''actualizar_grilla_diseñador()
+                'comprobacion_insercion = 1
+                cerrarconexion()
+                'en caso de que halla u
+                'na inserción con exito, actualizamos
+                'MsgBox(estado_folio)
+            Else
 
 
-                End If
+            End If
 
 
 
@@ -20991,13 +21027,13 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
                 'Try
                 cerrarconexion()
-                    conexionMysql.Open()
-                    Dim Sqlda As String
+                conexionMysql.Open()
+                Dim Sqlda As String
                 Sqlda = "UPDATE procesos_diseño SET observacion='" & ctxtobservacion.Text & "' WHERE id_folio_servicio='" & ctxtfolio_diseñador.Text & "';"
                 Dim cmdda As New MySqlCommand(Sqlda, conexionMysql)
-                    cmdda.ExecuteNonQuery()
-                    conexionMysql.Close()
-                    MsgBox("Información actualizada", MsgBoxStyle.Information, "CTRL+y")
+                cmdda.ExecuteNonQuery()
+                conexionMysql.Close()
+                MsgBox("Información actualizada", MsgBoxStyle.Information, "CTRL+y")
                 ''''''' actualizar_grilla_diseñador()
                 cerrarconexion()
                 ctxtfolio_diseñador.Text = ""
@@ -21012,32 +21048,32 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
             End If
 
-                    actualizar_grilla_diseñador()
-                '-----------------------------------
+            actualizar_grilla_diseñador()
+            '-----------------------------------
 
-                'For i = 0 To cantidadfilas
-                '    usuarioactual = lbasignacionlista2.Items.IndexOf(i)
-                '    '                   usuarioactual = lbasignacionlista2.Items(lbasignacionlista2.SelectedItem)
-                '    MsgBox(usuarioactual)
+            'For i = 0 To cantidadfilas
+            '    usuarioactual = lbasignacionlista2.Items.IndexOf(i)
+            '    '                   usuarioactual = lbasignacionlista2.Items(lbasignacionlista2.SelectedItem)
+            '    MsgBox(usuarioactual)
 
 
 
-                '    Sql = "INSERT INTO `dwin`.`procesos_diseño` (`usuario`, `fecha_asignacion`,`id_folio_servicio`,`estado_folio`,`observacion`) VALUES ('" & usuarioactual & "', '" & fecha_completa_inicio & "','" & ctxtfolio_diseñador.Text & "'," & estado_folio & ",'" & ctxtobservacion.Text & "');"
-                '    Dim cmd As New MySqlCommand(Sql, conexionMysql)
-                '    cmd.ExecuteNonQuery()
-                '    conexionMysql.Close()
-                '    MsgBox("folio asignado a " & lbasignacion2.Text, MsgBoxStyle.Information, "ctrl+y")
-                '    'limpiar_cajas_proceso()
-                '    actualizar_grilla_diseñador()
+            '    Sql = "INSERT INTO `dwin`.`procesos_diseño` (`usuario`, `fecha_asignacion`,`id_folio_servicio`,`estado_folio`,`observacion`) VALUES ('" & usuarioactual & "', '" & fecha_completa_inicio & "','" & ctxtfolio_diseñador.Text & "'," & estado_folio & ",'" & ctxtobservacion.Text & "');"
+            '    Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            '    cmd.ExecuteNonQuery()
+            '    conexionMysql.Close()
+            '    MsgBox("folio asignado a " & lbasignacion2.Text, MsgBoxStyle.Information, "ctrl+y")
+            '    'limpiar_cajas_proceso()
+            '    actualizar_grilla_diseñador()
 
-                'Next
+            'Next
 
-                'Catch
-                '    MsgBox("Error," & Err.Description)
-                '    cerrarconexion()
-                'End Try
+            'Catch
+            '    MsgBox("Error," & Err.Description)
+            '    cerrarconexion()
+            'End Try
 
-            End If
+        End If
 
 
         'End If
@@ -21319,30 +21355,44 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         End If
         'MsgBox(cbestado_proceso.Text)
         'MsgBox(e1)
+        Dim dato As String
 
         cerrarconexion()
         'grilla.Columns(0).Width = 0
         cgrillaplanadministrador.AlternatingRowsDefaultCellStyle.BackColor = Color.SkyBlue
         conexionMysql.Open()
         Dim Sql As String
-        Sql = "Select procesos_diseño.usuario, procesos_diseño.fecha_asignacion, procesos_diseño.fecha_inicio, procesos_diseño.fecha_fin, procesos_diseño.id_folio_servicio FROM USUARIO, procesos_diseño where usuario.usuario=procesos_diseño.usuario And usuario.rol='" & cbestado_proceso.Text & "' and procesos_diseño.estado_folio=" & e1 & ""
+        Sql = "Select procesos_diseño.usuario, procesos_diseño.fecha_asignacion, procesos_diseño.fecha_inicio, procesos_diseño.fecha_fin,venta.fechaentrega, procesos_diseño.id_folio_servicio FROM venta, USUARIO, procesos_diseño where usuario.usuario=procesos_diseño.usuario And usuario.rol='" & cbestado_proceso.Text & "' and procesos_diseño.estado_folio=" & e1 & " and  procesos_diseño.id_folio_servicio= venta.idventa"
         Dim cmd As New MySqlCommand(Sql, conexionMysql)
         Dim dt As New DataTable
         Dim da As New MySqlDataAdapter(cmd)
         'cargamos el formulario  resumen
         da.Fill(dt)
         cgrillaplanadministrador.DataSource = dt
-
-
         cgrillaplanadministrador.Columns(0).Width = 120
         cgrillaplanadministrador.Columns(1).Width = 180
         cgrillaplanadministrador.Columns(2).Width = 130
         cgrillaplanadministrador.Columns(3).Width = 180
+        cgrillaplanadministrador.Columns(4).Width = 180
+        reader = cmd.ExecuteReader()
+        reader.Read()
+        dato = reader.GetString(4).ToString()
+        MsgBox(dato)
         conexionMysql.Close()
         ' Catch ex As Exception
 
-        ' End Try
 
+        ' End Try
+        '-------------------asignacion de colores para celdas
+
+        Dim i As Integer = cgrillaplanadministrador.RowCount
+
+        For y = 0 To i - 1
+
+            Dim Variable As String = cgrillaplanadministrador.Item(4, y).Value
+            MsgBox(Variable)
+
+        Next
     End Sub
 
     Private Sub Button104_Click(sender As Object, e As EventArgs)
@@ -21434,31 +21484,31 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             Dim contador, contadorentregado As Integer
             ' Try
             cerrarconexion()
-                'consultar cuantos folios se han generado, para cada persona usuario
-                'contar cuantos folios hay en servicio
-                conexionMysql.Open()
-                Dim Sql23 As String
-                Sql23 = "select cantidad from proceso_diseño_entregar where folio='" & ctxtfolio_entregar.Text & "';"
-                Dim cmd23 As New MySqlCommand(Sql23, conexionMysql)
-                reader = cmd23.ExecuteReader()
-                reader.Read()
-                contador = reader.GetString(0).ToString()
-                cerrarconexion()
+            'consultar cuantos folios se han generado, para cada persona usuario
+            'contar cuantos folios hay en servicio
+            conexionMysql.Open()
+            Dim Sql23 As String
+            Sql23 = "select cantidad from proceso_diseño_entregar where folio='" & ctxtfolio_entregar.Text & "';"
+            Dim cmd23 As New MySqlCommand(Sql23, conexionMysql)
+            reader = cmd23.ExecuteReader()
+            reader.Read()
+            contador = reader.GetString(0).ToString()
+            cerrarconexion()
             ' MsgBox(contador)
             'Dim correcto As Integer
             'correcto = 0
             '-------------------------------------verificar que halla la misma cantidad de guardados que entregados por root
             cerrarconexion()
-                'consultar cuantos folios se han generado, para cada persona usuario
-                'contar cuantos folios hay en servicio
-                conexionMysql.Open()
-                Dim Sql23x1 As String
-                Sql23x1 = "select count(estado_folio) from procesos_diseño where id_folio_servicio='" & ctxtfolio_entregar.Text & "' and usuario='" & usuarioactual & "';"
-                Dim cmd23x1 As New MySqlCommand(Sql23x1, conexionMysql)
-                reader = cmd23x1.ExecuteReader()
-                reader.Read()
-                contadorentregado = reader.GetString(0).ToString()
-                cerrarconexion()
+            'consultar cuantos folios se han generado, para cada persona usuario
+            'contar cuantos folios hay en servicio
+            conexionMysql.Open()
+            Dim Sql23x1 As String
+            Sql23x1 = "select count(estado_folio) from procesos_diseño where id_folio_servicio='" & ctxtfolio_entregar.Text & "' and usuario='" & usuarioactual & "';"
+            Dim cmd23x1 As New MySqlCommand(Sql23x1, conexionMysql)
+            reader = cmd23x1.ExecuteReader()
+            reader.Read()
+            contadorentregado = reader.GetString(0).ToString()
+            cerrarconexion()
             '-----------------------------------------------------------------------
             ' Catch ex As Exception
             'cerrarconexion()
@@ -21480,17 +21530,17 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
                 Dim estado_folio1 As Integer
 
-                    cerrarconexion()
-                    'consultar cuantos folios se han generado, para cada persona usuario
-                    'contar cuantos folios hay en servicio
+                cerrarconexion()
+                'consultar cuantos folios se han generado, para cada persona usuario
+                'contar cuantos folios hay en servicio
 
-                    conexionMysql.Open()
-                    Dim Sql23x As String
-                    Sql23x = "select estado_folio from procesos_diseño where id_folio_servicio='" & ctxtfolio_entregar.Text & "' and usuario='" & usuarioactual & "';"
-                    Dim cmd23x As New MySqlCommand(Sql23x, conexionMysql)
-                    reader = cmd23x.ExecuteReader()
-                    reader.Read()
-                    estado_folio1 = reader.GetString(0).ToString()
+                conexionMysql.Open()
+                Dim Sql23x As String
+                Sql23x = "select estado_folio from procesos_diseño where id_folio_servicio='" & ctxtfolio_entregar.Text & "' and usuario='" & usuarioactual & "';"
+                Dim cmd23x As New MySqlCommand(Sql23x, conexionMysql)
+                reader = cmd23x.ExecuteReader()
+                reader.Read()
+                estado_folio1 = reader.GetString(0).ToString()
                 cerrarconexion()
 
 
@@ -21529,16 +21579,16 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
                     'Try
                     cerrarconexion()
-                            conexionMysql.Open()
-                            Dim Sqld As String
-                            Sqld = "UPDATE procesos_diseño SET estado_folio = '10', fecha_inicio='" & fecha_completa_inicio & "',fecha_fin='" & fecha_completa_inicio & "'  WHERE id_folio_servicio='" & ctxtfolio_entregar.Text & "' and usuario='" & usuarioactual & "';"
-                            Dim cmdd As New MySqlCommand(Sqld, conexionMysql)
-                            cmdd.ExecuteNonQuery()
-                            conexionMysql.Close()
-                            MsgBox("Información actualizada", MsgBoxStyle.Information, "CTRL+y")
+                    conexionMysql.Open()
+                    Dim Sqld As String
+                    Sqld = "UPDATE procesos_diseño SET estado_folio = '10', fecha_inicio='" & fecha_completa_inicio & "',fecha_fin='" & fecha_completa_inicio & "'  WHERE id_folio_servicio='" & ctxtfolio_entregar.Text & "' and usuario='" & usuarioactual & "';"
+                    Dim cmdd As New MySqlCommand(Sqld, conexionMysql)
+                    cmdd.ExecuteNonQuery()
+                    conexionMysql.Close()
+                    MsgBox("Información actualizada", MsgBoxStyle.Information, "CTRL+y")
 
-                            'actualizar_grilla_diseñador()
-                            cerrarconexion()
+                    'actualizar_grilla_diseñador()
+                    cerrarconexion()
                     '    Catch
                     'MsgBox
                     cerrarconexion()
@@ -21546,145 +21596,153 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
 
                 End If
-                    actualizar_grilla_usuarios()
-                    '    cerrarconexion()
-                    ''comprobar si el folio que está seleccionado cumple con la fecha de terminacion y en valor 6
-                    ''que significa que ya esta terminado.
-                    ''OBTENER EL ESTADO DEL FOLIO PARA SABER QUE HACER
-                    'Dim estado_folio As Integer
-                    'Dim fecha_fin As String
-                    'conexionMysql.Open()
-                    'Dim Sql2 As String
-                    'Sql2 = "select  estado_folio, fecha_fin  from procesos_diseño where id_folio_servicio='" & ctxtfolio_entregar.Text & "';"
-                    'Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
-                    'reader = cmd2.ExecuteReader()
-                    'reader.Read()
-                    'estado_folio = reader.GetString(0).ToString()
-                    'fecha_fin = reader.GetString(1).ToString()
-                    'MsgBox(estado_folio)
-                    'cerrarconexion()
+                actualizar_grilla_usuarios()
+                '    cerrarconexion()
+                ''comprobar si el folio que está seleccionado cumple con la fecha de terminacion y en valor 6
+                ''que significa que ya esta terminado.
+                ''OBTENER EL ESTADO DEL FOLIO PARA SABER QUE HACER
+                'Dim estado_folio As Integer
+                'Dim fecha_fin As String
+                'conexionMysql.Open()
+                'Dim Sql2 As String
+                'Sql2 = "select  estado_folio, fecha_fin  from procesos_diseño where id_folio_servicio='" & ctxtfolio_entregar.Text & "';"
+                'Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+                'reader = cmd2.ExecuteReader()
+                'reader.Read()
+                'estado_folio = reader.GetString(0).ToString()
+                'fecha_fin = reader.GetString(1).ToString()
+                'MsgBox(estado_folio)
+                'cerrarconexion()
 
-                    '    If estado_folio = 6 And fecha_fin <> "" Then
-
-
-
-                    '        MsgBox("El folio se puede entregar," & vbNewLine & "Porfavor, redirigete a la sección de VENTA", MsgBoxStyle.Information, "ctrl+y")
-                    '        'Dim hora2, minuto, segundo As String
-                    'Dim total As Double
-                    ''obtener fecha y hora
-                    'hora2 = Now.Hour()
-                    'minuto = Now.Minute()
-                    'segundo = Now.Second()
-
-                    'hora = hora2 & ":" & minuto & ":" & segundo
-
-
-                    'Dim dia, mes, año, fecha, fecha_completa_inicio As String
-
-                    'dia = Date.Now.Day
-                    'mes = Date.Now.Month
-                    'año = Date.Now.Year
-                    'fecha = año & "-" & mes & "-" & dia
-
-                    'fecha_completa_inicio = fecha & " " & hora
-
-                    ''OBTENER EL ESTADO DEL FOLIO PARA SABER QUE HACER
-                    'Dim estado_folio As Integer
-                    'conexionMysql.Open()
-                    'Dim Sql2 As String
-                    'Sql2 = "select  estado_folio  from procesos_diseño where id_folio_servicio='" & ctxtfolio_diseñador.Text & "';"
-                    'Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
-                    'reader = cmd2.ExecuteReader()
-                    'reader.Read()
-                    'estado_folio = reader.GetString(0).ToString()
-
-                    'estado_folio = estado_folio + 1
+                '    If estado_folio = 6 And fecha_fin <> "" Then
 
 
 
+                '        MsgBox("El folio se puede entregar," & vbNewLine & "Porfavor, redirigete a la sección de VENTA", MsgBoxStyle.Information, "ctrl+y")
+                '        'Dim hora2, minuto, segundo As String
+                'Dim total As Double
+                ''obtener fecha y hora
+                'hora2 = Now.Hour()
+                'minuto = Now.Minute()
+                'segundo = Now.Second()
+
+                'hora = hora2 & ":" & minuto & ":" & segundo
+
+
+                'Dim dia, mes, año, fecha, fecha_completa_inicio As String
+
+                'dia = Date.Now.Day
+                'mes = Date.Now.Month
+                'año = Date.Now.Year
+                'fecha = año & "-" & mes & "-" & dia
+
+                'fecha_completa_inicio = fecha & " " & hora
+
+                ''OBTENER EL ESTADO DEL FOLIO PARA SABER QUE HACER
+                'Dim estado_folio As Integer
+                'conexionMysql.Open()
+                'Dim Sql2 As String
+                'Sql2 = "select  estado_folio  from procesos_diseño where id_folio_servicio='" & ctxtfolio_diseñador.Text & "';"
+                'Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+                'reader = cmd2.ExecuteReader()
+                'reader.Read()
+                'estado_folio = reader.GetString(0).ToString()
+
+                'estado_folio = estado_folio + 1
+
+                'estado_folio = estado_folio + 1
 
 
 
 
-                    ''MsgBox(estado_folio)
-                    'Try
-                    '    cerrarconexion()
-                    '    conexionMysql.Open()
-                    '    Dim Sqld As String
-                    '    Sqld = "UPDATE procesos_diseño SET estado_folio = '" & estado_folio & "', fecha_fin='" & fecha_completa_inicio & "' WHERE id_folio_servicio='" & ctxtfolio_diseñador.Text & "';"
-                    '    Dim cmdd As New MySqlCommand(Sqld, conexionMysql)
-                    '    cmdd.ExecuteNonQuery()
-                    '    conexionMysql.Close()
-                    '    MsgBox("Información actualizada", MsgBoxStyle.Information, "CTRL+y")
-
-                    '    actualizar_grilla_diseñador()
-                    '    cerrarconexion()
-                    'Catch
-                    '    'MsgBox
-                    '    cerrarconexion()
-                    'End Try
-
-                    ''----------------------------------------------------------------
-                    ''insertar, asignar el folio a X diseñador
-
-                    'Dim folio_asig, usuario, usuario_nuevo As String
-                    'Try
 
 
-                    '    conexionMysql.Open()
-                    '    Dim Sql23 As String
-                    '    Sql23 = "select id_folio_servicio,usuario from procesos_diseño where id_folio_servicio  = " & ctxtfolio_diseñador.Text & ";"
-                    '    Dim cmd23 As New MySqlCommand(Sql23, conexionMysql)
-                    '    reader = cmd23.ExecuteReader()
-                    '    reader.Read()
-                    '    folio_asig = reader.GetString(0).ToString()
-                    '    usuario = reader.GetString(1).ToString()
-                    '    cerrarconexion()
+                ''MsgBox(estado_folio)
+                'Try
+                '    cerrarconexion()
+                '    conexionMysql.Open()
+                '    Dim Sqld As String
+                '    Sqld = "UPDATE procesos_diseño SET estado_folio = '" & estado_folio & "', fecha_fin='" & fecha_completa_inicio & "' WHERE id_folio_servicio='" & ctxtfolio_diseñador.Text & "';"
+                '    Dim cmdd As New MySqlCommand(Sqld, conexionMysql)
+                '    cmdd.ExecuteNonQuery()
+                '    conexionMysql.Close()
+                '    MsgBox("Información actualizada", MsgBoxStyle.Information, "CTRL+y")
 
-                    'Catch ex As Exception
-                    '    cerrarconexion()
-                    'End Try
-                    ''usuario_nuevo = ccbasignacion2.Text
+                '    actualizar_grilla_diseñador()
+                '    cerrarconexion()
+                'Catch
+                '    'MsgBox
+                '    cerrarconexion()
+                'End Try
 
-                    ''If ccbasignacion2.Text = usuario Then
-                    ''MsgBox("Este folio ya se encuentra asignado a un usuario:" & usuario, MsgBoxStyle.Information, "ctrl+y")
-                    ''Else
-                    'Try
-                    '    conexionMysql.Open()
-                    '    Dim Sql As String
-                    '    '                MsgBox(ccbasignacion2.Text)
+                ''----------------------------------------------------------------
+                ''insertar, asignar el folio a X diseñador
+
+                'Dim folio_asig, usuario, usuario_nuevo As String
+                'Try
+
+                'Dim folio_asig, usuario, usuario_nuevo As String
+                'Try
+
+                '    conexionMysql.Open()
+                '    Dim Sql23 As String
+                '    Sql23 = "select id_folio_servicio,usuario from procesos_diseño where id_folio_servicio  = " & ctxtfolio_diseñador.Text & ";"
+                '    Dim cmd23 As New MySqlCommand(Sql23, conexionMysql)
+                '    reader = cmd23.ExecuteReader()
+                '    reader.Read()
+                '    folio_asig = reader.GetString(0).ToString()
+                '    usuario = reader.GetString(1).ToString()
+                '    cerrarconexion()
+
+                'Catch ex As Exception
+                '    cerrarconexion()
+                'End Try
+                ''usuario_nuevo = ccbasignacion2.Text
+
+                ''If ccbasignacion2.Text = usuario Then
+                ''MsgBox("Este folio ya se encuentra asignado a un usuario:" & usuario, MsgBoxStyle.Information, "ctrl+y")
+                ''Else
+                'Try
+                '    conexionMysql.Open()
+                '    Dim Sql As String
+                '    '                MsgBox(ccbasignacion2.Text)
+
+                ''If ccbasignacion2.Text = usuario Then
+                ''MsgBox("Este folio ya se encuentra asignado a un usuario:" & usuario, MsgBoxStyle.Information, "ctrl+y")
+                ''Else
+                'Try
+                '    conexionMysql.Open()
+                '    Dim Sql As String
+                '    '                MsgBox(ccbasignacion2.Text)
 
 
+                '    Sql = "INSERT INTO `dwin`.`procesos_diseño` (`usuario`, `fecha_asignacion`,`id_folio_servicio`,`estado_folio`,`observacion`) VALUES ('" & lbasignacion2.Text & "', '" & fecha_completa_inicio & "','" & ctxtfolio_diseñador.Text & "'," & estado_folio & ",'" & ctxtobservacion.Text & "');"
+                '    Dim cmd As New MySqlCommand(Sql, conexionMysql)
+                '    cmd.ExecuteNonQuery()
+                '    conexionMysql.Close()
+                '    MsgBox("folio asignado a " & lbasignacion2.Text, MsgBoxStyle.Information, "ctrl+y")
+                '    'limpiar_cajas_proceso()
+                'Catch
+                '    MsgBox("Error," & Err.Description)
+                '    cerrarconexion()
+                'End Try
 
-                    '    Sql = "INSERT INTO `dwin`.`procesos_diseño` (`usuario`, `fecha_asignacion`,`id_folio_servicio`,`estado_folio`,`observacion`) VALUES ('" & lbasignacion2.Text & "', '" & fecha_completa_inicio & "','" & ctxtfolio_diseñador.Text & "'," & estado_folio & ",'" & ctxtobservacion.Text & "');"
-                    '    Dim cmd As New MySqlCommand(Sql, conexionMysql)
-                    '    cmd.ExecuteNonQuery()
-                    '    conexionMysql.Close()
-                    '    MsgBox("folio asignado a " & lbasignacion2.Text, MsgBoxStyle.Information, "ctrl+y")
-                    '    'limpiar_cajas_proceso()
-                    'Catch
-                    '    MsgBox("Error," & Err.Description)
-                    '    cerrarconexion()
-                    'End Try
+                'Else
+                '        MsgBox("El folio no esta listo para entregar", MsgBoxStyle.Information, "ctrl+y")
+                '    End If
 
-                    'Else
-                    '        MsgBox("El folio no esta listo para entregar", MsgBoxStyle.Information, "ctrl+y")
-                    '    End If
+                'Else
+                '        MsgBox("El folio no esta listo para entregar", MsgBoxStyle.Information, "ctrl+y")
+                '    End If
 
-
-                    'End If
-                    ' ElseIf contador = 0 Then
-
-                End If
+                'End If
+                ' ElseIf contador = 0 Then
 
             End If
-
-
-
+        End If
+        ''''''''''''''''''''''''''''''''End If
     End Sub
-
     Private Sub TabPage13_Click(sender As Object, e As EventArgs) Handles TabPage13.Click
-
     End Sub
 
     Private Sub Button96_Click_2(sender As Object, e As EventArgs) Handles Button96.Click
@@ -21729,7 +21787,6 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         'ccbasignacion2.Items.Add(lbasignacionlista2.SelectedItem)
         'lbasignacionlista2.Items.RemoveAt(lbasignacionlista2.SelectedIndex)
     End Sub
-
     Private Sub ccbasignacion23_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ccbasignacion23.SelectedIndexChanged
         'If ccbasignacion23.SelectedItem = usuarioactual Then
         '    ccbasignacion23.SelectedItem = False
@@ -21756,9 +21813,7 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
             MsgBox("Folio encontrado", MsgBoxStyle.Information, "ctrl+y")
             Dim folio_asig, usuario As String
             Try
-
                 conexionMysql.Open()
-
                 Dim Sql23 As String
                 Sql23 = "select id_folio_servicio,usuario from procesos_diseño where id_folio_servicio  = " & txtfolio_concentrado.Text & ";"
                 Dim cmd23 As New MySqlCommand(Sql23, conexionMysql)
@@ -21766,7 +21821,6 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
                 reader.Read()
                 folio_asig = reader.GetString(0).ToString()
                 usuario = reader.GetString(1).ToString()
-
                 If folio_asig = txtfolio_concentrado.Text Then
                     MsgBox("Este folio ya se encuentra asignado a un usuario:" & usuario, MsgBoxStyle.Information, "ctrl+y")
                 End If
@@ -21965,15 +22019,15 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
                 cerrarconexion()
                 ' Try
                 conexionMysql.Open()
-                    Dim Sql As String
+                Dim Sql As String
                 Sql = "delete From procesos_diseño Where id_folio_servicio ='" & ctxtfolio_entregar.Text & "' and estado_folio>0;"
                 Dim cmd As New MySqlCommand(Sql, conexionMysql)
-                    cmd.ExecuteNonQuery()
-                    conexionMysql.Close()
+                cmd.ExecuteNonQuery()
+                conexionMysql.Close()
                 'Catch
                 MsgBox("Folio Reseteado", MsgBoxStyle.Information, "Ctrl+y")
-                    cerrarconexion()
-                    actualizar_grilla_usuarios()
+                cerrarconexion()
+                actualizar_grilla_usuarios()
                 'End Try
 
 
@@ -21998,15 +22052,165 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
         picturecancelado.Visible = False
     End Sub
 
+    Private Sub Button108_Click(sender As Object, e As EventArgs) Handles Button108.Click
+        'MsgBox(folioventa)
+        Dim formulario As New frVentaAdicional
+        'FRagregaranticipo.ShowDialog()
+        formulario.ShowDialog()
+        frVentaAdicional.stxtdescripcion.Text = stxtdescripcion.Text
+        frVentaAdicional.lbfolio.Text = txtclavep.Text
+    End Sub
+
+    Private Sub Button109_Click(sender As Object, e As EventArgs) Handles Button109.Click
+        'insertar los registros de variables.
+        'primero verificamos que exista la clave del producto
+
+        If txtclavep.Text = "" Then
+            MsgBox("no hay clave de producto", MsgBoxStyle.Information, "CTRL+y")
+        Else
+
+            Try
+
+
+                Dim clavePro As String
+                conexionMysql.Close()
+                reader.Close()
+                conexionMysql.Open()
+                Dim sql As String
+                sql = "select idproducto from producto where idproducto='" & txtclavep.Text & "'"
+                'sql = "select concat(nombre, ' ', ap, ' ', am) as nombre from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & ctxtnombre.Text & "%';"
+                Dim cmd As New MySqlCommand(sql, conexionMysql)
+                reader = cmd.ExecuteReader
+                reader.Read()
+                clavePro = reader.GetString(0).ToString()
+                cerrarconexion()
+                conexionMysql.Open()
+
+                If clavePro = txtclavep.Text Then
+                    'en caso de que exista, hacemos la agregación a la tabla y cargamos los valores en el combobox
+                    Dim Sql36g As String
+                    Sql36g = "INSERT INTO `dwin`.`variableproducto` (`idproducto`, `variable`) VALUES ('" & txtclavep.Text & "', '" & txtvaloradicional.Text & "');"
+                    Dim cmd36g As New MySqlCommand(Sql36g, conexionMysql)
+                    cmd36g.ExecuteNonQuery()
+                    conexionMysql.Close()
+                    MsgBox("Valor agregada", MsgBoxStyle.Information, "CTRL+y")
+                    txtvaloradicional.Text = ""
+
+
+                    cargartipovariable()
+                Else
+                    MsgBox("Producto no registrado", MsgBoxStyle.Exclamation, "CTRL+y")
+
+
+                End If
+
+                conexionMysql.Close()
+            Catch ex As Exception
+                MsgBox("Producto", MsgBoxStyle.Exclamation, "CTRL+y")
+
+            End Try
+        End If
+
+
+
+
+
+    End Sub
+    Function cargartipovariable()
+
+        'limpiar el combo para que no se duplique
+        cbvaloradicional.Items.Clear()
+
+        Try
+
+
+            Dim cantidadvariable, i As Integer
+            cerrarconexion()
+
+            conexionMysql.Open()
+            Dim Sql As String
+            Sql = "select count(*)as contador from variableproducto where idproducto='" & txtclavep.Text & "';"
+            Dim cmd As New MySqlCommand(Sql, conexionMysql)
+            reader = cmd.ExecuteReader()
+            reader.Read()
+            cantidadvariable = reader.GetString(0).ToString()
+
+            conexionMysql.Close()
+
+
+            cerrarconexion()
+
+            conexionMysql.Open()
+            Dim Sql2 As String
+            Sql2 = "select variable from variableproducto where idproducto='" & txtclavep.Text & "';"
+            Dim cmd2 As New MySqlCommand(Sql2, conexionMysql)
+            reader = cmd2.ExecuteReader()
+
+            For i = 1 To cantidadvariable
+
+                reader.Read()
+
+                cbvaloradicional.Items.Add(reader.GetString(0).ToString())
+            Next
+
+            reader.Close()
+
+            conexionMysql.Close()
+
+
+        Catch ex As Exception
+
+        End Try
+
+
+    End Function
+
+    Private Sub Button110_Click(sender As Object, e As EventArgs) Handles Button110.Click
+        'insertar los registros de variables.
+        'primero verificamos que exista la clave del producto
+        Dim clavePro As String
+        conexionMysql.Close()
+        reader.Close()
+        conexionMysql.Open()
+        Dim sql As String
+        sql = "select variable from variableproducto where variable='" & cbvaloradicional.Text & "' and idproducto='" & txtclavep.Text & "'"
+        'sql = "select concat(nombre, ' ', ap, ' ', am) as nombre from cliente where concat(nombre, ' ',ap, ' ', am) like '%" & ctxtnombre.Text & "%';"
+        Dim cmd As New MySqlCommand(sql, conexionMysql)
+        reader = cmd.ExecuteReader
+        reader.Read()
+        clavePro = reader.GetString(0).ToString()
+        cerrarconexion()
+        conexionMysql.Open()
+
+        If clavePro = cbvaloradicional.Text Then
+            'en caso de que exista, hacemos la agregación a la tabla y cargamos los valores en el combobox
+            Dim Sql36g As String
+            Sql36g = "delete from variableproducto  where variable='" & cbvaloradicional.Text & "' and idproducto='" & txtclavep.Text & "';"
+            Dim cmd36g As New MySqlCommand(Sql36g, conexionMysql)
+            cmd36g.ExecuteNonQuery()
+            conexionMysql.Close()
+            MsgBox("Valor eliminado", MsgBoxStyle.Information, "CTRL+y")
+
+            cargartipovariable()
+        Else
+            MsgBox("Producto no registrado", MsgBoxStyle.Exclamation, "CTRL+y")
+
+
+        End If
+
+        conexionMysql.Close()
+    End Sub
+
     Private Sub btncancelarfolio_Click(sender As Object, e As EventArgs) Handles btncancelarfolio.Click
         ' stxtfoliobusquedaventa
 
         Dim res As String
 
         If folcancel = True Then
-            res = MsgBox("¿Estas seguro de cancelar el folio?", MsgBoxStyle.YesNo & MsgBoxStyle.Information, "Ctrl+y")
 
-            If res = vbOK Then
+            res = MsgBox("¿Estas seguro de cancelar el folio?", MsgBoxStyle.YesNo + MsgBoxStyle.Information, "Ctrl+y")
+
+            If res = vbYes Then
                 conexionMysql.Open()
 
                 'Try
@@ -22019,6 +22223,8 @@ ADD COLUMN `cantidad_mayoreo` INT(11) NULL AFTER `idtipoproducto`;"
 
 
                 picturecancelado.Visible = True
+
+
 
                 ' Catch ex As Exception
                 cerrarconexion()

@@ -448,6 +448,12 @@
     <Compile Include="frTIPOPAGO.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frVentaAdicional.Designer.vb">
+      <DependentUpon>frVentaAdicional.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frVentaAdicional.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FRventaporcliente.Designer.vb">
       <DependentUpon>FRventaporcliente.vb</DependentUpon>
     </Compile>
@@ -695,6 +701,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frTIPOPAGO.resx">
       <DependentUpon>frTIPOPAGO.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frVentaAdicional.resx">
+      <DependentUpon>frVentaAdicional.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FRventaporcliente.resx">
       <DependentUpon>FRventaporcliente.vb</DependentUpon>
